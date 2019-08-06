@@ -36,6 +36,7 @@
             this.tap_local = new System.Windows.Forms.TabPage();
             this.btn_model = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
+            this.btn_modelline = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
             this.tap_local.SuspendLayout();
@@ -104,6 +105,7 @@
             // 
             // tap_local
             // 
+            this.tap_local.Controls.Add(this.btn_modelline);
             this.tap_local.Controls.Add(this.btn_model);
             this.tap_local.Controls.Add(this.btn_line);
             this.tap_local.Location = new System.Drawing.Point(4, 25);
@@ -138,6 +140,18 @@
             this.btn_line.UseVisualStyleBackColor = true;
             this.btn_line.Click += new System.EventHandler(this.btn_line_Click);
             // 
+            // btn_modelline
+            // 
+            this.btn_modelline.Enabled = false;
+            this.btn_modelline.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_modelline.Location = new System.Drawing.Point(430, 15);
+            this.btn_modelline.Name = "btn_modelline";
+            this.btn_modelline.Size = new System.Drawing.Size(153, 48);
+            this.btn_modelline.TabIndex = 6;
+            this.btn_modelline.Text = "Model Line";
+            this.btn_modelline.UseVisualStyleBackColor = true;
+            this.btn_modelline.Click += new System.EventHandler(this.btn_modelline_Click);
+            // 
             // MainFr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -166,5 +180,6 @@
         private System.Windows.Forms.Button btn_permission;
         private System.Windows.Forms.Button btn_line;
         private System.Windows.Forms.Button btn_model;
+        private System.Windows.Forms.Button btn_modelline;
     }
 }
