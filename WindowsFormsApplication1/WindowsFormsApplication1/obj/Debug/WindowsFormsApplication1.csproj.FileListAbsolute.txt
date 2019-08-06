@@ -21,3 +21,6 @@ C:\Users\Long Coi\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\
 C:\Users\Long Coi\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.AddModelForm.resources
 C:\Users\Long Coi\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.ModelForm.resources
 C:\Users\Long Coi\Desktop\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\GIT\MESDANG\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\GIT\MESDANG\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\GIT\MESDANG\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
