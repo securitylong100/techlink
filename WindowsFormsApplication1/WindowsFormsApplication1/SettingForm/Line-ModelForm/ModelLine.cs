@@ -48,15 +48,25 @@ namespace WindowsFormsApplication1.SettingForm.Line_ModelForm
 
         private void btn_add_Click(object sender, EventArgs e)
         {
-         
+            if (cmb_modelcode.Text == "" || tv_line.Nodes[0].Nodes.Count < 1) return;
+            string sqldelete = "delete from m_model_line where modelcode = '" + cmb_modelcode.Text + "'";
+            sqlCON connect = new sqlCON();
+            connect.sqlExecuteNonQuery(sqldelete, false); //false không xuất hiện thông báo
             for (int i = 0; i < tv_line.Nodes[0].Nodes.Count; i++)
             {
-                if (tv_line.Nodes[0].Nodes[i].Checked)
-                {
-                    MessageBox.Show(tv_line.Nodes[0].Nodes[i].Text);
-                }
+                //if (tv_line.Nodes[0].Nodes[i].Checked)
+                //{
+                //    MessageBox.Show(tv_line.Nodes[0].Nodes[i].Text);
+                //}
+               
+                string sqladd = @"insert into m_model_line(modelcode, linecode, status, datetimeRST) values ('"
++ cmb_modelcode.Text + "','" + tv_line.Nodes[0].Nodes[i].Text + "','"
++ tv_line.Nodes[0].Nodes[i].Checked.ToString() + "',GETDATE())";
+                connect.sqlExecuteNonQuery(sqladd, false);
             }
-            
+            infomesge infor = new infomesge();
+            infor.WarningMesger("Update is Ok", "INFO", this);
+            getdgvfull(cmb_modelcode.Text);
         }
         void getdgvfull(string modelcode)
         {
