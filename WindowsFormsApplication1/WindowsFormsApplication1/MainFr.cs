@@ -33,6 +33,7 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("LineMaster", btn_line);
             connect.sqlDatatablePermision("ModelMaster", btn_model);
             connect.sqlDatatablePermision("ModelLine", btn_modelline);
+            connect.sqlDatatablePermision("Dept", btn_dept);
 
         }
 
@@ -65,6 +66,12 @@ namespace WindowsFormsApplication1
         {
             SettingForm.Line_ModelForm.ModelLine modelf = new SettingForm.Line_ModelForm.ModelLine();
             modelf.Show();
+        }
+
+        private void btn_dept_Click(object sender, EventArgs e)
+        {
+            SettingForm.DeptForm.DeptForm frnew = new SettingForm.DeptForm.DeptForm();
+            frnew.Show();
         }
     }
 }

@@ -34,9 +34,10 @@
             this.btn_changepass = new System.Windows.Forms.Button();
             this.btn_registeruser = new System.Windows.Forms.Button();
             this.tap_local = new System.Windows.Forms.TabPage();
+            this.btn_modelline = new System.Windows.Forms.Button();
             this.btn_model = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
-            this.btn_modelline = new System.Windows.Forms.Button();
+            this.btn_dept = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
             this.tap_local.SuspendLayout();
@@ -56,6 +57,7 @@
             // 
             // tap_setting
             // 
+            this.tap_setting.Controls.Add(this.btn_dept);
             this.tap_setting.Controls.Add(this.btn_permission);
             this.tap_setting.Controls.Add(this.btn_changepass);
             this.tap_setting.Controls.Add(this.btn_registeruser);
@@ -71,7 +73,7 @@
             // 
             this.btn_permission.Enabled = false;
             this.btn_permission.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_permission.Location = new System.Drawing.Point(430, 27);
+            this.btn_permission.Location = new System.Drawing.Point(419, 27);
             this.btn_permission.Name = "btn_permission";
             this.btn_permission.Size = new System.Drawing.Size(153, 48);
             this.btn_permission.TabIndex = 2;
@@ -83,7 +85,7 @@
             // 
             this.btn_changepass.Enabled = false;
             this.btn_changepass.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_changepass.Location = new System.Drawing.Point(231, 27);
+            this.btn_changepass.Location = new System.Drawing.Point(223, 27);
             this.btn_changepass.Name = "btn_changepass";
             this.btn_changepass.Size = new System.Drawing.Size(153, 48);
             this.btn_changepass.TabIndex = 1;
@@ -116,6 +118,18 @@
             this.tap_local.Text = "Local";
             this.tap_local.UseVisualStyleBackColor = true;
             // 
+            // btn_modelline
+            // 
+            this.btn_modelline.Enabled = false;
+            this.btn_modelline.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_modelline.Location = new System.Drawing.Point(430, 15);
+            this.btn_modelline.Name = "btn_modelline";
+            this.btn_modelline.Size = new System.Drawing.Size(153, 48);
+            this.btn_modelline.TabIndex = 6;
+            this.btn_modelline.Text = "Model Line";
+            this.btn_modelline.UseVisualStyleBackColor = true;
+            this.btn_modelline.Click += new System.EventHandler(this.btn_modelline_Click);
+            // 
             // btn_model
             // 
             this.btn_model.Enabled = false;
@@ -140,17 +154,17 @@
             this.btn_line.UseVisualStyleBackColor = true;
             this.btn_line.Click += new System.EventHandler(this.btn_line_Click);
             // 
-            // btn_modelline
+            // btn_dept
             // 
-            this.btn_modelline.Enabled = false;
-            this.btn_modelline.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_modelline.Location = new System.Drawing.Point(430, 15);
-            this.btn_modelline.Name = "btn_modelline";
-            this.btn_modelline.Size = new System.Drawing.Size(153, 48);
-            this.btn_modelline.TabIndex = 6;
-            this.btn_modelline.Text = "Model Line";
-            this.btn_modelline.UseVisualStyleBackColor = true;
-            this.btn_modelline.Click += new System.EventHandler(this.btn_modelline_Click);
+            this.btn_dept.Enabled = false;
+            this.btn_dept.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_dept.Location = new System.Drawing.Point(606, 27);
+            this.btn_dept.Name = "btn_dept";
+            this.btn_dept.Size = new System.Drawing.Size(153, 48);
+            this.btn_dept.TabIndex = 3;
+            this.btn_dept.Text = "Department";
+            this.btn_dept.UseVisualStyleBackColor = true;
+            this.btn_dept.Click += new System.EventHandler(this.btn_dept_Click);
             // 
             // MainFr
             // 
@@ -181,5 +195,6 @@
         private System.Windows.Forms.Button btn_line;
         private System.Windows.Forms.Button btn_model;
         private System.Windows.Forms.Button btn_modelline;
+        private System.Windows.Forms.Button btn_dept;
     }
 }
