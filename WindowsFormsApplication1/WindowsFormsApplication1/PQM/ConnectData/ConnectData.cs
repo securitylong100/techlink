@@ -16,5 +16,18 @@ namespace WindowsFormsApplication1.PQM.ConnectData
         {
             InitializeComponent();
         }
+
+        private void ConnectData_Load(object sender, EventArgs e)
+        {
+
+            sqlCON connect = new sqlCON();
+            string sql = "select distinct modelcode from m_model order by modelcode";
+            connect.getComboBoxData(sql, ref cmb_modelcode);
+            treeview();
+        }
+        void treeview()
+        {
+
+        }
     }
 }

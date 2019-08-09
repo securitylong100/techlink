@@ -142,6 +142,18 @@
     <Compile Include="SettingForm\PermissionForm.Designer.cs">
       <DependentUpon>PermissionForm.cs</DependentUpon>
     </Compile>
+    <Compile Include="SettingForm\ProcessForm\AddProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\ProcessForm\AddProcessForm.Designer.cs">
+      <DependentUpon>AddProcessForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingForm\ProcessForm\ProcessForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\ProcessForm\ProcessForm.Designer.cs">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
+    </Compile>
     <Compile Include="SettingForm\RegisterUserForm\AddRegisterUser.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -204,6 +216,12 @@
     <EmbeddedResource Include="SettingForm\PermissionForm.resx">
       <DependentUpon>PermissionForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\ProcessForm\AddProcessForm.resx">
+      <DependentUpon>AddProcessForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\ProcessForm\ProcessForm.resx">
+      <DependentUpon>ProcessForm.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="SettingForm\RegisterUserForm\AddRegisterUser.resx">
       <DependentUpon>AddRegisterUser.cs</DependentUpon>
     </EmbeddedResource>
@@ -227,7 +245,9 @@
   <ItemGroup>
     <None Include="Resources\pic.png" />
   </ItemGroup>
-  <ItemGroup />
+  <ItemGroup>
+    <Folder Include="SettingForm\ItemForm\" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
        Other similar extension points exist, see Microsoft.Common.targets.

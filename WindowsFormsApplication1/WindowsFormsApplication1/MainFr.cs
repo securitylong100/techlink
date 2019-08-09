@@ -34,7 +34,9 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("ModelMaster", btn_model);
             connect.sqlDatatablePermision("ModelLine", btn_modelline);
             connect.sqlDatatablePermision("Dept", btn_dept);
-
+            connect.sqlDatatablePermision("PQMShow",btn_pqmshow);
+            connect.sqlDatatablePermision("ProcessInspect", btn_process);
+            connect.sqlDatatablePermision("ItemInspect", btn_item);
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -67,11 +69,23 @@ namespace WindowsFormsApplication1
             SettingForm.Line_ModelForm.ModelLine modelf = new SettingForm.Line_ModelForm.ModelLine();
             modelf.Show();
         }
-
-        private void btn_dept_Click(object sender, EventArgs e)
+    
+        private void btn_dept_Click_1(object sender, EventArgs e)
         {
             SettingForm.DeptForm.DeptForm frnew = new SettingForm.DeptForm.DeptForm();
             frnew.Show();
+        }
+
+        private void btn_pqmshow_Click(object sender, EventArgs e)
+        {
+            PQM.ConnectData.ConnectData frm = new PQM.ConnectData.ConnectData();
+            frm.Show();
+        }
+
+        private void btn_process_Click(object sender, EventArgs e)
+        {
+            SettingForm.ProcessForm.ProcessForm frew = new SettingForm.ProcessForm.ProcessForm();
+            frew.Show();
         }
     }
 }
