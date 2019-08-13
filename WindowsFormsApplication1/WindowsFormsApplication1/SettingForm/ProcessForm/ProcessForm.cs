@@ -89,6 +89,7 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
             Class.valiballecommon va = Class.valiballecommon.GetStorage();
             va.value1 = dgv_process.Rows[dgv_process.SelectedCells[0].RowIndex].Cells[1].Value.ToString();
             va.value2 = dgv_process.Rows[dgv_process.SelectedCells[0].RowIndex].Cells[2].Value.ToString();
+            va.value3 = dgv_process.Rows[dgv_process.SelectedCells[0].RowIndex].Cells[3].Value.ToString();
 
             if (frm.ShowDialog() == DialogResult.OK)
             {

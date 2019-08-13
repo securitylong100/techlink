@@ -15,9 +15,10 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
         public AddProcessForm()
         {
             InitializeComponent();
+            AcceptButton = btn_ok;
         }
 
-       
+
         private void AddProcessForm_Load_2(object sender, EventArgs e)
         {
             sqlCON connect = new sqlCON();
@@ -25,10 +26,10 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
             connect.getComboBoxData(sql, ref cmb_modelcode);
             if (Class.valiballecommon.GetStorage().value1 != null)
             {
-                txt_usercode.Text = Class.valiballecommon.GetStorage().value1;
-                txt_username.Text = Class.valiballecommon.GetStorage().value2;
-                cmb_permission.Text = Class.valiballecommon.GetStorage().value3;
-                txt_usercode.Enabled = false;
+                cmb_modelcode.Text = Class.valiballecommon.GetStorage().value1;
+                cmb_processcode.Text = Class.valiballecommon.GetStorage().value2;
+                txt_processname.Text = Class.valiballecommon.GetStorage().value3;
+                cmb_processcode.Enabled = false;
                 Class.valiballecommon va = Class.valiballecommon.GetStorage();
                 va.value1 = null;
                 va.value2 = null;
@@ -41,18 +42,37 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
 
             }
         }
+        private void cmb_modelcode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmb_modelcode.Text == "") return;
+            cmb_processcode.Text = "";
+            cmb_processcode.DataSource = null;
+
+            sqlCON connect = new sqlCON();
+            string sql = "select distinct processcode from m_process where modelcode = '" + cmb_modelcode.Text + "' order by processcode";
+            connect.getComboBoxData(sql, ref cmb_processcode);
+        }
+        private void cmb_processcode_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (cmb_processcode.Text == "") return;
+            cmb_itemcode.Text = "";
+            cmb_itemcode.DataSource = null;
+            sqlCON connect = new sqlCON();
+            string sql = "select distinct itemcode from m_process where modelcode = '" + cmb_modelcode.Text + "' order by itemcode";
+            connect.getComboBoxData(sql, ref cmb_itemcode);
+        }
         int addupdate = 0; //0 update, 1 add
         string sql = "";
         bool checkdata()
         {
-            if (txt_usercode.Text == "" || txt_username.Text == "" || cmb_permission.Text == "")
+            if (cmb_modelcode.Text == "" || cmb_processcode.Text == "" || txt_processname.Text == "")
             {
                 infomesge mes = new infomesge();
                 mes.WarningMesger("Data is null", "Warning System", this);
                 return false;
             }
             sqlCON connect = new sqlCON();
-            if (int.Parse(connect.sqlExecuteScalarString("select count(*) from m_user where usercode ='" + txt_usercode.Text + "'")) > 0 && addupdate == 1)
+            if (int.Parse(connect.sqlExecuteScalarString("select count(*) from m_process where processcode ='" + cmb_processcode.Text + "' and modelcode ='" + cmb_modelcode.Text + "'")) > 0 && addupdate == 1)
             {
                 infomesge mes = new infomesge();
                 mes.ErrorMesger("UserCode is duplicate", "Error System", this);
@@ -66,14 +86,14 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
             {
                 return;
             }
-            if (addupdate == 1)
+            if (addupdate == 1) //add
             {
-                sql = @"insert into m_user(usercode, username, permission,password,  datetimeRST) values('"
-                          + txt_usercode.Text + "','" + txt_username.Text + "','" + cmb_permission.Text + "','1111',GETDATE())";
+                sql = @"insert into m_process(modelcode, processcode, processname,  datetimeRST) values('"
+                          + cmb_modelcode.Text + "','" + cmb_processcode.Text + "','" + txt_processname.Text + "',GETDATE())";
             }
-            else
+            else //update
             {
-                sql = "update m_user set username  =  '" + txt_username.Text + "', permission = '" + cmb_permission.Text + "' where usercode= '" + txt_usercode.Text + "'";
+                sql = "update m_process set processname  =  '" + txt_processname.Text + "' where processcode = '" + cmb_processcode.Text + "' and modelcode = '" + cmb_modelcode.Text + "'";
 
             }
 
@@ -82,5 +102,7 @@ namespace WindowsFormsApplication1.SettingForm.ProcessForm
             this.DialogResult = DialogResult.OK;
             this.Close();
         }
+
+
     }
 }
