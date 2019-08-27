@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
             InitializeComponent();
 
         }
-      
+
         private void btn_registeruser_Click(object sender, EventArgs e)
         {
             WindowsFormsApplication1.SettingForm.RegisterUsesForm.RegisterUserForm fr = new SettingForm.RegisterUsesForm.RegisterUserForm();
@@ -34,9 +34,9 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("ModelMaster", btn_model);
             connect.sqlDatatablePermision("ModelLine", btn_modelline);
             connect.sqlDatatablePermision("Dept", btn_dept);
-            connect.sqlDatatablePermision("PQMShow",btn_pqmshow);
+            connect.sqlDatatablePermision("PQMShow", btn_pqmshow);
             connect.sqlDatatablePermision("ProcessInspect", btn_process);
-           
+            connect.sqlDatatablePermision("ERPShowOrder", btn_erpshoworder);
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -69,7 +69,7 @@ namespace WindowsFormsApplication1
             SettingForm.Line_ModelForm.ModelLine modelf = new SettingForm.Line_ModelForm.ModelLine();
             modelf.Show();
         }
-    
+
         private void btn_dept_Click_1(object sender, EventArgs e)
         {
             SettingForm.DeptForm.DeptForm frnew = new SettingForm.DeptForm.DeptForm();
@@ -87,5 +87,13 @@ namespace WindowsFormsApplication1
             SettingForm.ProcessForm.ProcessForm frew = new SettingForm.ProcessForm.ProcessForm();
             frew.Show();
         }
+
+        private void btn_erpshoworder_Click(object sender, EventArgs e)
+        {
+            ERPShowOrder.ERPShowOrder showfrm = new ERPShowOrder.ERPShowOrder();
+            showfrm.Show();
+        }
+
+       
     }
 }

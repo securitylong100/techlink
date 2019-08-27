@@ -10,10 +10,10 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1
 {
-    public class sqlCON
+    public class sqlERPCON
     {
-        public SqlConnection conn = DBUtils.GetDBConnection(); //get from user database
-       
+        public SqlConnection conn = DBUtils.GetERPDBConnection(); //get from user database
+             
         public string sqlExecuteScalarString(string sql)
         {
             String outstring;

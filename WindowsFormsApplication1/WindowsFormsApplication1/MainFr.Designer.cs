@@ -40,6 +40,7 @@
             this.btn_model = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
             this.tap_function = new System.Windows.Forms.TabPage();
+            this.btn_erpshoworder = new System.Windows.Forms.Button();
             this.btn_pqmshow = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
@@ -186,6 +187,7 @@
             // 
             // tap_function
             // 
+            this.tap_function.Controls.Add(this.btn_erpshoworder);
             this.tap_function.Controls.Add(this.btn_pqmshow);
             this.tap_function.Location = new System.Drawing.Point(4, 25);
             this.tap_function.Name = "tap_function";
@@ -193,6 +195,18 @@
             this.tap_function.TabIndex = 2;
             this.tap_function.Text = "Function";
             this.tap_function.UseVisualStyleBackColor = true;
+            // 
+            // btn_erpshoworder
+            // 
+            this.btn_erpshoworder.Enabled = false;
+            this.btn_erpshoworder.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_erpshoworder.Location = new System.Drawing.Point(216, 27);
+            this.btn_erpshoworder.Name = "btn_erpshoworder";
+            this.btn_erpshoworder.Size = new System.Drawing.Size(153, 48);
+            this.btn_erpshoworder.TabIndex = 6;
+            this.btn_erpshoworder.Text = "ERP Show Order";
+            this.btn_erpshoworder.UseVisualStyleBackColor = true;
+            this.btn_erpshoworder.Click += new System.EventHandler(this.btn_erpshoworder_Click);
             // 
             // btn_pqmshow
             // 
@@ -202,7 +216,7 @@
             this.btn_pqmshow.Name = "btn_pqmshow";
             this.btn_pqmshow.Size = new System.Drawing.Size(153, 48);
             this.btn_pqmshow.TabIndex = 5;
-            this.btn_pqmshow.Text = "PQM SHOW";
+            this.btn_pqmshow.Text = "PQM Data";
             this.btn_pqmshow.UseVisualStyleBackColor = true;
             this.btn_pqmshow.Click += new System.EventHandler(this.btn_pqmshow_Click);
             // 
@@ -214,6 +228,7 @@
             this.Controls.Add(this.tpc_main);
             this.Name = "MainFr";
             this.Text = "Form2";
+           
             this.Load += new System.EventHandler(this.MainFr_Load);
             this.Controls.SetChildIndex(this.tpc_main, 0);
             this.tpc_main.ResumeLayout(false);
@@ -240,5 +255,6 @@
         private System.Windows.Forms.TabPage tap_function;
         private System.Windows.Forms.Button btn_pqmshow;
         private System.Windows.Forms.Button btn_process;
+        private System.Windows.Forms.Button btn_erpshoworder;
     }
 }

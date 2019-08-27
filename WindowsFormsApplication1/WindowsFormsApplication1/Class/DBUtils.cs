@@ -21,6 +21,17 @@ namespace WindowsFormsApplication1
 
             return DBSQLServerUtils.GetDBConnection(datasource, database, username, password);
         }
+        public static SqlConnection GetERPDBConnection()
+        {
+            //Data Source=LONG;Initial Catalog=TEST;Integrated Security=True
+            string datasource = "172.16.0.11";
+            string database = "TECHLINK";
+            string username = "soft";
+            string password = "techlink@!@#";
+
+
+            return DBSQLServerUtils.GetERPDBConnection(datasource, database, username, password);
+        }
 
     }
 }

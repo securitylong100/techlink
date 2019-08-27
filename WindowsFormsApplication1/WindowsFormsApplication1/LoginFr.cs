@@ -68,6 +68,7 @@ namespace WindowsFormsApplication1
             va.UserCode = cmb_user.Text;
             MainFr newfr = new MainFr();
             newfr.Show();
+            this.Hide();
            
         }
     }
