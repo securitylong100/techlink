@@ -48,7 +48,7 @@
             this.groupBox1.Controls.Add(this.btn_add);
             this.groupBox1.Controls.Add(this.btn_edit);
             this.groupBox1.Controls.Add(this.btn_search);
-            this.groupBox1.Location = new System.Drawing.Point(366, 66);
+            this.groupBox1.Location = new System.Drawing.Point(466, 66);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Size = new System.Drawing.Size(434, 121);
             this.groupBox1.TabIndex = 14;
@@ -114,7 +114,7 @@
             this.txt_processcode.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_processcode.Location = new System.Drawing.Point(140, 146);
             this.txt_processcode.Name = "txt_processcode";
-            this.txt_processcode.Size = new System.Drawing.Size(144, 26);
+            this.txt_processcode.Size = new System.Drawing.Size(183, 26);
             this.txt_processcode.TabIndex = 12;
             // 
             // dgv_process
@@ -128,7 +128,7 @@
             this.dgv_process.Name = "dgv_process";
             this.dgv_process.ReadOnly = true;
             this.dgv_process.RowHeadersWidthSizeMode = System.Windows.Forms.DataGridViewRowHeadersWidthSizeMode.AutoSizeToAllHeaders;
-            this.dgv_process.Size = new System.Drawing.Size(812, 354);
+            this.dgv_process.Size = new System.Drawing.Size(939, 354);
             this.dgv_process.TabIndex = 17;
             // 
             // lbl_modelcode
@@ -147,14 +147,14 @@
             this.cmb_modelcode.FormattingEnabled = true;
             this.cmb_modelcode.Location = new System.Drawing.Point(140, 94);
             this.cmb_modelcode.Name = "cmb_modelcode";
-            this.cmb_modelcode.Size = new System.Drawing.Size(144, 28);
+            this.cmb_modelcode.Size = new System.Drawing.Size(183, 28);
             this.cmb_modelcode.TabIndex = 19;
             // 
             // ProcessForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(812, 565);
+            this.ClientSize = new System.Drawing.Size(939, 565);
             this.Controls.Add(this.cmb_modelcode);
             this.Controls.Add(this.lbl_modelcode);
             this.Controls.Add(this.dgv_process);

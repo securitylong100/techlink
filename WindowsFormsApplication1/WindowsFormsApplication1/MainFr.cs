@@ -36,7 +36,7 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("Dept", btn_dept);
             connect.sqlDatatablePermision("PQMShow",btn_pqmshow);
             connect.sqlDatatablePermision("ProcessInspect", btn_process);
-            connect.sqlDatatablePermision("ItemInspect", btn_item);
+           
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)

@@ -108,7 +108,8 @@
             this.cmb_itemcode.Name = "cmb_itemcode";
             this.cmb_itemcode.Size = new System.Drawing.Size(231, 28);
             this.cmb_itemcode.TabIndex = 28;
-            // 
+            this.cmb_itemcode.SelectedIndexChanged += new System.EventHandler(this.cmb_itemcode_SelectedIndexChanged);
+          
             // label2
             // 
             this.label2.AutoSize = true;

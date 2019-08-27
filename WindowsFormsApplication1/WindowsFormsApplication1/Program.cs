@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new LoginFr());
-            //   Application.Run(new SettingForm.RegisterUsesForm.RegisterUserForm());
+            //   Application.Run(new PQM.ConnectData.ConnectData());
         }
     }
 }
