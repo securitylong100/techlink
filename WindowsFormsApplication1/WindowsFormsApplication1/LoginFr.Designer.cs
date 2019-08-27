@@ -33,6 +33,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.label2 = new System.Windows.Forms.Label();
             this.btn_login = new System.Windows.Forms.Button();
+            this.Version_lbl = new System.Windows.Forms.Label();
             this.SuspendLayout();
             // 
             // txt_pass
@@ -76,7 +77,7 @@
             // btn_login
             // 
             this.btn_login.Font = new System.Drawing.Font("Microsoft Sans Serif", 14.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_login.Location = new System.Drawing.Point(234, 203);
+            this.btn_login.Location = new System.Drawing.Point(234, 197);
             this.btn_login.Name = "btn_login";
             this.btn_login.Size = new System.Drawing.Size(189, 48);
             this.btn_login.TabIndex = 4;
@@ -84,11 +85,24 @@
             this.btn_login.UseVisualStyleBackColor = true;
             this.btn_login.Click += new System.EventHandler(this.btn_login_Click);
             // 
+            // Version_lbl
+            // 
+            this.Version_lbl.AutoSize = true;
+            this.Version_lbl.Font = new System.Drawing.Font("Arial Narrow", 11.25F, ((System.Drawing.FontStyle)((System.Drawing.FontStyle.Italic | System.Drawing.FontStyle.Underline))), System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.Version_lbl.ForeColor = System.Drawing.Color.Blue;
+            this.Version_lbl.Location = new System.Drawing.Point(-4, 261);
+            this.Version_lbl.Name = "Version_lbl";
+            this.Version_lbl.Size = new System.Drawing.Size(110, 20);
+            this.Version_lbl.TabIndex = 10;
+            this.Version_lbl.Tag = "";
+            this.Version_lbl.Text = "TechLink Version: ";
+            // 
             // LoginFr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(592, 278);
+            this.Controls.Add(this.Version_lbl);
             this.Controls.Add(this.btn_login);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.label1);
@@ -103,6 +117,7 @@
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.btn_login, 0);
+            this.Controls.SetChildIndex(this.Version_lbl, 0);
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -115,6 +130,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.Button btn_login;
+        private System.Windows.Forms.Label Version_lbl;
     }
 }
 

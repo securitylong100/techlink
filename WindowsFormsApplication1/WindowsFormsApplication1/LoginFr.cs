@@ -34,6 +34,24 @@ namespace WindowsFormsApplication1
             string sql = "select distinct usercode from m_user ";
             sqlCON connect = new sqlCON();
             connect.getComboBoxData(sql, ref cmb_user);
+            if (System.Deployment.Application.ApplicationDeployment.IsNetworkDeployed)
+            {
+
+                Version deploy = System.Deployment.Application.ApplicationDeployment.CurrentDeployment.CurrentVersion;
+
+                StringBuilder version = new StringBuilder();
+                //version.Append("VERSION:   ");
+                version.Append("TechLink Version: ");
+                version.Append(deploy.Major);
+                version.Append("_");
+                version.Append(deploy.Minor);
+                version.Append("_");
+                version.Append(deploy.Build);
+                version.Append("_");
+                version.Append(deploy.Revision);
+
+                Version_lbl.Text = version.ToString();
+            }
         }
         bool checkdata()
         {
