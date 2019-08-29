@@ -13,11 +13,17 @@ namespace WindowsFormsApplication1
         public static SqlConnection GetDBConnection()
         {
             //Data Source=LONG;Initial Catalog=TEST;Integrated Security=True
-            string datasource = "Long";
-            string database = "TEST";
-            string username = "SQLUSER";
+            //string datasource = "Long";
+            //string database = "TEST";
+            //string username = "SQLUSER";
+            //string password = "12345";
+
+            string datasource = "172.16.0.12";
+            string database = "ERPSOFT";
+            string username = "ERPUSER";
             string password = "12345";
-           
+
+
 
             return DBSQLServerUtils.GetDBConnection(datasource, database, username, password);
         }

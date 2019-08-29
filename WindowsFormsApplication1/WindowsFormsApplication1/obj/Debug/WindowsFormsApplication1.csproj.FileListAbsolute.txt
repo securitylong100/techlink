@@ -76,3 +76,8 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Wind
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.AddProcessForm.resources
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\pic.png
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowOrder.resources
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.TrustInfo.xml
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.manifest
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.application
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
