@@ -52,7 +52,6 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Enti
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.xml
-D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CommonForm.resources
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.LoginFr.resources
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainFr.resources
@@ -81,3 +80,4 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Wind
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.application
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.Order_PDC.resources

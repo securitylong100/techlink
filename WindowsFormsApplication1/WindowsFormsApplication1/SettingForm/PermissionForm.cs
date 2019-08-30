@@ -10,7 +10,7 @@ using System.Windows.Forms;
 
 namespace WindowsFormsApplication1.SettingForm
 {
-    public partial class 
+    public partial class
         PermissionForm : CommonForm
     {
         public PermissionForm()

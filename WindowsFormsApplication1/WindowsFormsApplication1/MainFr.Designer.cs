@@ -42,6 +42,7 @@
             this.tap_function = new System.Windows.Forms.TabPage();
             this.btn_erpshoworder = new System.Windows.Forms.Button();
             this.btn_pqmshow = new System.Windows.Forms.Button();
+            this.btn_order_pdc = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
             this.tap_local.SuspendLayout();
@@ -112,6 +113,7 @@
             // 
             // tap_local
             // 
+            this.tap_local.Controls.Add(this.btn_order_pdc);
             this.tap_local.Controls.Add(this.btn_process);
             this.tap_local.Controls.Add(this.btn_dept);
             this.tap_local.Controls.Add(this.btn_modelline);
@@ -220,6 +222,18 @@
             this.btn_pqmshow.UseVisualStyleBackColor = true;
             this.btn_pqmshow.Click += new System.EventHandler(this.btn_pqmshow_Click);
             // 
+            // btn_order_pdc
+            // 
+            this.btn_order_pdc.Enabled = false;
+            this.btn_order_pdc.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_order_pdc.Location = new System.Drawing.Point(21, 244);
+            this.btn_order_pdc.Name = "btn_order_pdc";
+            this.btn_order_pdc.Size = new System.Drawing.Size(153, 48);
+            this.btn_order_pdc.TabIndex = 9;
+            this.btn_order_pdc.Text = "Order-PDC";
+            this.btn_order_pdc.UseVisualStyleBackColor = true;
+            this.btn_order_pdc.Click += new System.EventHandler(this.btn_order_pdc_Click);
+            // 
             // MainFr
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
@@ -228,7 +242,6 @@
             this.Controls.Add(this.tpc_main);
             this.Name = "MainFr";
             this.Text = "Form2";
-           
             this.Load += new System.EventHandler(this.MainFr_Load);
             this.Controls.SetChildIndex(this.tpc_main, 0);
             this.tpc_main.ResumeLayout(false);
@@ -256,5 +269,6 @@
         private System.Windows.Forms.Button btn_pqmshow;
         private System.Windows.Forms.Button btn_process;
         private System.Windows.Forms.Button btn_erpshoworder;
+        private System.Windows.Forms.Button btn_order_pdc;
     }
 }

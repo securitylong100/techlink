@@ -2,7 +2,7 @@
 <Project ToolsVersion="14.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
   <PropertyGroup>
     <PublishUrlHistory>\\172.16.0.5\Program\publish\|D:\TECHLINK\publishapp\|publish\</PublishUrlHistory>
-    <InstallUrlHistory>http://172.16.0.5/Program/publish/|http://TECHLINK/publishapp/</InstallUrlHistory>
+    <InstallUrlHistory>\\172.16.0.5\Program\publish\|http://172.16.0.5/Program/publish/|http://TECHLINK/publishapp/</InstallUrlHistory>
     <SupportUrlHistory />
     <UpdateUrlHistory />
     <BootstrapperUrlHistory />
