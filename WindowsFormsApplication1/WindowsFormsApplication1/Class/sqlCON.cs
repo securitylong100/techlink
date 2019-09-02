@@ -13,23 +13,26 @@ namespace WindowsFormsApplication1
     public class sqlCON
     {
         public SqlConnection conn = DBUtils.GetDBConnection(); //get from user database
-       
+
         public string sqlExecuteScalarString(string sql)
         {
+          
             String outstring;
-            conn.Open();
-            SqlCommand cmd = new SqlCommand(sql, conn);
             try
             {
+                SqlCommand cmd = new SqlCommand(sql, conn);
+                conn.Open();
                 outstring = cmd.ExecuteScalar().ToString();
+                conn.Close();
                 return outstring;
             }
             catch (Exception ex)
             {
+
                 MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return String.Empty;
             }
-        //    conn.Close();
+
 
         }
         public void getComboBoxData(string sql, ref ComboBox cmb)
@@ -137,7 +140,7 @@ namespace WindowsFormsApplication1
                 MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
 
             }
-           
+
         }
     }
 }

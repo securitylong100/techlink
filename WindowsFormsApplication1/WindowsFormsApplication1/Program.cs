@@ -17,8 +17,8 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-          Application.Run(new LoginFr());
-         //  Application.Run(new ERPShowOrder.ERPShowOrder());
+         // Application.Run(new LoginFr());
+           Application.Run(new ERPShowOrder.ERPShowMain());
         }
     }
 }

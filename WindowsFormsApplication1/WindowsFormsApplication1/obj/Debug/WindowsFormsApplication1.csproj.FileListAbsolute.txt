@@ -81,3 +81,5 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Wind
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.Order_PDC.resources
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowMain.resources

@@ -38,6 +38,7 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("ProcessInspect", btn_process);
             connect.sqlDatatablePermision("ERPShowOrder", btn_erpshoworder);
             connect.sqlDatatablePermision("Order-PDC", btn_order_pdc);
+            connect.sqlDatatablePermision("Order-SHOW", btn_ordershow);
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -99,6 +100,12 @@ namespace WindowsFormsApplication1
         {
             ERPShowOrder.Order_PDC showconfig = new ERPShowOrder.Order_PDC();
             showconfig.Show();
+        }
+
+        private void btn_ordershow_Click(object sender, EventArgs e)
+        {
+            ERPShowOrder.ERPShowMain show = new ERPShowOrder.ERPShowMain();
+            show.Show();
         }
     }
 }
