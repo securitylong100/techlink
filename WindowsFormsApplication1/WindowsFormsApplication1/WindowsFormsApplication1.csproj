@@ -117,6 +117,12 @@
     <Compile Include="ERPShowOrder\ERPShowOrder.Designer.cs">
       <DependentUpon>ERPShowOrder.cs</DependentUpon>
     </Compile>
+    <Compile Include="ERPShowOrder\ERPShowShipping.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPShowShipping.Designer.cs">
+      <DependentUpon>ERPShowShipping.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\Order-PDC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +237,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPShowOrder.resx">
       <DependentUpon>ERPShowOrder.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPShowShipping.resx">
+      <DependentUpon>ERPShowShipping.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\Order-PDC.resx">
       <DependentUpon>Order-PDC.cs</DependentUpon>

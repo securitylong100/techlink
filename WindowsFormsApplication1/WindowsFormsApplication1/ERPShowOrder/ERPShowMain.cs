@@ -27,6 +27,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
 
         private void cmd_MOCTA_TA001_SelectedIndexChanged(object sender, EventArgs e)
         {
+            cmd_COPTC_TC002.Items.Clear();
             string sql = "select distinct  TC002 from COPTC where TC001 ='" + cmd_COPTC_TC001.Text + "' order by TC002";
             sqlERPCON conERP = new sqlERPCON();
             conERP.getComboBoxData(sql, ref cmd_COPTC_TC002);
@@ -35,10 +36,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
         private void btn_search_Click(object sender, EventArgs e)
         {
             getERPdata();
-            // dtShow = new DataTable();
-            //datashow();
-
-            dgv_show.DataSource = dt;
+            datashow();
+            dgv_show.DataSource = dtshow;
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
@@ -53,30 +52,9 @@ namespace WindowsFormsApplication1.ERPShowOrder
 cast(coptcs.CREATE_DATE as int) as ngaytaodon,
 coptcs.TC001 as malamdon, 
 coptcs.TC002 as code,
-coptcs.TC012 as makh, 
-coptds.TD004 as codesp,
-coptds.TD005 as nametensp,
-coptds.TD008 as soluongdathang,
-coptds.TD010 as donvi,
-coptcs.TC005 as bophan,
-coptds.TD047 as deadline,
-sum(copths.TH008) as SLdagiao,
-copths.TH004 as spduocgiao,
-copths.TH001 as maDongiaohang,
-copths.TH005 as namespdcgiao,
-max(coptgs.TG003) as ngayGiaohang,
-coptjs.TJ008 as SLDatralai,
-coptis.TI003 as ngaytrahang,
- (sum(copths.TH008)/coptds.TD008)*100 as ShippingPercent
+coptcs.TC012 as makh
  from COPTC coptcs
-left join COPTD  coptds on coptcs.TC002 = coptds.TD002  and coptcs.TC001 = coptds.TD001 -- cong doan tao don
-left join MOCTB  moctbs on coptcs.TC002 = moctbs.TB002  and coptcs.TC001 = moctbs.TB001
-left join COPTH copths on coptcs.TC002 = copths.TH015 and  coptcs.TC001 = copths.TH014--cong doan giao hang
-left join COPTG coptgs on copths.TH002  = coptgs.TG002 and copths.TH001  = coptgs.TG001 --cong doan giao hang
-left join COPTJ coptjs on coptcs.TC002 = coptjs.TJ019 and coptcs.TC001 = coptjs.TJ018-- cong doan tra hang
-left join COPTI coptis on coptjs.TJ002 = coptis.TI002 and coptjs.TJ001 = coptis.TI001 --cong doan tra hang
-where 1=1  
-and copths.TH004  = coptds.TD004 ");
+where 1=1 ");
             if (cmd_COPTC_TC001.Text != "")
             {
                 sql.Append(" and coptcs.TC001   = '" + cmd_COPTC_TC001.Text + "'");
@@ -94,19 +72,7 @@ and copths.TH004  = coptds.TD004 ");
                                    coptcs.CREATE_DATE,
                                     coptcs.TC001 ,
                                     coptcs.TC002 ,
-                                   coptcs.TC012,
-                                    coptds.TD004,
-                                    coptds.TD005,
-                                   coptds.TD008,
-                                    coptds.TD010,
-                                    coptcs.TC005,
-                                    coptds.TD047,
-                                    copths.TH004,
-                                    copths.TH001,
-                                    copths.TH005,
-                                  --  coptgs.TG003,
-                                    coptjs.TJ008,
-                                    coptis.TI003
+                                   coptcs.TC012
                                     ");
             sql.Append("order by coptcs.TC001, coptcs.TC002");
             sqlERPCON con = new sqlERPCON();
@@ -117,13 +83,11 @@ and copths.TH004  = coptds.TD004 ");
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
                     string sqlcheck = "";
-
+                    string NgayTaoDon = dt.Rows[i]["ngaytaodon"].ToString();
                     string MaTaoDon = dt.Rows[i]["malamdon"].ToString();
                     string codeDon = dt.Rows[i]["code"].ToString();
-                    string codeSanPham = dt.Rows[i]["codesp"].ToString();
-                    string ShippingPercent = dt.Rows[i]["ShippingPercent"].ToString();
-
-                    sqlcheck = "select COUNT(*) from t_OCTC where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC05='" + codeSanPham + "'";
+                    string MAHK = dt.Rows[i]["makh"].ToString();
+                    sqlcheck = "select COUNT(*) from t_OCTM where TM01 = '" + NgayTaoDon + "' and TM02 ='" + MaTaoDon + "' and TM03= '" + codeDon + "' and TM04 = '" + MAHK + "'";
                     sqlCON check = new sqlCON();
                     if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                     {
@@ -134,60 +98,91 @@ and copths.TH004  = coptds.TD004 ");
                             list += dt.Rows[i][j].ToString() + "',";
                         }
                         StringBuilder sqlinsert = new StringBuilder();
-                        sqlinsert.Append("insert into t_OCTC ");
-                        sqlinsert.Append(@"(TC01,TC02,TC03,TC04,TC05,TC06,TC07,TC08,TC09,TC10,TC11,TC12,TC13,TC14,TC15,TC16,TC17,TC30,UserName,datetimeRST) values ( ");
+                        sqlinsert.Append("insert into t_OCTM ");
+                        sqlinsert.Append(@"(TM01,TM02,TM03,TM04,UserName,datetimeRST) values ( ");
                         sqlinsert.Append(list);
                         sqlinsert.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
                         sqlCON insert = new sqlCON();
                         insert.sqlExecuteNonQuery(sqlinsert.ToString(), false);
                     }
-                    else //update
-                    {
-
-                        StringBuilder sqlupdate = new StringBuilder();
-                        sqlupdate.Append("update t_OCTC set ");
-                        sqlupdate.Append(@"TC11 = '" + dt.Rows[i]["SLdagiao"].ToString() + "',");
-                        sqlupdate.Append(@"TC15 = '" + dt.Rows[i]["ngayGiaohang"].ToString() + "'");
-                        sqlupdate.Append(@"TC30 = '" + ShippingPercent + "'");
-                        sqlupdate.Append(@" where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC05='" + codeSanPham + "'");
-
-                        sqlCON update = new sqlCON();
-                        update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
-                    }
                 }
             }
         }
-        /*
+
         void datashow()
         {
+            dtshow = new DataTable();
             int intdateto = int.Parse(dtp_to.Value.ToString("yyyyMMdd"));
             int intdatefrom = int.Parse(dtp_from.Value.ToString("yyyyMMdd"));
             StringBuilder sql = new StringBuilder();
-            sql.Append(@"select cast (TB01 as int) as NgayTaoLenh,TB02 as MaTaoDon,TB03 as codeTaoLenh,TB04 as NgayLapDon,TB05 as MaSanPham,TB06 as DuTinhBatdauSx,");
-            sql.Append("TB07 as DuTinhHoanThanh,TB08 as ThucTeSanXuat,TB09 as xacnhan,TB10 as SoluongDuTinh,TB11 as SoluongThuclanh,TB12 as LenhSanxuatcaptren,");
-            sql.Append("TB13 as MaLenhSanXuatCapTren,TB14 as LoaiDonHang,TB15 as MaDonHang,TB16 as TenSanPham,TB17 as DonViNhapKho,TB18 as SoluongNhapKho,");
-            sql.Append("TB19 as SoluongBaoPhe,TB20 as SoluongNghiemThu,TB21 as NgayNhapKhoTP, ");
-            sql.Append("TB30, TB31, TB32, TB33 ");
-            sql.Append("from t_OCTB where 1 = 1 ");
-            if (cmd_MOCTA_TA001.Text != "")
+            sql.Append(@"select max(cast(a.TC01 as int)) as ngaytaodon, a.TC02 as malamdon, a.TC03 as Code, avg(CAST(a.TC32 as float)) as ShippingPercent , max(cast(a.TC15 as int)) as NgayGiaoHang, max(cast(a.TC10 as int)) as Deadline from t_OCTC a ");
+            sql.Append("left join   t_OCTM b  on a.TC02 = b.TM02 and a.TC03 = b.TM03 where 1=1");
+            if (cmd_COPTC_TC001.Text != "")
             {
-                sql.Append(" and TB02   = '" + cmd_MOCTA_TA001.Text + "'");
+                sql.Append(" and a.TC02   = '" + cmd_COPTC_TC001.Text + "'");
             }
-            if (cmd_MOCTA_TA002.Text != "")
+            if (cmd_COPTC_TC002.Text != "")
             {
-                sql.Append(" and TB03   = '" + cmd_MOCTA_TA002.Text + "'");
+                sql.Append(" and a.TC03   = '" + cmd_COPTC_TC002.Text + "'");
             }
             else
             {
-                sql.Append(" and TB01 >=" + intdatefrom);
-                sql.Append(" and TB01 <=" + intdateto);
+                sql.Append(" and a.TC01 >=" + intdatefrom);
+                sql.Append(" and a.TC01 <=" + intdateto);
             }
-            sql.Append("order by TB02");
+            sql.Append(@" group by a.TC03 , a.TC02");
+            sql.Append(" order by a.TC02,  a.TC03");
             sqlCON con = new sqlCON();
-            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtShow);
+            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtshow);
+
+
+           
+            for (int i = 0; i < dtshow.Rows.Count; i++) ///update code
+            {
+                StringBuilder sqlupdate = new StringBuilder();
+                sqlupdate.Append("update t_OCTM set ");
+                sqlupdate.Append(@"TM12 = '" + dtshow.Rows[i]["ShippingPercent"].ToString() + "',"); //percent
+                if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) >= 100)
+                {
+                    sqlupdate.Append(@"TM11 = 'OK'");
+                }
+                else
+                {
+                    sqlupdate.Append(@"TM11 = 'NG'");
+                }
+                sqlupdate.Append(@" where TM02 = '" + dtshow.Rows[i]["malamdon"].ToString() + "' and TM03 ='" + dtshow.Rows[i]["Code"].ToString() + "'");
+
+                sqlCON update = new sqlCON();
+                update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
+            }
+
+            if (dtshow.Rows.Count >  0)
+            {
+                for (int i = 0; i < dtshow.Rows.Count; i++) // waring
+                {
+               //     if()
+
+                }
+            }
+           
         }
-        */
+        private void dgv_show_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv_show.RowCount == 0)
+            {
+                return;
+            }
+            int i = e.RowIndex;
+            int j = e.ColumnIndex;
+            Class.valiballecommon va = Class.valiballecommon.GetStorage();
+            va.value1 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["malamdon"].Value.ToString();
+            va.value2 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Code"].Value.ToString();
+            if (dgv_show.Rows[i].Cells["ShippingPercent"].Selected)
+            {
+                ERPShowShipping shipping = new ERPShowShipping();
+                shipping.ShowDialog();
+            }
 
-
+        }
     }
 }

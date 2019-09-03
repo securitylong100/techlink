@@ -1,6 +1,6 @@
 ﻿namespace WindowsFormsApplication1.ERPShowOrder
 {
-    partial class ERPShowMain
+    partial class ERPShowShipping
     {
         /// <summary>
         /// Required designer variable.
@@ -58,8 +58,8 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(0, 60);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(1294, 71);
-            this.groupBox1.TabIndex = 4;
+            this.groupBox1.Size = new System.Drawing.Size(1297, 71);
+            this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Processing";
             // 
@@ -141,7 +141,7 @@
             this.cmd_COPTC_TC001.Name = "cmd_COPTC_TC001";
             this.cmd_COPTC_TC001.Size = new System.Drawing.Size(121, 21);
             this.cmd_COPTC_TC001.TabIndex = 1;
-            this.cmd_COPTC_TC001.SelectedIndexChanged += new System.EventHandler(this.cmd_MOCTA_TA001_SelectedIndexChanged);
+            this.cmd_COPTC_TC001.SelectedIndexChanged += new System.EventHandler(this.cmd_COPTC_TC001_SelectedIndexChanged);
             // 
             // btn_search
             // 
@@ -157,23 +157,22 @@
             // 
             this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_show.Dock = System.Windows.Forms.DockStyle.Bottom;
-            this.dgv_show.Location = new System.Drawing.Point(0, 161);
+            this.dgv_show.Location = new System.Drawing.Point(0, 150);
             this.dgv_show.Name = "dgv_show";
             this.dgv_show.ReadOnly = true;
-            this.dgv_show.Size = new System.Drawing.Size(1294, 566);
-            this.dgv_show.TabIndex = 5;
-            this.dgv_show.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_show_CellDoubleClick);
+            this.dgv_show.Size = new System.Drawing.Size(1297, 566);
+            this.dgv_show.TabIndex = 6;
             // 
-            // ERPShowMain
+            // ERPShowShipping
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1294, 727);
+            this.ClientSize = new System.Drawing.Size(1297, 716);
             this.Controls.Add(this.dgv_show);
             this.Controls.Add(this.groupBox1);
-            this.Name = "ERPShowMain";
-            this.Text = "ERPShowMain";
-            this.Load += new System.EventHandler(this.ERPShowMain_Load);
+            this.Name = "ERPShowShipping";
+            this.Text = "ERPShowShipping";
+            this.Load += new System.EventHandler(this.ERPShowShipping_Load);
             this.Controls.SetChildIndex(this.groupBox1, 0);
             this.Controls.SetChildIndex(this.dgv_show, 0);
             this.groupBox1.ResumeLayout(false);
