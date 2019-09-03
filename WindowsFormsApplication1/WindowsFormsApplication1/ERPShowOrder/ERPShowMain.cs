@@ -38,6 +38,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             getERPdata();
             datashow();
             dgv_show.DataSource = dtshow;
+            alram();
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
@@ -137,7 +138,7 @@ where 1=1 ");
 
 
 
-            for (int i = 0; i < dtshow.Rows.Count; i++) ///update code
+            for (int i = 0; i < dtshow.Rows.Count; i++) ///update code and alram
             {
                 StringBuilder sqlupdate = new StringBuilder();
                 sqlupdate.Append("update t_OCTM set ");
@@ -154,25 +155,31 @@ where 1=1 ");
 
                 sqlCON update = new sqlCON();
                 update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
-            }
-
-            if (dtshow.Rows.Count > 0)
+            }         
+        }
+        void alram()
+        {
+            if (dgv_show.Rows.Count > 0)
             {
-                for (int i = 0; i < dtshow.Rows.Count; i++) // waring
+                DateTime datetimeNow = DateTime.Now;
+                for (int i = 0; i < dgv_show.Rows.Count; i++) // waring
                 {
-                    if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) < 100)// > 90 nho 100 con 1 tuan vàng
-                    {
-                        
-                    }
-                    else if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) >= 100) // < 90 nho 100 con 1 tuan 
-                    {
+                    string strdateget = dgv_show.Rows[i].Cells["Deadline"].ToString().Insert(4, "-").Insert(7, "-");
+                    
+                    double shipingpercent =( dgv_show.Rows[i].Cells["ShippingPercent"].Value.ToString() == "") ?0: double.Parse(dgv_show.Rows[i].Cells["ShippingPercent"].ToString());
+                    DateTime datetimeGet = Convert.ToDateTime(strdateget);
 
-                        //row/ shiping xanh
-                    }
-                    else if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) >= 100) // <100. thoi gian qua, do
+                    if (shipingpercent < 100 && shipingpercent < 90 && datetimeNow.AddDays(+7) < datetimeGet)// > 90 nho 100 con 1 tuan vàng
                     {
-
-                        //row/ shiping xanh
+                        dgv_show.Rows[i].Cells["ShippingPercent"].Style.BackColor = Color.Yellow;
+                    }
+                    else if (shipingpercent < 100 && datetimeNow.AddDays(+7) < datetimeGet)// > 90 nho 100 con 1 tuan vàng
+                    {
+                        dgv_show.Rows[i].Cells["ShippingPercent"].Style.BackColor = Color.LightYellow;
+                    }
+                    else if (datetimeNow > datetimeGet && shipingpercent < 100) // <100. thoi gian qua, do
+                    {
+                        dgv_show.Rows[i].Cells[12].Style.BackColor = Color.Red;
                     }
 
 

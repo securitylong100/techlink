@@ -19,7 +19,8 @@ namespace WindowsFormsApplication1
             Application.SetCompatibleTextRenderingDefault(false);
          // Application.Run(new LoginFr());
         Application.Run(new ERPShowOrder.ERPShowMain());
-         //   Application.Run(new ERPShowOrder.ERPShowShipping());
+            //   Application.Run(new ERPShowOrder.ERPShowShipping());
+          //  Application.Run(new ERPShowOrder.ERPShowOrder());
         }
     }
 }
