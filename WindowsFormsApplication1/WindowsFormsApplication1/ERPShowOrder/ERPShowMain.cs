@@ -136,7 +136,7 @@ where 1=1 ");
             con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtshow);
 
 
-           
+
             for (int i = 0; i < dtshow.Rows.Count; i++) ///update code
             {
                 StringBuilder sqlupdate = new StringBuilder();
@@ -156,15 +156,30 @@ where 1=1 ");
                 update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
             }
 
-            if (dtshow.Rows.Count >  0)
+            if (dtshow.Rows.Count > 0)
             {
                 for (int i = 0; i < dtshow.Rows.Count; i++) // waring
                 {
-               //     if()
+                    if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) < 100)// > 90 nho 100 con 1 tuan vàng
+                    {
+                        
+                    }
+                    else if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) >= 100) // < 90 nho 100 con 1 tuan 
+                    {
+
+                        //row/ shiping xanh
+                    }
+                    else if (double.Parse(dtshow.Rows[i]["ShippingPercent"].ToString()) >= 100) // <100. thoi gian qua, do
+                    {
+
+                        //row/ shiping xanh
+                    }
+
+
 
                 }
             }
-           
+
         }
         private void dgv_show_CellDoubleClick(object sender, DataGridViewCellEventArgs e)
         {

@@ -48,7 +48,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             //datashow();
 
             dgv_show.DataSource = dt;
-            //  getupdateMAINFORM();
+            //  alrma();
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
