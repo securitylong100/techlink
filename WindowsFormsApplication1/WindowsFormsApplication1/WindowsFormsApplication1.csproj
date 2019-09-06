@@ -78,6 +78,10 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
+      <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
+      <EmbedInteropTypes>True</EmbedInteropTypes>
+    </Reference>
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -96,6 +100,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Class\sqlERPCON.cs" />
+    <Compile Include="Class\ToolSupport.cs" />
     <Compile Include="Class\valiballecommon.cs" />
     <Compile Include="CommonForm.cs">
       <SubType>Form</SubType>
@@ -105,6 +110,12 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="ERPShowOrder\ERPMaterialShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPMaterialShow.Designer.cs">
+      <DependentUpon>ERPMaterialShow.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\ERPShowMain.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -231,6 +242,9 @@
     <Compile Include="Class\sqlCON.cs" />
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPMaterialShow.resx">
+      <DependentUpon>ERPMaterialShow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPShowMain.resx">
       <DependentUpon>ERPShowMain.cs</DependentUpon>

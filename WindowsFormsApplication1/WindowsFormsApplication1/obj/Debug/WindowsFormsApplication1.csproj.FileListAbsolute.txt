@@ -84,3 +84,126 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Wind
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowMain.resources
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowShipping.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\pic.png
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.manifest
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.application
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.xml
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojAssemblyReference.cache
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CommonForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowMain.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowOrder.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowShipping.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.Order_PDC.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.LoginFr.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainFr.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.PQM.ConnectData.ConnectData.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Change_Password.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.AddDept.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.DeptForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Line_ModelForm.ModelLine.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.AddModelForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.ModelForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.AddLineForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.LineForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.PermissionForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.AddProcessForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.ProcessForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUserForm.AddRegisterUser.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUsesForm.RegisterUserForm.resources
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.TrustInfo.xml
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CopyComplete
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+E:\job\tech-link\Job of probation\1.Delivery Monitoring\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\pic.png
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.manifest
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.application
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.xml
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojAssemblyReference.cache
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CommonForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowMain.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowOrder.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowShipping.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.Order_PDC.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.LoginFr.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainFr.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.PQM.ConnectData.ConnectData.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Change_Password.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.AddDept.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.DeptForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Line_ModelForm.ModelLine.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.AddModelForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.ModelForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.AddLineForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.LineForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.PermissionForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.AddProcessForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.ProcessForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUserForm.AddRegisterUser.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUsesForm.RegisterUserForm.resources
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.cache
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CoreCompileInputs.cache
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.TrustInfo.xml
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CopyComplete
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+D:\AN\Project\TechLink\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPMaterialShow.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.config
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.pdb
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\pic.png
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe.manifest
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.application
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.exe
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\WindowsFormsApplication1.pdb
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.dll
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.xml
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojResolveAssemblyReference.cache
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CommonForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPMaterialShow.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowMain.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowOrder.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPShowShipping.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.Order_PDC.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.LoginFr.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MainFr.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.PQM.ConnectData.ConnectData.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.Properties.Resources.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Change_Password.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.AddDept.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.DeptForm.DeptForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.Line_ModelForm.ModelLine.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.AddModelForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ModelForm.ModelForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.AddLineForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.LineForm.LineForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.PermissionForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.AddProcessForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.ProcessForm.ProcessForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUserForm.AddRegisterUser.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.SettingForm.RegisterUsesForm.RegisterUserForm.resources
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.GenerateResource.Cache
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.TrustInfo.xml
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
+C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
