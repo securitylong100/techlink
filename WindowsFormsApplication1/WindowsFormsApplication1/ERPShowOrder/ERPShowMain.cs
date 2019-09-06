@@ -131,7 +131,7 @@ where 1=1 ");
             {
                 sql.Append(" and coptcs.TC002   = '" + cmd_COPTC_TC002.Text + "'");
             }
-          //  else
+           else
             {
                 sql.Append(" and CONVERT(date,coptcs.CREATE_DATE)  >= '" + datefrom + "' ");
                 sql.Append(" and CONVERT(date,coptcs.CREATE_DATE) <= '" + dateto + "' ");
@@ -196,7 +196,7 @@ where 1=1 ");
             {
                 sql.Append(" and a.TC03   = '" + cmd_COPTC_TC002.Text + "'");
             }
-       //     else
+          else
             {
                 sql.Append(" and CONVERT(date,a.TC01)  >= '" + datefrom  + "' ");
                 sql.Append(" and CONVERT(date,a.TC01) <= '" + dateto  + "' ");

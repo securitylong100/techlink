@@ -19,19 +19,70 @@ namespace WindowsFormsApplication1.ERPShowOrder
         }
         DataTable dt;
         DataTable dtShow;
-      
+
         private void btn_search_Click(object sender, EventArgs e)
         {
             getERPdata();
             dtShow = new DataTable();
             datashow();
+            DataView dv = dtShow.DefaultView;
+            dv.Sort = "Good_Qty_Percent ASC";
+            dgv_show.DataSource = dv;
             dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgv_show.AllowUserToAddRows = false;
-            dgv_show.DataSource = dtShow;
+            // dgv_show.DataSource = dv;
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+            MakeAlarmForWarning(dgv_show);
+        }
+        private void MakeAlarmForWarning(DataGridView dtgv)
+        {
+            if (dtgv.Rows.Count > 0)
+            {
+                int count = 0;
+                foreach (DataGridViewRow row in dtgv.Rows)
+                {
+                    double Good_Qty_Percent = Convert.ToDouble(row.Cells["Good_Qty_Percent"].Value);
+
+
+
+
+                    if (Good_Qty_Percent >= 100)
+                    {
+                        dtgv["Good_Qty_Percent", count].Style.BackColor = Color.Green;//to color the row
+                        dtgv["Status", count].Style.BackColor = Color.Green;
+
+
+                    }
+                    else if (Good_Qty_Percent >= 98 && Good_Qty_Percent < 100)
+                    {
+                        dtgv["Good_Qty_Percent", count].Style.BackColor = Color.GreenYellow;//to color the row
+                        dtgv["Status", count].Style.BackColor = Color.GreenYellow;
+
+                    }
+                    else if (Good_Qty_Percent >= 95 && Good_Qty_Percent < 98)
+                    {
+                        dtgv["Good_Qty_Percent", count].Style.BackColor = Color.Orange;//to color the row
+                        dtgv["Status", count].Style.BackColor = Color.Orange;
+
+                    }
+                    else if (Good_Qty_Percent >= 70 && Good_Qty_Percent < 95)
+                    {
+                        dtgv["Good_Qty_Percent", count].Style.BackColor = Color.Red;//to color the row
+                        dtgv["Status", count].Style.BackColor = Color.Red;
+
+                    }
+                    else if (Good_Qty_Percent < 70)
+                    {
+                        dtgv["Good_Qty_Percent", count].Style.BackColor = Color.DarkRed;//to color the row
+                        dtgv["Status", count].Style.BackColor = Color.DarkRed;
+
+                    }
+                    count++;
+                }
+            }
         }
         void getERPdata()
         {
@@ -53,9 +104,9 @@ namespace WindowsFormsApplication1.ERPShowOrder
                             moctas.TA012 as Actual_Production_Date,
                             moctas.TA013 as Confirm,
                             moctas.TA015 as Plan_Quanity,
-                            sum(moctgs.TG011) as Produced_Quanity,
-                            sum(moctgs.TG012) as Finished_NG_Quanity,
-                            sum(moctgs.TG013) as Finished_Good_Quanity,
+                            sum(moctgs.TG011) as Finished_Goods,
+                            sum(moctgs.TG012) as NG_Quanity,
+                            sum(moctgs.TG013) as Good_Quanity,
                             moctgs.TG007 as Unit, 
                             max(CONVERT(date,moctfs.TF003)) as Input_Date
                             from MOCTA moctas
@@ -66,10 +117,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             {
                 sql.Append(" and moctas.TA026   = '" + (string)cmb_COPTC_TC001.Text + "'");
             }
-            if ((string)cmb_COPTC_TC002.Text != "")
-            {
-                sql.Append(" and moctas.TA027   = '" + (string)cmb_COPTC_TC002.Text + "'");
-            }
+
             if (cmb_MOCTA_TA001.Text != "")
             {
                 sql.Append(" and moctas.TA001   = '" + cmb_MOCTA_TA001.Text + "'");
@@ -78,7 +126,10 @@ namespace WindowsFormsApplication1.ERPShowOrder
             {
                 sql.Append(" and moctas.TA002   = '" + cmb_MOCTA_TA002.Text + "'");
             }
-
+            if ((string)cmb_COPTC_TC002.Text != "")
+            {
+                sql.Append(" and moctas.TA027   = '" + (string)cmb_COPTC_TC002.Text + "'");
+            }
             else
             {
                 sql.Append(" and CONVERT(date,moctas.CREATE_DATE) >= '" + datefrom + "'");
@@ -88,8 +139,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             sql.Append(@" group by 
                                     moctas.CREATE_DATE,
                                     moctas.TA001 ,
-                                    moctas.TA002 ,
-                                   
+                                    moctas.TA002 ,                                   
                                     moctas.TA006,
                                     moctas.TA009 ,
                                     moctas.TA010 ,
@@ -111,9 +161,32 @@ namespace WindowsFormsApplication1.ERPShowOrder
                 for (int i = 0; i < dt.Rows.Count; i++)
                 {
 
-                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'","");
+                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'", "");
                     string codeTaoLenh = dt.Rows[i]["Code_No"].ToString().Replace("'", "");
                     string sqlcheck = "select COUNT(*) from t_OCTB where TB02 = '" + MaTaoDon + "' and TB03 ='" + codeTaoLenh + "'";
+                    double FinishedGoodQty = 0;
+                    double NGQty = 0;
+                    double OKQty = 0;
+                    double PercentofOKQty = 0;
+                    try
+                    {
+                        FinishedGoodQty = double.Parse(dt.Rows[i]["Finished_Goods"].ToString().Replace("'", ""));
+                        NGQty = double.Parse(dt.Rows[i]["NG_Quanity"].ToString().Replace("'", ""));
+                        OKQty = double.Parse(dt.Rows[i]["Good_Quanity"].ToString().Replace("'", ""));
+                        if (FinishedGoodQty != 0)
+                            PercentofOKQty = Math.Round((OKQty / FinishedGoodQty) * 100, 2);
+
+                    }
+                    catch (Exception ex)
+                    {
+                        FinishedGoodQty = 0;
+                        NGQty = 0;
+                        OKQty = 0;
+                        //MessageBox.Show(ex.Message);
+
+                    }
+
+
                     sqlCON check = new sqlCON();
                     if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                     {
@@ -127,6 +200,23 @@ namespace WindowsFormsApplication1.ERPShowOrder
                         sqlinsert.Append("insert into t_OCTB ");
                         sqlinsert.Append(@"(TB01,TB02,TB03,TB04,TB05,TB06,TB07,TB08,TB09,TB10,TB11,TB12,TB13,TB14,TB15,TB16,TB17,TB31,TB32,TB33,UserName,datetimeRST) values ( ");
                         sqlinsert.Append(list);
+                        if (PercentofOKQty >= 100)
+                        {
+                            sqlinsert.Append("'OK', '" + PercentofOKQty.ToString() + " ' , '0' " + ",");
+                        }
+                        else if (PercentofOKQty > 98)
+                        {
+                            sqlinsert.Append("'OK', '" + PercentofOKQty.ToString() + " ' , '1' " + ",");
+                        }
+                        else if (PercentofOKQty < 98 && PercentofOKQty > 95)
+                        {
+                            sqlinsert.Append("'OK', '" + PercentofOKQty.ToString() + " ' , '2' " + ",");
+                        }
+                        else if (PercentofOKQty < 95)
+                        {
+                            sqlinsert.Append("'NG', '" + PercentofOKQty.ToString() + " ' , '0' " + ",");
+                        }
+
                         sqlinsert.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
                         sqlCON insert = new sqlCON();
                         insert.sqlExecuteNonQuery(sqlinsert.ToString(), false);
@@ -135,10 +225,37 @@ namespace WindowsFormsApplication1.ERPShowOrder
                     {
                         StringBuilder sqlupdate = new StringBuilder();
                         sqlupdate.Append("update t_OCTB set ");
-                        sqlupdate.Append(@"TB13 = '" + dt.Rows[i]["Produced_Quanity"].ToString() + "',");
-                        sqlupdate.Append(@"TB14 = '" + dt.Rows[i]["Finished_NG_Quanity"].ToString() + "',");
-                        sqlupdate.Append(@"TB15 = '" + dt.Rows[i]["Finished_Good_Quanity"].ToString() + "',");
+                        sqlupdate.Append(@"TB13 = '" + dt.Rows[i]["Finished_Goods"].ToString() + "',");
+                        sqlupdate.Append(@"TB14 = '" + dt.Rows[i]["NG_Quanity"].ToString() + "',");
+                        sqlupdate.Append(@"TB15 = '" + dt.Rows[i]["Good_Quanity"].ToString() + "',");
                         sqlupdate.Append(@"TB17 = '" + dt.Rows[i]["Input_Date"].ToString() + "'");
+                        if (PercentofOKQty >= 100)
+                        {
+                            sqlupdate.Append(@", TB31 = 'OK' ,");
+                            sqlupdate.Append(@" TB32 = ' " + PercentofOKQty.ToString() + "' ,");
+                            sqlupdate.Append(@"TB33 = '0' ");
+                        }
+                        else if (PercentofOKQty > 98)
+                        {
+                            sqlupdate.Append(@", TB31 = 'OK' ,");
+                            sqlupdate.Append(@" TB32 = ' " + PercentofOKQty.ToString() + "' ,");
+                            sqlupdate.Append(@"TB33 = '1' ");
+                        }
+                        else if (PercentofOKQty < 98 && PercentofOKQty > 95)
+                        {
+                            sqlupdate.Append(@", TB31 = 'OK' ,");
+                            sqlupdate.Append(@" TB32 = ' " + PercentofOKQty.ToString() + "' ,");
+                            sqlupdate.Append(@"TB33 = '2' ");
+
+                        }
+                        else if (PercentofOKQty < 95)
+                        {
+                            sqlupdate.Append(@", TB31 = 'NG' ,");
+                            sqlupdate.Append(@" TB32 = ' " + PercentofOKQty.ToString() + "' ,");
+                            sqlupdate.Append(@"TB33 = '0' ");
+                        }
+                        //  sqlupdate.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
+
                         sqlupdate.Append(@" where TB02 = '" + MaTaoDon + "' and TB03 ='" + codeTaoLenh + "'");
 
                         sqlCON update = new sqlCON();
@@ -154,17 +271,14 @@ namespace WindowsFormsApplication1.ERPShowOrder
             StringBuilder sql = new StringBuilder();
             sql.Append(@"select CONVERT(date,TB01) as Create_Date,TB02 as Code_Type,TB03 as Code_No,TB04 as Production_Planning_Code,TB05 as Production_Planning_No,TB06 as Product_Code,");
             sql.Append("TB07 as Product_Name,TB08 as Production_Start_Date,TB09 as Estimate_Complete_Date,TB10 as Actual_Production_Date,TB11 as Confirm,TB12 as Plan_Quanity,");
-            sql.Append("TB13 as Produced_Quanity,TB14 as Finished_NG_Quanity,TB15 as Finished_Good_Quanity,TB16 as Unit,TB17 as Input_Date,");
-            sql.Append("TB30, TB31, TB32, TB33 ");
-                sql.Append(" from t_OCTB where 1 = 1 ");
+            sql.Append("TB13 as Finished_Goods,TB14 as NG_Quanity,TB15 as Good_Quanity,TB16 as Unit,TB17 as Input_Date,");
+            sql.Append("TB30, TB31 as Status, cast( TB32 as float) as Good_Qty_Percent, TB33 as Alarm");
+            sql.Append(" from t_OCTB where 1 = 1 ");
             if ((string)cmb_COPTC_TC001.Text != "")
             {
                 sql.Append(" and TB02 = '" + cmb_COPTC_TC001.Text + "'");
             }
-            if ((string)cmb_COPTC_TC002.Text != "")
-            {
-                sql.Append(" and TB03  = '" + cmb_COPTC_TC002.Text + "'");
-            }
+
             if (cmb_MOCTA_TA001.Text != "")
             {
                 sql.Append(" and TB04   = '" + cmb_MOCTA_TA001.Text + "'");
@@ -172,6 +286,10 @@ namespace WindowsFormsApplication1.ERPShowOrder
             if (cmb_MOCTA_TA002.Text != "")
             {
                 sql.Append(" and TB05   = '" + cmb_MOCTA_TA002.Text + "'");
+            }
+            if ((string)cmb_COPTC_TC002.Text != "")
+            {
+                sql.Append(" and TB03  = '" + cmb_COPTC_TC002.Text + "'");
             }
             else
             {
@@ -201,7 +319,7 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             }
         }
 
-            private void cmd_MOCTA_TA001_SelectedIndexChanged(object sender, EventArgs e)
+        private void cmd_MOCTA_TA001_SelectedIndexChanged(object sender, EventArgs e)
         {
             cmb_MOCTA_TA002.Items.Clear();
             string sql = "select distinct  TA002 from MOCTA where TA001 ='" + cmb_MOCTA_TA001.Text + "' order by TA002";
@@ -240,7 +358,6 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             {
                 cmb_MOCTA_TA002.Items.Add("");
                 cmb_MOCTA_TA002.SelectedIndex = 0;
-
             }
             cmb_MOCTA_TA001.Text = "";
             cmb_MOCTA_TA002.Text = "";
