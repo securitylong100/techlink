@@ -18,15 +18,15 @@ namespace WindowsFormsApplication1
             //string username = "SQLUSER";
             //string password = "12345";
 
-            string datasource = @"MSI\SQLEXPRESS";
-            string database = "TLSOFT";
-            string username = "SQLUSER";
-            string password = "12345";
-
-            //string datasource = "172.16.0.12";
-            //string database = "ERPSOFT";
-            //string username = "ERPUSER";
+            //string datasource = @"MSI\SQLEXPRESS";
+            //string database = "TLSOFT";
+            //string username = "SQLUSER";
             //string password = "12345";
+
+            string datasource = "172.16.0.12";
+            string database = "ERPSOFT";
+            string username = "ERPUSER";
+            string password = "12345";
 
 
 

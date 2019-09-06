@@ -16,7 +16,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
         {
             InitializeComponent();
         }
-       
+
         DataTable dt;
         private void cmd_COPTC_TC001_SelectedIndexChanged(object sender, EventArgs e)
         {
@@ -35,8 +35,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
                 Class.valiballecommon va = Class.valiballecommon.GetStorage();
                 cmd_COPTC_TC002.Text = Class.valiballecommon.GetStorage().value2;
                 cmd_COPTC_TC001.Text = Class.valiballecommon.GetStorage().value1;
-              //  string test = Class.valiballecommon.GetStorage().value3;
-               dtp_from.Value =(Class.valiballecommon.GetStorage().value3.Length >8)? Convert.ToDateTime(Class.valiballecommon.GetStorage().value3):DateTime.MinValue;
+                //  string test = Class.valiballecommon.GetStorage().value3;
+                dtp_from.Value = (Class.valiballecommon.GetStorage().value3.Length > 8) ? Convert.ToDateTime(Class.valiballecommon.GetStorage().value3) : DateTime.MinValue;
                 va.value3 = null;
                 va.value1 = null;
                 va.value2 = null;
@@ -50,7 +50,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             // dtShow = new DataTable();
             //datashow();
             DataView dv = dt.DefaultView;
-            dv.Sort = "Shipping_Percent DESC";
+            dv.Sort = "Shipping_Percent ASC";
             dgv_show.DataSource = dv;
             //  alrma();
             dgv_show.AutoGenerateColumns = true;
@@ -123,7 +123,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
         }
         void getERPdata()
         {
-           DateTime dateto = dtp_to.Value;
+            DateTime dateto = dtp_to.Value;
             DateTime datefrom = dtp_from.Value;
             dt = new DataTable();
             StringBuilder sql = new StringBuilder();
@@ -164,11 +164,11 @@ and copths.TH004  = coptds.TD004 ");
             {
                 sql.Append(" and coptcs.TC002   = '" + cmd_COPTC_TC002.Text + "'");
             }
-         //   else
+            else
             {
                 sql.Append(" and CONVERT(date,coptcs.CREATE_DATE)  >= '" + datefrom + "' ");
                 sql.Append(" and CONVERT(date,coptcs.CREATE_DATE) <= '" + dateto + "' ");
-               
+
             }
             sql.Append(@"group by 
                                    coptcs.CREATE_DATE,
@@ -199,7 +199,7 @@ and copths.TH004  = coptds.TD004 ");
                 {
                     string sqlcheck = "";
 
-                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'","");
+                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'", "");
                     string codeDon = dt.Rows[i]["Code_No"].ToString().Replace("'", "");
                     string codeSanPham = dt.Rows[i]["Product_Code"].ToString().Replace("'", "");
                     string ShippingPercent = dt.Rows[i]["Shipping_Percent"].ToString().Replace("'", "");

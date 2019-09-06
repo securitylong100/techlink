@@ -79,7 +79,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
                 sql.Append(" and moctas.TA002   = '" + cmb_MOCTA_TA002.Text + "'");
             }
 
-            //else
+            else
             {
                 sql.Append(" and CONVERT(date,moctas.CREATE_DATE) >= '" + datefrom + "'");
                 sql.Append(" and CONVERT(date,moctas.CREATE_DATE) <= '" + dateto + "'");
@@ -125,7 +125,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
                         }
                         StringBuilder sqlinsert = new StringBuilder();
                         sqlinsert.Append("insert into t_OCTB ");
-                        sqlinsert.Append(@"(TB01,TB02,TB03,TB04,TB05,TB06,TB07,TB08,TB09,TB10,TB11,TB12,TB13,TB14,TB15,TB16,TB17,TB31,TB32,Tb33,UserName,datetimeRST) values ( ");
+                        sqlinsert.Append(@"(TB01,TB02,TB03,TB04,TB05,TB06,TB07,TB08,TB09,TB10,TB11,TB12,TB13,TB14,TB15,TB16,TB17,TB31,TB32,TB33,UserName,datetimeRST) values ( ");
                         sqlinsert.Append(list);
                         sqlinsert.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
                         sqlCON insert = new sqlCON();
@@ -242,6 +242,8 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
                 cmb_MOCTA_TA002.SelectedIndex = 0;
 
             }
+            cmb_MOCTA_TA001.Text = "";
+            cmb_MOCTA_TA002.Text = "";
         }
     }
 }

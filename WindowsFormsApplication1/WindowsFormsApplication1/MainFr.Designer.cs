@@ -41,8 +41,8 @@
             this.btn_model = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
             this.tap_function = new System.Windows.Forms.TabPage();
-            this.btn_ordershow = new System.Windows.Forms.Button();
-            this.btn_erpshoworder = new System.Windows.Forms.Button();
+            this.btn_tam = new System.Windows.Forms.Button();
+            this.btn_ERPshowmain = new System.Windows.Forms.Button();
             this.btn_pqmshow = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
@@ -138,7 +138,6 @@
             this.btn_order_pdc.TabIndex = 9;
             this.btn_order_pdc.Text = "Order-PDC";
             this.btn_order_pdc.UseVisualStyleBackColor = true;
-            this.btn_order_pdc.Click += new System.EventHandler(this.btn_order_pdc_Click);
             // 
             // btn_process
             // 
@@ -202,8 +201,8 @@
             // 
             // tap_function
             // 
-            this.tap_function.Controls.Add(this.btn_ordershow);
-            this.tap_function.Controls.Add(this.btn_erpshoworder);
+            this.tap_function.Controls.Add(this.btn_tam);
+            this.tap_function.Controls.Add(this.btn_ERPshowmain);
             this.tap_function.Controls.Add(this.btn_pqmshow);
             this.tap_function.Location = new System.Drawing.Point(4, 25);
             this.tap_function.Name = "tap_function";
@@ -212,29 +211,28 @@
             this.tap_function.Text = "Function";
             this.tap_function.UseVisualStyleBackColor = true;
             // 
-            // btn_ordershow
+            // btn_tam
             // 
-            this.btn_ordershow.Enabled = false;
-            this.btn_ordershow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_ordershow.Location = new System.Drawing.Point(24, 110);
-            this.btn_ordershow.Name = "btn_ordershow";
-            this.btn_ordershow.Size = new System.Drawing.Size(153, 48);
-            this.btn_ordershow.TabIndex = 7;
-            this.btn_ordershow.Text = "Order Show";
-            this.btn_ordershow.UseVisualStyleBackColor = true;
-            this.btn_ordershow.Click += new System.EventHandler(this.btn_ordershow_Click);
+            this.btn_tam.Enabled = false;
+            this.btn_tam.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_tam.Location = new System.Drawing.Point(24, 110);
+            this.btn_tam.Name = "btn_tam";
+            this.btn_tam.Size = new System.Drawing.Size(153, 48);
+            this.btn_tam.TabIndex = 7;
+            this.btn_tam.Text = "tam";
+            this.btn_tam.UseVisualStyleBackColor = true;
             // 
-            // btn_erpshoworder
+            // btn_ERPshowmain
             // 
-            this.btn_erpshoworder.Enabled = false;
-            this.btn_erpshoworder.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_erpshoworder.Location = new System.Drawing.Point(216, 27);
-            this.btn_erpshoworder.Name = "btn_erpshoworder";
-            this.btn_erpshoworder.Size = new System.Drawing.Size(153, 48);
-            this.btn_erpshoworder.TabIndex = 6;
-            this.btn_erpshoworder.Text = "ERP Show Order";
-            this.btn_erpshoworder.UseVisualStyleBackColor = true;
-            this.btn_erpshoworder.Click += new System.EventHandler(this.btn_erpshoworder_Click);
+            this.btn_ERPshowmain.Enabled = false;
+            this.btn_ERPshowmain.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_ERPshowmain.Location = new System.Drawing.Point(216, 27);
+            this.btn_ERPshowmain.Name = "btn_ERPshowmain";
+            this.btn_ERPshowmain.Size = new System.Drawing.Size(153, 48);
+            this.btn_ERPshowmain.TabIndex = 6;
+            this.btn_ERPshowmain.Text = "ERP Show Main";
+            this.btn_ERPshowmain.UseVisualStyleBackColor = true;
+            this.btn_ERPshowmain.Click += new System.EventHandler(this.btn_ERPshowmain_Click);
             // 
             // btn_pqmshow
             // 
@@ -282,8 +280,8 @@
         private System.Windows.Forms.TabPage tap_function;
         private System.Windows.Forms.Button btn_pqmshow;
         private System.Windows.Forms.Button btn_process;
-        private System.Windows.Forms.Button btn_erpshoworder;
+        private System.Windows.Forms.Button btn_ERPshowmain;
         private System.Windows.Forms.Button btn_order_pdc;
-        private System.Windows.Forms.Button btn_ordershow;
+        private System.Windows.Forms.Button btn_tam;
     }
 }

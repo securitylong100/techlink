@@ -207,3 +207,4 @@ C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplicat
 C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.TrustInfo.xml
 C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.exe.manifest
 C:\Users\Long Coi\Desktop\techlink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.application
+D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPMaterialShow.resources
