@@ -68,7 +68,7 @@
             this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
             this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
-            this.groupBox1.Size = new System.Drawing.Size(1362, 105);
+            this.groupBox1.Size = new System.Drawing.Size(1362, 131);
             this.groupBox1.TabIndex = 4;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Processing";
@@ -185,16 +185,14 @@
             // 
             // dgv_show
             // 
-            this.dgv_show.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_show.Location = new System.Drawing.Point(0, 203);
+            this.dgv_show.Dock = System.Windows.Forms.DockStyle.Bottom;
+            this.dgv_show.Location = new System.Drawing.Point(0, 229);
             this.dgv_show.Margin = new System.Windows.Forms.Padding(4);
             this.dgv_show.Name = "dgv_show";
             this.dgv_show.ReadOnly = true;
             this.dgv_show.RowHeadersWidth = 51;
-            this.dgv_show.Size = new System.Drawing.Size(1362, 766);
+            this.dgv_show.Size = new System.Drawing.Size(1362, 740);
             this.dgv_show.TabIndex = 5;
             this.dgv_show.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_show_CellDoubleClick);
             // 
@@ -253,7 +251,6 @@
             this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ERPShowMain";
             this.Text = "ERPShowMain";
-            this.WindowState = System.Windows.Forms.FormWindowState.Minimized;
             this.Load += new System.EventHandler(this.ERPShowMain_Load);
             this.Controls.SetChildIndex(this.menuStrip1, 0);
             this.Controls.SetChildIndex(this.groupBox1, 0);

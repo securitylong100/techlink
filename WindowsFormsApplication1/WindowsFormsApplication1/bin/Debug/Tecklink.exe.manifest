@@ -1,10 +1,10 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <asmv1:assembly xsi:schemaLocation="urn:schemas-microsoft-com:asm.v1 assembly.adaptive.xsd" manifestVersion="1.0" xmlns:asmv1="urn:schemas-microsoft-com:asm.v1" xmlns="urn:schemas-microsoft-com:asm.v2" xmlns:asmv2="urn:schemas-microsoft-com:asm.v2" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:co.v1="urn:schemas-microsoft-com:clickonce.v1" xmlns:asmv3="urn:schemas-microsoft-com:asm.v3" xmlns:dsig="http://www.w3.org/2000/09/xmldsig#" xmlns:co.v2="urn:schemas-microsoft-com:clickonce.v2">
-  <asmv1:assemblyIdentity name="Techlink.exe" version="1.0.0.11" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
+  <asmv1:assemblyIdentity name="Tecklink.exe" version="1.0.0.6" publicKeyToken="0000000000000000" language="neutral" processorArchitecture="msil" type="win32" />
   <application />
   <entryPoint>
-    <assemblyIdentity name="Techlink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
-    <commandLine file="Techlink.exe" parameters="" />
+    <assemblyIdentity name="Tecklink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <commandLine file="Tecklink.exe" parameters="" />
   </entryPoint>
   <trustInfo>
     <security>
@@ -66,18 +66,18 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Techlink.exe" size="215040">
-      <assemblyIdentity name="Techlink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Tecklink.exe" size="212480">
+      <assemblyIdentity name="Tecklink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>b+LeDh+7Rp4h0NdNB1gn4ZNm+7eEiUwzcxADYiS2uag=</dsig:DigestValue>
+        <dsig:DigestValue>W8zM4PddnX9Tji3Sa/3bXHgMtalAxv/H3k/sAjSgZ6E=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
-  <file name="Techlink.exe.config" size="1450">
+  <file name="Tecklink.exe.config" size="1450">
     <hash>
       <dsig:Transforms>
         <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
