@@ -305,17 +305,44 @@ namespace WindowsFormsApplication1.ERPShowOrder
             //string sql = "select distinct TA001 from MOCTA where TA001 != '' order by TA001";
             //sqlERPCON conERP = new sqlERPCON();
             //conERP.getComboBoxData(sql, ref cmd_MOCTA_TA001);
-            string sql_cmb_COPTC_TC001 = @"select distinct
+//            string sql_cmb_COPTC_TC001 = @"select distinct
+//moctas.TA026 as MaDDH
+//from MOCTA moctas
+//where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
+//            sqlERPCON conERP = new sqlERPCON();
+//            cmb_COPTC_TC001.Items.Clear();
+//            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
+//            if (cmb_COPTC_TC001.Items != null)
+//            {
+//                cmb_COPTC_TC001.SelectedIndex = 0;
+
+//            }
+            if (Class.valiballecommon.GetStorage().value1 != null)
+            {
+                Class.valiballecommon va = Class.valiballecommon.GetStorage();
+                cmb_COPTC_TC002.Text = Class.valiballecommon.GetStorage().value2;
+                cmb_COPTC_TC001.Text = Class.valiballecommon.GetStorage().value1;
+                //  string test = Class.valiballecommon.GetStorage().value3;
+                dtp_from.Value = (Class.valiballecommon.GetStorage().value3.Length > 8) ? Convert.ToDateTime(Class.valiballecommon.GetStorage().value3) : DateTime.MinValue;
+                va.value3 = null;
+                va.value1 = null;
+                va.value2 = null;
+                btn_search_Click(sender, e);
+            }
+            else
+            {
+                string sql_cmb_COPTC_TC001 = @"select distinct
 moctas.TA026 as MaDDH
 from MOCTA moctas
 where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
-            sqlERPCON conERP = new sqlERPCON();
-            cmb_COPTC_TC001.Items.Clear();
-            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
-            if (cmb_COPTC_TC001.Items != null)
-            {
-                cmb_COPTC_TC001.SelectedIndex = 0;
+                sqlERPCON conERP = new sqlERPCON();
+                cmb_COPTC_TC001.Items.Clear();
+                conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
+                if (cmb_COPTC_TC001.Items != null)
+                {
+                    cmb_COPTC_TC001.SelectedIndex = 0;
 
+                }
             }
         }
 
