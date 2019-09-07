@@ -178,103 +178,104 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             sql.Append(" order by moctas.TA002");
             sqlERPCON con = new sqlERPCON();
             con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
-            //checkdata
-            //if (dt.Rows.Count > 0)
-            //{
-            //    try
-            //    {
+          //  checkdata
+            if (dt.Rows.Count > 0)
+            {
+                try
+                {
 
 
-            //        for (int i = 0; i < dt.Rows.Count; i++)
-            //        {
-            //            string sqlcheck = "";
+                    for (int i = 0; i < dt.Rows.Count; i++)
+                    {
+                        string sqlcheck = "";
 
-            //            string MaDDH = dt.Rows[i]["Code_Type"].ToString();
-            //            string SoDDH = dt.Rows[i]["Code_No"].ToString();
-            //            string MaLSX = dt.Rows[i]["Production_Planning_Code"].ToString();
-            //            string SoLSX = dt.Rows[i]["Production_Planning_No"].ToString();
-            //            string codeSanPham = dt.Rows[i]["Product_Code"].ToString();
-            //            string MaVatLieu = dt.Rows[i]["Material_Code"].ToString();
+                        string MaDDH = dt.Rows[i]["Code_Type"].ToString();
+                        string SoDDH = dt.Rows[i]["Code_No"].ToString();
+                        string MaLSX = dt.Rows[i]["Production_Planning_Code"].ToString();
+                        string SoLSX = dt.Rows[i]["Production_Planning_No"].ToString();
+                        string codeSanPham = dt.Rows[i]["Product_Code"].ToString();
+                        string MaVatLieu = dt.Rows[i]["Material_Code"].ToString();
 
-            //            double SoNVLCanLanh = (dt.Rows[i]["amount_of_material_receive"] != null && dt.Rows[i]["amount_of_material_receive"].ToString() != "") ? double.Parse(dt.Rows[i]["amount_of_material_receive"].ToString()) : 0;
-            //            double SoNVLTrongKho = (dt.Rows[i]["Avaiable_Material_Quanity"] != null && dt.Rows[i]["Avaiable_Material_Quanity"].ToString() != "") ? double.Parse(dt.Rows[i]["Avaiable_Material_Quanity"].ToString()) : 0;
+                        double SoNVLCanLanh = (dt.Rows[i]["amount_of_material_receive"] != null && dt.Rows[i]["amount_of_material_receive"].ToString() != "") ? double.Parse(dt.Rows[i]["amount_of_material_receive"].ToString()) : 0;
+                        double SoNVLTrongKho = (dt.Rows[i]["Avaiable_Material_Quanity"] != null && dt.Rows[i]["Avaiable_Material_Quanity"].ToString() != "") ? double.Parse(dt.Rows[i]["Avaiable_Material_Quanity"].ToString()) : 0;
 
 
-            //            sqlcheck = @"select COUNT(*) from t_OCTD where TD02 = '" + MaDDH + "' and TD03 ='" + SoDDH + "' and TD04='" + MaLSX + "' and TD05='" + SoLSX
-            //             + "' and TD07 ='" + codeSanPham + "' and TD15 ='" + MaVatLieu + "'";
-            //            sqlCON check = new sqlCON();
-            //            if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
-            //            {
-            //                string list = "";
-            //                for (int j = 0; j < dt.Columns.Count; j++)
-            //                {
-            //                    list += "'";
-            //                    list += dt.Rows[i][j].ToString() + "',";
-            //                }
-            //                StringBuilder sqlinsert = new StringBuilder();
-            //                sqlinsert.Append("insert into t_OCTD ");
-            //                sqlinsert.Append(@"(TD01,TD02,TD03,TD04,TD05,TD06,TD07,TD08,TD09,TD10,TD11,TD12,TD13,TD14,TD15,TD16,TD17,TD18,TD19,TD20,TD31,TD32,TD33,UserName,datetimeRST) values ( ");
-            //                sqlinsert.Append(list);
-            //                if (SoNVLTrongKho > SoNVLCanLanh)
-            //                {
-            //                    sqlinsert.Append("'OK', 'OK' , '0' " + ",");
-            //                }
-            //                else if (SoNVLTrongKho == SoNVLCanLanh)
-            //                {
-            //                    sqlinsert.Append("'OK', 'OK' , '1' " + ",");
-            //                }
-            //                else if (SoNVLTrongKho < SoNVLCanLanh)
-            //                {
-            //                    sqlinsert.Append("'NG', 'NG' , '2' " + ",");
+                        sqlcheck = @"select COUNT(*) from t_OCTD where TD02 = '" + MaDDH + "' and TD03 ='" + SoDDH + "' and TD04='" + MaLSX + "' and TD05='" + SoLSX
+                         + "' and TD07 ='" + codeSanPham + "' and TD15 ='" + MaVatLieu + "'";
+                        sqlCON check = new sqlCON();
+                        if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
+                        {
+                            string list = "";
+                            for (int j = 0; j < dt.Columns.Count; j++)
+                            {
+                                list += "'";
+                                list += dt.Rows[i][j].ToString() + "',";
+                            }
+                            StringBuilder sqlinsert = new StringBuilder();
+                            sqlinsert.Append("insert into t_OCTD ");
+                            sqlinsert.Append(@"(TD01,TD02,TD03,TD04,TD05,TD06,TD07,TD08,TD09,TD10,TD11,TD12,TD13,TD14,TD15,TD16,TD17,TD18,TD19,TD20,TD21,TD31,TD32,TD33,UserName,datetimeRST) values ( ");
+                            sqlinsert.Append(list);
+                            if (SoNVLTrongKho > SoNVLCanLanh)
+                            {
+                                sqlinsert.Append("'OK', 'OK' , '0' " + ",");
+                            }
+                            else if (SoNVLTrongKho == SoNVLCanLanh)
+                            {
+                                sqlinsert.Append("'OK', 'OK' , '1' " + ",");
+                            }
+                            else if (SoNVLTrongKho < SoNVLCanLanh)
+                            {
+                                sqlinsert.Append("'NG', 'NG' , '2' " + ",");
 
-            //                }
-            //                sqlinsert.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
-            //                sqlCON insert = new sqlCON();
-            //                insert.sqlExecuteNonQuery(sqlinsert.ToString(), false);
-            //            }
-            //            else //update
-            //            {
+                            }
+                            sqlinsert.Append("'" + Class.valiballecommon.GetStorage().UserName + "',GETDATE())");
+                            sqlCON insert = new sqlCON();
+                            insert.sqlExecuteNonQuery(sqlinsert.ToString(), false);
+                        }
+                        else //update
+                        {
 
-            //                StringBuilder sqlupdate = new StringBuilder();
-            //                sqlupdate.Append("update t_OCTD set ");
-            //                sqlupdate.Append(@"TD19 = '" + dt.Rows[i]["amount_of_material_receive"].ToString() + "',");
-            //                sqlupdate.Append(@"TD20 = '" + dt.Rows[i]["amount_of_material_use"].ToString() + "',");
-            //                sqlupdate.Append(@"TD21 = '" + dt.Rows[i]["Avaiable_Material_Quanity"].ToString() + "'");
-            //                if (SoNVLTrongKho > SoNVLCanLanh)
-            //                {
-            //                    sqlupdate.Append(@", TD31 = 'OK' ,");
-            //                    sqlupdate.Append(@" TD32 = 'OK' ,");
-            //                    sqlupdate.Append(@"TD33 = '0', ");
-            //                }
-            //                else if (SoNVLTrongKho == SoNVLCanLanh)
-            //                {
-            //                    sqlupdate.Append(@", TD31 = 'OK' ,");
-            //                    sqlupdate.Append(@" TD32 = 'OK' ,");
-            //                    sqlupdate.Append(@"TD33 = '1' ,");
-            //                }
-            //                else if (SoNVLTrongKho < SoNVLCanLanh)
-            //                {
-            //                    sqlupdate.Append(@", TD31 = 'NG' ,");
-            //                    sqlupdate.Append(@" TD32 = 'NG' ,");
-            //                    sqlupdate.Append(@"TD33 = '2' ,");
-            //                }
-            //                sqlupdate.Append(@" UserName = '" + Class.valiballecommon.GetStorage().UserName + "' ,");
-            //                sqlupdate.Append(@" datetimeRST = GETDATE()");
+                            StringBuilder sqlupdate = new StringBuilder();
+                            sqlupdate.Append("update t_OCTD set ");
+                            sqlupdate.Append(@"TD18 = '" + dt.Rows[i]["amount_of_material_receive"].ToString() + "',");
+                            sqlupdate.Append(@"TD18 = '" + dt.Rows[i]["amount_of_material_use"].ToString() + "',");
+                            sqlupdate.Append(@"TD19 = '" + dt.Rows[i]["Avaiable_Material_Quanity"].ToString() + "',");
+                            sqlupdate.Append(@"TD20 = '" + dt.Rows[i]["Production_Material_Quantity"].ToString() + "'");
+                            if (SoNVLTrongKho > SoNVLCanLanh)
+                            {
+                                sqlupdate.Append(@", TD31 = 'OK' ,");
+                                sqlupdate.Append(@" TD32 = 'OK' ,");
+                                sqlupdate.Append(@"TD33 = '0', ");
+                            }
+                            else if (SoNVLTrongKho == SoNVLCanLanh)
+                            {
+                                sqlupdate.Append(@", TD31 = 'OK' ,");
+                                sqlupdate.Append(@" TD32 = 'OK' ,");
+                                sqlupdate.Append(@"TD33 = '1' ,");
+                            }
+                            else if (SoNVLTrongKho < SoNVLCanLanh)
+                            {
+                                sqlupdate.Append(@", TD31 = 'NG' ,");
+                                sqlupdate.Append(@" TD32 = 'NG' ,");
+                                sqlupdate.Append(@"TD33 = '2' ,");
+                            }
+                            sqlupdate.Append(@" UserName = '" + Class.valiballecommon.GetStorage().UserName + "' ,");
+                            sqlupdate.Append(@" datetimeRST = GETDATE()");
 
-            //                sqlupdate.Append(@" where TD02 = '" + MaDDH + "' and TD03 ='" + SoDDH + "' and TD04='" + MaLSX + "' and TD05='" + SoLSX
-            //             + "' and TD07 ='" + codeSanPham + "' and TD15 ='" + MaVatLieu + "'");
+                            sqlupdate.Append(@" where TD02 = '" + MaDDH + "' and TD03 ='" + SoDDH + "' and TD04='" + MaLSX + "' and TD05='" + SoLSX
+                         + "' and TD07 ='" + codeSanPham + "' and TD15 ='" + MaVatLieu + "'");
 
-            //                sqlCON update = new sqlCON();
-            //                update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
-            //            }
-            //        }
-            //    }
-            //    catch (Exception ex)
-            //    {
+                            sqlCON update = new sqlCON();
+                            update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
+                        }
+                    }
+                }
+                catch (Exception ex)
+                {
 
-            //        MessageBox.Show("Update or Insert to database fail: " + ex.Message, "Error");
-            //    }
-            //}
+                    MessageBox.Show("Update or Insert to database fail: " + ex.Message, "Error");
+                }
+            }
         }
         void datashow()
         {
