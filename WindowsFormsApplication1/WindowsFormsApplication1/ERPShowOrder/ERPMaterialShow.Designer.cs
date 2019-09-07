@@ -29,6 +29,7 @@
         private void InitializeComponent()
         {
             this.groupBox1 = new System.Windows.Forms.GroupBox();
+            this.btn_ExportExcel = new System.Windows.Forms.Button();
             this.label6 = new System.Windows.Forms.Label();
             this.label5 = new System.Windows.Forms.Label();
             this.cmb_MOCTA_TA001 = new System.Windows.Forms.ComboBox();
@@ -43,7 +44,6 @@
             this.cmb_COPTC_TC001 = new System.Windows.Forms.ComboBox();
             this.btn_search = new System.Windows.Forms.Button();
             this.dtgv_material = new System.Windows.Forms.DataGridView();
-            this.btn_ExportExcel = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_material)).BeginInit();
             this.SuspendLayout();
@@ -66,13 +66,24 @@
             this.groupBox1.Controls.Add(this.btn_search);
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(0, 78);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
-            this.groupBox1.Size = new System.Drawing.Size(1201, 139);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
+            this.groupBox1.Size = new System.Drawing.Size(1204, 141);
             this.groupBox1.TabIndex = 5;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Processing";
+            // 
+            // btn_ExportExcel
+            // 
+            this.btn_ExportExcel.Location = new System.Drawing.Point(994, 77);
+            this.btn_ExportExcel.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_ExportExcel.Name = "btn_ExportExcel";
+            this.btn_ExportExcel.Size = new System.Drawing.Size(147, 46);
+            this.btn_ExportExcel.TabIndex = 31;
+            this.btn_ExportExcel.Text = "To Excel";
+            this.btn_ExportExcel.UseVisualStyleBackColor = true;
+            this.btn_ExportExcel.Click += new System.EventHandler(this.Btn_ExportExcel_Click);
             // 
             // label6
             // 
@@ -98,7 +109,7 @@
             // 
             this.cmb_MOCTA_TA001.FormattingEnabled = true;
             this.cmb_MOCTA_TA001.Location = new System.Drawing.Point(64, 98);
-            this.cmb_MOCTA_TA001.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MOCTA_TA001.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_MOCTA_TA001.Name = "cmb_MOCTA_TA001";
             this.cmb_MOCTA_TA001.Size = new System.Drawing.Size(154, 25);
             this.cmb_MOCTA_TA001.TabIndex = 28;
@@ -108,7 +119,7 @@
             // 
             this.cmb_MOCTA_TA002.FormattingEnabled = true;
             this.cmb_MOCTA_TA002.Location = new System.Drawing.Point(275, 99);
-            this.cmb_MOCTA_TA002.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MOCTA_TA002.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_MOCTA_TA002.Name = "cmb_MOCTA_TA002";
             this.cmb_MOCTA_TA002.Size = new System.Drawing.Size(154, 25);
             this.cmb_MOCTA_TA002.TabIndex = 27;
@@ -129,7 +140,7 @@
             this.cmb_COPTC_TC002.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_COPTC_TC002.FormattingEnabled = true;
             this.cmb_COPTC_TC002.Location = new System.Drawing.Point(275, 37);
-            this.cmb_COPTC_TC002.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_COPTC_TC002.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_COPTC_TC002.MaxLength = 8;
             this.cmb_COPTC_TC002.Name = "cmb_COPTC_TC002";
             this.cmb_COPTC_TC002.Size = new System.Drawing.Size(154, 25);
@@ -164,7 +175,7 @@
             this.dtp_from.CustomFormat = "yyyy-MM-dd";
             this.dtp_from.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_from.Location = new System.Drawing.Point(455, 42);
-            this.dtp_from.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_from.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_from.Name = "dtp_from";
             this.dtp_from.Size = new System.Drawing.Size(196, 23);
             this.dtp_from.TabIndex = 22;
@@ -175,7 +186,7 @@
             this.dtp_to.CustomFormat = "yyyy-MM-dd";
             this.dtp_to.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_to.Location = new System.Drawing.Point(687, 42);
-            this.dtp_to.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_to.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_to.Name = "dtp_to";
             this.dtp_to.Size = new System.Drawing.Size(196, 23);
             this.dtp_to.TabIndex = 21;
@@ -196,7 +207,7 @@
             this.cmb_COPTC_TC001.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_COPTC_TC001.FormattingEnabled = true;
             this.cmb_COPTC_TC001.Location = new System.Drawing.Point(66, 37);
-            this.cmb_COPTC_TC001.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_COPTC_TC001.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_COPTC_TC001.Name = "cmb_COPTC_TC001";
             this.cmb_COPTC_TC001.Size = new System.Drawing.Size(154, 25);
             this.cmb_COPTC_TC001.TabIndex = 1;
@@ -205,7 +216,7 @@
             // btn_search
             // 
             this.btn_search.Location = new System.Drawing.Point(994, 16);
-            this.btn_search.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_search.Margin = new System.Windows.Forms.Padding(4);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(147, 49);
             this.btn_search.TabIndex = 0;
@@ -219,32 +230,21 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgv_material.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgv_material.Location = new System.Drawing.Point(1, 264);
-            this.dtgv_material.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtgv_material.Location = new System.Drawing.Point(1, 227);
+            this.dtgv_material.Margin = new System.Windows.Forms.Padding(4);
             this.dtgv_material.Name = "dtgv_material";
             this.dtgv_material.RowHeadersWidth = 51;
-            this.dtgv_material.Size = new System.Drawing.Size(1198, 347);
+            this.dtgv_material.Size = new System.Drawing.Size(1366, 515);
             this.dtgv_material.TabIndex = 6;
-            // 
-            // btn_ExportExcel
-            // 
-            this.btn_ExportExcel.Location = new System.Drawing.Point(994, 77);
-            this.btn_ExportExcel.Margin = new System.Windows.Forms.Padding(4);
-            this.btn_ExportExcel.Name = "btn_ExportExcel";
-            this.btn_ExportExcel.Size = new System.Drawing.Size(147, 46);
-            this.btn_ExportExcel.TabIndex = 31;
-            this.btn_ExportExcel.Text = "To Excel";
-            this.btn_ExportExcel.UseVisualStyleBackColor = true;
-            this.btn_ExportExcel.Click += new System.EventHandler(this.Btn_ExportExcel_Click);
             // 
             // ERPMaterialShow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1200, 611);
+            this.ClientSize = new System.Drawing.Size(1368, 742);
             this.Controls.Add(this.dtgv_material);
             this.Controls.Add(this.groupBox1);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ERPMaterialShow";
             this.Text = "ERPMaterialShow";
             this.Load += new System.EventHandler(this.ERPMaterialShow_Load);

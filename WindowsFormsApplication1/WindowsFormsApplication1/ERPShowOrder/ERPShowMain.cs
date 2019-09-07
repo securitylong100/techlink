@@ -7,17 +7,23 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.Class;
 
 namespace WindowsFormsApplication1.ERPShowOrder
 {
     public partial class ERPShowMain : CommonForm
     {
+        string PathFoler = @"C:\ERP_Temp\";
         public ERPShowMain()
         {
             InitializeComponent();
+            bool exists = System.IO.Directory.Exists(PathFoler);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(PathFoler);
         }
         DataTable dtshow;
         DataTable dt;
+
         private void ERPShowMain_Load(object sender, EventArgs e)
         {
             string sql = "select distinct TC001 from COPTC where TC001 != '' order by TC001";
@@ -45,9 +51,9 @@ namespace WindowsFormsApplication1.ERPShowOrder
             dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
-            dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
+            dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
             dgv_show.AllowUserToAddRows = false;
-            MakeAlarmForWarning(dgv_show);
+          //  MakeAlarmForWarning(dgv_show);
         }
         private void MakeAlarmForWarning(DataGridView dtgv)
         {
@@ -186,25 +192,44 @@ where 1=1 ");
             DateTime dateto = dtp_to.Value;
             DateTime datefrom = dtp_from.Value;
             StringBuilder sql = new StringBuilder();
-            sql.Append(@"select CONVERT(date,a.TC01) as Create_Date, a.TC02 as Code_Type, a.TC03 as Code_No, a.TC04 as Clients_Code, a.TC05 as  Clients_Order_Code, a.TC06 as Product_Code, a.TC07 as Product_Name, avg(CAST(a.TC32 as float)) as Shipping_Percent , max(CONVERT(date,a.TC16)) as Delivery_Date, max(CONVERT(date,a.TC11)) as Client_Request_Date from t_OCTC a ");
-            sql.Append("left join   t_OCTM b  on a.TC02 = b.TM02 and a.TC03 = b.TM03 where 1=1");
+            sql.Append(@"select 
+CONVERT(date,t_octcs.TC01) as Create_Date, 
+t_octcs.TC02 as Code_Type, 
+t_octcs.TC03 as Code_No, 
+t_octcs.TC04 as Clients_Code, 
+t_octcs.TC05 as  Clients_Order_Code, 
+t_octcs.TC06 as Product_Code, 
+t_octcs.TC07 as Product_Name, 
+avg(CAST(t_octcs.TC32 as float)) as Shipping_Percent ,
+max(CONVERT(date,t_octcs.TC16)) as Delivery_Date , 
+max(CONVERT(date,t_octcs.TC11)) as Client_Request_Date,
+t_octbs.TB13 as FinishedGoods,
+t_octbs.TB14 as NGQuantity,
+t_octbs.TB15 as OKQuantity,
+t_octbs.TB32 as Good_product_ratio,
+t_octbs.TB34 as Production_Rate,
+t_octms.TM10 as Status_Production
+from t_OCTC t_octcs ");
+ sql.Append(" left join  t_OCTM t_octms  on t_octcs.TC02 = t_octms.TM02 and t_octcs.TC03 = t_octms.TM03 ");
+sql.Append(" left join  t_OCTB t_octbs  on t_octcs.TC02 = t_octbs.TB02 and t_octcs.TC03 = t_octbs.TB03 ");
+ sql.Append(" where 1=1 ");
             if (cmd_COPTC_TC001.Text != "")
             {
-                sql.Append(" and a.TC02   = '" + cmd_COPTC_TC001.Text + "'");
+                sql.Append(" and t_octcs.TC02   = '" + cmd_COPTC_TC001.Text + "'");
             }
             if (cmd_COPTC_TC002.Text != "")
             {
-                sql.Append(" and a.TC03   = '" + cmd_COPTC_TC002.Text + "'");
+                sql.Append(" and t_octcs.TC03   = '" + cmd_COPTC_TC002.Text + "'");
             }
           else
             {
-                sql.Append(" and CONVERT(date,a.TC01)  >= '" + datefrom  + "' ");
-                sql.Append(" and CONVERT(date,a.TC01) <= '" + dateto  + "' ");
+                sql.Append(" and CONVERT(date,t_octcs.TC01)  >= '" + datefrom  + "' ");
+                sql.Append(" and CONVERT(date,t_octcs.TC01) <= '" + dateto  + "' ");
                 //sql.Append(" and a.TC01 >=" + intdatefrom);
                 //sql.Append(" and a.TC01 <=" + intdateto);
             }
-            sql.Append(@" group by a.TC01, a.TC03 , a.TC02, a.TC04, a.TC05, a.TC06, a.TC07");
-            sql.Append(" order by a.TC02,  a.TC03");
+            sql.Append(@" group by t_octcs.TC01, t_octcs.TC03 , t_octcs.TC02, t_octcs.TC04, t_octcs.TC05, t_octcs.TC06, t_octcs.TC07,t_octbs.TB13,t_octbs.TB14,t_octbs.TB15,t_octbs.TB32,t_octbs.TB34,t_octms.TM10");
+            sql.Append(" order by t_octcs.TC02,  t_octcs.TC03");
             sqlCON con = new sqlCON();
             con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtshow);
 
@@ -244,10 +269,16 @@ where 1=1 ");
             va.value1 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Code_Type"].Value.ToString();
             va.value2 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Code_No"].Value.ToString();
             va.value3 = dtp_from.Value.ToString("yyyy-MM-dd");
-            if (dgv_show.Rows[i].Cells["Shipping_Percent"].Selected)
+            if (dgv_show.Rows[i].Cells["Shipping_Percent"].Selected )
             {
                 ERPShowShipping shipping = new ERPShowShipping();
                 shipping.ShowDialog();
+            }
+            else if(dgv_show.Rows[i].Cells["FinishedGoods"].Selected || dgv_show.Rows[i].Cells["NGQuantity"].Selected || dgv_show.Rows[i].Cells["OKQuantity"].Selected|| 
+                dgv_show.Rows[i].Cells["Good_product_ratio"].Selected|| dgv_show.Rows[i].Cells["Production_Rate"].Selected)
+            {
+                ERPShowOrder showOrder = new ERPShowOrder();
+                showOrder.ShowDialog();
             }
 
         }
@@ -268,6 +299,13 @@ where 1=1 ");
         {
             ERPMaterialShow eRPMaterialShow = new ERPMaterialShow();
             eRPMaterialShow.ShowDialog();
+        }
+
+        private void Btn_toExcel_Click(object sender, EventArgs e)
+        {
+            
+            ToolSupport tool = new ToolSupport();
+            tool.dtgvExport2Excel(dgv_show, PathFoler +  DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls");
         }
     }
 }
