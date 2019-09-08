@@ -46,9 +46,41 @@ namespace WindowsFormsApplication1
                 adapter.Fill(ds);
                 adapter.Dispose();
                 cmd.Dispose();
+                cmb.Items.Clear();
+                foreach (DataRow row in ds.Tables[0].Rows)
+                {if (cmb.Items !=null && cmb.Items.Contains(row[0].ToString()) ==false)
+                    cmb.Items.Add(row[0].ToString());
+                }
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+
+            }
+            conn.Close();
+        }
+        public void getComboBoxData(string sql, ref ComboBox cmb, ref ComboBox cmb2)
+        {
+            try
+            {
+                conn.Open();
+                SqlCommand cmd = new SqlCommand();
+                cmd.Connection = conn;
+                cmd.CommandText = sql;
+                SqlDataAdapter adapter = new SqlDataAdapter();
+                adapter.SelectCommand = cmd;
+                DataSet ds = new DataSet();
+                adapter.Fill(ds);
+                adapter.Dispose();
+                cmd.Dispose();
+                cmb.Items.Clear();
+                cmb2.Items.Clear();
                 foreach (DataRow row in ds.Tables[0].Rows)
                 {
-                    cmb.Items.Add(row[0].ToString());
+                    if (cmb.Items != null && cmb.Items.Contains(row[0].ToString()) == false)
+                        cmb.Items.Add(row[0].ToString());
+                    if (cmb2.Items != null && cmb2.Items.Contains(row[1].ToString()) == false)
+                        cmb2.Items.Add(row[1].ToString());
                 }
             }
             catch (Exception ex)

@@ -13,8 +13,8 @@ namespace WindowsFormsApplication1
         public static SqlConnection GetDBConnection()
         {
             //Data Source=LONG;Initial Catalog=TEST;Integrated Security=True
-            string datasource = "Long";
-            string database = "TEST";
+            string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
+            string database = "TLSOFT";
             string username = "SQLUSER";
             string password = "12345";
 
@@ -35,7 +35,7 @@ namespace WindowsFormsApplication1
             //string username = "soft";
             //string password = "techlink@!@#";
 
-            string datasource = "Long";
+            string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
             string database = "TECHLINK";
             string username = "SQLUSER";
             string password = "12345";
