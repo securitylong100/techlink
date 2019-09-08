@@ -36,9 +36,9 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("Dept", btn_dept);
             connect.sqlDatatablePermision("PQMShow", btn_pqmshow);
             connect.sqlDatatablePermision("ProcessInspect", btn_process);
-            connect.sqlDatatablePermision("ERPShowOrder", btn_erpshoworder);
-            connect.sqlDatatablePermision("Order-PDC", btn_order_pdc);
-            connect.sqlDatatablePermision("Order-SHOW", btn_ordershow);
+            connect.sqlDatatablePermision("ERPShowOrder", btn_ERPshowmain);
+            connect.sqlDatatablePermision("ERPShowMain", btn_ERPshowmain);
+            connect.sqlDatatablePermision("Order-SHOW", btn_tam);
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -90,22 +90,10 @@ namespace WindowsFormsApplication1
             frew.Show();
         }
 
-        private void btn_erpshoworder_Click(object sender, EventArgs e)
-        {
-            ERPShowOrder.ERPShowOrder showfrm = new ERPShowOrder.ERPShowOrder();
-            showfrm.Show();
-        }
-
-        private void btn_order_pdc_Click(object sender, EventArgs e)
-        {
-            ERPShowOrder.Order_PDC showconfig = new ERPShowOrder.Order_PDC();
-            showconfig.Show();
-        }
-
-        private void btn_ordershow_Click(object sender, EventArgs e)
+        private void btn_ERPshowmain_Click(object sender, EventArgs e)
         {
             ERPShowOrder.ERPShowMain show = new ERPShowOrder.ERPShowMain();
-            show.Show();
+            show.ShowDialog();
         }
     }
 }

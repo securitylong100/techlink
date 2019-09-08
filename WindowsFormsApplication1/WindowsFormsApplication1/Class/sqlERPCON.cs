@@ -47,8 +47,9 @@ namespace WindowsFormsApplication1
                 adapter.Dispose();
                 cmd.Dispose();
                 cmb.Items.Clear();
+
                 foreach (DataRow row in ds.Tables[0].Rows)
-                {if (cmb.Items !=null && cmb.Items.Contains(row[0].ToString()) ==false)
+                {
                     cmb.Items.Add(row[0].ToString());
                 }
             }
