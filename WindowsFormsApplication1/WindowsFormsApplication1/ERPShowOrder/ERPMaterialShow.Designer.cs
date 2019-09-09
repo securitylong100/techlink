@@ -230,7 +230,7 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dtgv_material.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dtgv_material.Location = new System.Drawing.Point(1, 227);
+            this.dtgv_material.Location = new System.Drawing.Point(0, 227);
             this.dtgv_material.Margin = new System.Windows.Forms.Padding(4);
             this.dtgv_material.Name = "dtgv_material";
             this.dtgv_material.RowHeadersWidth = 51;

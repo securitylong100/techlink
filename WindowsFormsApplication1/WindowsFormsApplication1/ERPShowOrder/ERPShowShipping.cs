@@ -131,7 +131,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
 CONVERT(date,coptcs.CREATE_DATE) as Create_Date,
 coptcs.TC001 as Code_Type, 
 coptcs.TC002 as Code_No,
-coptcs.TC004 as Clients_Code,
+coptcs.TC005 as Department_code,
+copmas.MA002 as Clients_Name,
 coptcs.TC012 as Clients_Order_Code, 
 coptds.TD004 as Product_Code,
 coptds.TD005 as Product_Name,
@@ -150,6 +151,7 @@ coptis.TI003 as Return_Date,
  from COPTC coptcs
 left join COPTD  coptds on coptcs.TC002 = coptds.TD002  and coptcs.TC001 = coptds.TD001 -- cong doan tao don
 left join MOCTB  moctbs on coptcs.TC002 = moctbs.TB002  and coptcs.TC001 = moctbs.TB001
+inner join COPMA copmas on copmas.MA001 = coptcs.TC004
 left join COPTH copths on coptcs.TC002 = copths.TH015 and  coptcs.TC001 = copths.TH014--cong doan giao hang
 left join COPTG coptgs on copths.TH002  = coptgs.TG002 and copths.TH001  = coptgs.TG001 --cong doan giao hang
 left join COPTJ coptjs on coptcs.TC002 = coptjs.TJ019 and coptcs.TC001 = coptjs.TJ018-- cong doan tra hang
@@ -174,7 +176,8 @@ and copths.TH004  = coptds.TD004 ");
                                    coptcs.CREATE_DATE,
                                     coptcs.TC001 ,
                                     coptcs.TC002 ,
-                                    coptcs.TC004, 
+                                    coptcs.TC005 ,
+                                    copmas.MA002, 
                                    coptcs.TC012,
                                     coptds.TD004,
                                     coptds.TD005,
@@ -204,7 +207,7 @@ and copths.TH004  = coptds.TD004 ");
                     string codeSanPham = dt.Rows[i]["Product_Code"].ToString().Replace("'", "");
                     string ShippingPercent = dt.Rows[i]["Shipping_Percent"].ToString().Replace("'", "");
 
-                    sqlcheck = "select COUNT(*) from t_OCTC where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC05='" + codeSanPham + "'";
+                    sqlcheck = "select COUNT(*) from t_OCTC where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC06='" + codeSanPham + "'";
                     sqlCON check = new sqlCON();
                     if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                     {
@@ -216,7 +219,7 @@ and copths.TH004  = coptds.TD004 ");
                         }
                         StringBuilder sqlinsert = new StringBuilder();
                         sqlinsert.Append("insert into t_OCTC ");
-                        sqlinsert.Append(@"(TC01,TC02,TC03,TC04,TC05,TC06,TC07,TC08,TC09,TC10,TC11,TC12,TC13,TC14,TC15,TC16,TC17,TC18,TC32,TC31,UserName,datetimeRST) values ( ");
+                        sqlinsert.Append(@"(TC01,TC02,TC03,TC04,TC05,TC06,TC07,TC08,TC09,TC10,TC11,TC12,TC13,TC14,TC15,TC16,TC17,TC18,TC19,TC32,TC31,UserName,datetimeRST) values ( ");
                         sqlinsert.Append(list);
                         if (ShippingPercent != "")
                         {
@@ -237,8 +240,8 @@ and copths.TH004  = coptds.TD004 ");
 
                         StringBuilder sqlupdate = new StringBuilder();
                         sqlupdate.Append("update t_OCTC set ");
-                        sqlupdate.Append(@"TC12 = '" + dt.Rows[i]["Quanity_Delivery"].ToString().Replace("'", "") + "',");
-                        sqlupdate.Append(@"TC16 = '" + dt.Rows[i]["Delivery_Date"].ToString().Replace("'", "") + "',");
+                        sqlupdate.Append(@"TC13 = '" + dt.Rows[i]["Quanity_Delivery"].ToString().Replace("'", "") + "',");
+                        sqlupdate.Append(@"TC17 = '" + dt.Rows[i]["Delivery_Date"].ToString().Replace("'", "") + "',");
                         sqlupdate.Append(@"TC32 = '" + ShippingPercent + "',");
                         if (ShippingPercent != "")
                         {
@@ -250,7 +253,7 @@ and copths.TH004  = coptds.TD004 ");
                             }
                         }
                         else { sqlupdate.Append(@"TC31 = 'WAITING'"); }
-                        sqlupdate.Append(@" where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC05='" + codeSanPham + "'");
+                        sqlupdate.Append(@" where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC06='" + codeSanPham + "'");
 
                         sqlCON update = new sqlCON();
                         update.sqlExecuteNonQuery(sqlupdate.ToString(), false);
