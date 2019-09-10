@@ -20,7 +20,6 @@ namespace WindowsFormsApplication1.ERPShowOrder
         DataTable dt;
         DataTable dtShow;
         DataGridViewButtonColumn dtCol;
-
         private void btn_search_Click(object sender, EventArgs e)
         {
             getERPdata();
@@ -39,6 +38,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             MakeAlarmForWarning(dgv_show);
             addColumn(ref dgv_show);
         }
+
         private void MakeAlarmForWarning(DataGridView dtgv)
         {
             if (dtgv.Rows.Count > 0)
@@ -307,18 +307,18 @@ namespace WindowsFormsApplication1.ERPShowOrder
             //string sql = "select distinct TA001 from MOCTA where TA001 != '' order by TA001";
             //sqlERPCON conERP = new sqlERPCON();
             //conERP.getComboBoxData(sql, ref cmd_MOCTA_TA001);
-//            string sql_cmb_COPTC_TC001 = @"select distinct
-//moctas.TA026 as MaDDH
-//from MOCTA moctas
-//where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
-//            sqlERPCON conERP = new sqlERPCON();
-//            cmb_COPTC_TC001.Items.Clear();
-//            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
-//            if (cmb_COPTC_TC001.Items != null)
-//            {
-//                cmb_COPTC_TC001.SelectedIndex = 0;
+            //            string sql_cmb_COPTC_TC001 = @"select distinct
+            //moctas.TA026 as MaDDH
+            //from MOCTA moctas
+            //where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
+            //            sqlERPCON conERP = new sqlERPCON();
+            //            cmb_COPTC_TC001.Items.Clear();
+            //            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
+            //            if (cmb_COPTC_TC001.Items != null)
+            //            {
+            //                cmb_COPTC_TC001.SelectedIndex = 0;
 
-//            }
+            //            }
             if (Class.valiballecommon.GetStorage().value1 != null)
             {
                 Class.valiballecommon va = Class.valiballecommon.GetStorage();
@@ -408,7 +408,7 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             }
         }
 
-        private void Dgv_show_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        private void dgv_show_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             int curRow = int.Parse(e.RowIndex.ToString());
 

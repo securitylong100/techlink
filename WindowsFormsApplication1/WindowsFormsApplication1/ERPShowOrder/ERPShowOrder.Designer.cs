@@ -225,7 +225,7 @@
             this.dgv_show.RowHeadersWidth = 51;
             this.dgv_show.Size = new System.Drawing.Size(1362, 688);
             this.dgv_show.TabIndex = 0;
-            this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentClick);
+            this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_show_CellContentClick);
             // 
             // ERPShowOrder
             // 
