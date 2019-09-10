@@ -198,7 +198,7 @@
             this.btn_search.Location = new System.Drawing.Point(4, 581);
             this.btn_search.Margin = new System.Windows.Forms.Padding(4);
             this.btn_search.Name = "btn_search";
-            this.btn_search.Size = new System.Drawing.Size(141, 51);
+            this.btn_search.Size = new System.Drawing.Size(140, 51);
             this.btn_search.TabIndex = 0;
             this.btn_search.Text = "Search";
             this.btn_search.TextAlign = System.Drawing.ContentAlignment.MiddleRight;
@@ -207,16 +207,18 @@
             // 
             // dgv_show
             // 
+            this.dgv_show.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_show.BorderStyle = System.Windows.Forms.BorderStyle.Fixed3D;
             this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_show.Cursor = System.Windows.Forms.Cursors.Default;
-            this.dgv_show.Dock = System.Windows.Forms.DockStyle.Fill;
-            this.dgv_show.Location = new System.Drawing.Point(159, 10);
+            this.dgv_show.Location = new System.Drawing.Point(158, 10);
             this.dgv_show.Margin = new System.Windows.Forms.Padding(4, 10, 10, 10);
             this.dgv_show.Name = "dgv_show";
             this.dgv_show.ReadOnly = true;
             this.dgv_show.RowHeadersWidth = 51;
-            this.dgv_show.Size = new System.Drawing.Size(1193, 742);
+            this.dgv_show.Size = new System.Drawing.Size(1194, 742);
             this.dgv_show.TabIndex = 5;
             this.dgv_show.CellDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_show_CellDoubleClick);
             // 
@@ -289,7 +291,7 @@
             this.panel1.Controls.Add(this.btn_search);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(149, 756);
+            this.panel1.Size = new System.Drawing.Size(148, 756);
             this.panel1.TabIndex = 6;
             // 
             // panel2
@@ -301,7 +303,7 @@
             this.panel2.Controls.Add(this.trv_department);
             this.panel2.Location = new System.Drawing.Point(3, 3);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(146, 571);
+            this.panel2.Size = new System.Drawing.Size(145, 571);
             this.panel2.TabIndex = 7;
             // 
             // panel3
@@ -314,7 +316,7 @@
             this.panel3.Controls.Add(this.cmd_COPTC_TC001);
             this.panel3.Location = new System.Drawing.Point(3, 449);
             this.panel3.Name = "panel3";
-            this.panel3.Size = new System.Drawing.Size(146, 119);
+            this.panel3.Size = new System.Drawing.Size(145, 119);
             this.panel3.TabIndex = 1;
             // 
             // trv_department
@@ -325,7 +327,7 @@
             this.trv_department.CheckBoxes = true;
             this.trv_department.Location = new System.Drawing.Point(0, -1);
             this.trv_department.Name = "trv_department";
-            this.trv_department.Size = new System.Drawing.Size(146, 444);
+            this.trv_department.Size = new System.Drawing.Size(145, 444);
             this.trv_department.TabIndex = 0;
             // 
             // ERPShowMain
