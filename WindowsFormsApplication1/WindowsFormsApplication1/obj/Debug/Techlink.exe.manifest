@@ -66,17 +66,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Techlink.exe" size="243712">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Techlink.exe" size="254464">
       <assemblyIdentity name="Techlink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>NXW0cgujB3RdK1UCv2Ky0nwswMelERgNoCb8U/PCOPQ=</dsig:DigestValue>
+        <dsig:DigestValue>EZD1/0v/wmAQpyVEh5Owvdme4ry4TMLkltIXGUnnY0U=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>
+  <file name="HTMLPage1.html" size="1461">
+    <hash>
+      <dsig:Transforms>
+        <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+      </dsig:Transforms>
+      <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+      <dsig:DigestValue>ONF+3+QDlLLWa1F5dSojmjbIRC1InsHBRto/rWInIdA=</dsig:DigestValue>
+    </hash>
+  </file>
   <file name="Techlink.exe.config" size="1450">
     <hash>
       <dsig:Transforms>

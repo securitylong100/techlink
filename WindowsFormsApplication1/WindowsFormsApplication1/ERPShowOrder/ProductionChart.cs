@@ -120,7 +120,7 @@ moctas.TA015 as Plan_Quanity,   (moctgs.TG011) as Finished_Goods,
                 dgv_show.Rows[i].Cells["Finished_Goods"].Value = input.ToString();
                 dgv_show.Rows[i].Cells["Good_Quanity"].Value = output.ToString();
                 dgv_show.Rows[i].Cells["NG_Quanity"].Value = NG.ToString();
-                double yvalue = 100 - NG / input;
+                double yvalue = Math.Round((100 - NG / input),2);
                 DateTime xvalue = DateTime.Parse(dgv_show.Rows[i].Cells["Input_Date"].Value.ToString());
                 chartIONG.Series["YEILD"].Points.AddXY(xvalue, yvalue);
             }

@@ -14,6 +14,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
     public partial class ERPShowMain : CommonForm
     {
         string PathFoler = @"C:\ERP_Temp\";
+        bool IscheckDepartment = false;
         public ERPShowMain()
         {
             InitializeComponent();
@@ -39,13 +40,18 @@ namespace WindowsFormsApplication1.ERPShowOrder
             sqlERPCON conERP = new sqlERPCON();
             conERP.sqlDataAdapterFillDatatable("select distinct b.TC005,a.ME002 from CMSME a inner join COPTC b on a.ME001 = b.TC005 order by b.TC005 ", ref dt);
             TreeNode child = new TreeNode();
+    
             foreach (DataRow row in dt.Rows)
             {
                 child = new TreeNode(row[0].ToString() + ": " + row[1].ToString());
                 trnode.Nodes.Add(child);
+                
             }
+           
             trv_department.Nodes.Add(trnode);
+           
             trv_department.AfterCheck += Trv_department_AfterCheck;
+            trnode.Checked = true;
         }
 
         private void Trv_department_AfterCheck(object sender, TreeViewEventArgs e)
@@ -56,13 +62,14 @@ namespace WindowsFormsApplication1.ERPShowOrder
                 foreach (TreeNode tn in e.Node.Nodes)
                 {
                     tn.Checked = e.Node.Checked;
-
+                    
                 }
             }
 
         }
         private string ChooseDeptoSQLcommand(TreeView treeView)
         {
+            IscheckDepartment = false;
             string sqlquerry = "";
             var treeviewNodes = treeView.Nodes["Node_Depts"];
             if (treeviewNodes.GetNodeCount(false) > 0)
@@ -114,36 +121,42 @@ namespace WindowsFormsApplication1.ERPShowOrder
 
         private void btn_search_Click(object sender, EventArgs e)
         {
-            //   string sql = ChooseDeptoSQLcommand(trv_department);
-            getERPdata();
+        
             datashow();
-            DataView dv = dtshow.DefaultView;
-            dv.Sort = "Shipping_Percent ASC";
-            dgv_show.DataSource = dv;
-            // dgv_show.DataSource = dtshow;
-            dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
-            dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-            dgv_show.AutoGenerateColumns = true;
-            dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
-            dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
-            dgv_show.AllowUserToAddRows = false;
-            MakeAlarmForWarning(dgv_show);
+            if (dtshow != null && dtshow.Rows.Count >0)
+            {
+                DataView dv = dtshow.DefaultView;
+
+                dv.Sort = "Shipping_Percent ASC";
+                dgv_show.DataSource = dv;
+                // dgv_show.DataSource = dtshow;
+                dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+                dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+                dgv_show.AutoGenerateColumns = true;
+                dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
+                dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
+                dgv_show.AllowUserToAddRows = false;
+                MakeAlarmForWarning(dgv_show);
+            }
+            else
+            {
+                dgv_show.DataSource = null;
+            }
         }
         private void MakeAlarmForWarning(DataGridView dtgv)
         {
             if (dtgv.Rows.Count > 0)
             {
-                string ColumnsAlam = "";
-                DataGridViewColumn dtCol = new DataGridViewColumn();
-                dtCol.Name = "colAlam";
-                dtCol.HeaderText = "ColumnsAlarm";
-                dtCol.CellTemplate = new DataGridViewTextBoxCell();
-                dtgv.Columns.Insert(10, dtCol);
+                //string ColumnsAlam = "";
+                //DataGridViewColumn dtCol = new DataGridViewColumn();
+                //dtCol.Name = "colAlam";
+                //dtCol.HeaderText = "ColumnsAlarm";
+                //dtCol.Frozen = false;
+                //dtCol.CellTemplate = new DataGridViewTextBoxCell();
+                //dtgv.Columns.Insert(10, dtCol);
                 int count = 0;
                 foreach (DataGridViewRow row in dtgv.Rows)
                 {
-
-
                     double ShippingPercent = Convert.ToDouble(row.Cells["Shipping_Percent"].Value);
                     DateTime Deadline = DateTime.MinValue;
                     DateTime DeliveryDate = DateTime.MinValue;
@@ -166,7 +179,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
                         dtgv["Shipping_Percent", count].Style.BackColor = Color.Red;//to color the row
                         dtgv["Delivery_Date", count].Style.BackColor = Color.Red;
                         dtgv["Client_Request_Date", count].Style.BackColor = Color.Red;
-                        ColumnsAlam = "BACKLOG";
+                        dtgv["Production_Status", count].Value = "BackLog";
+                      //  ColumnsAlam = "BACKLOG";
                         // Delivery_Date
                     }
 
@@ -175,24 +189,24 @@ namespace WindowsFormsApplication1.ERPShowOrder
                         dtgv["Shipping_Percent", count].Style.BackColor = Color.Orange;//to color the row
                         dtgv["Delivery_Date", count].Style.BackColor = Color.Orange;
                         dtgv["Client_Request_Date", count].Style.BackColor = Color.Orange;
-                        ColumnsAlam = "LATE";
+                        dtgv["Production_Status", count].Value = "Late";
                     }
                     else if (ShippingPercent < 70 && Deadline >= DateTime.Now.AddDays(7)) //Crisis
                     {
                         dtgv["Shipping_Percent", count].Style.BackColor = Color.Yellow;//to color the row
                         dtgv["Delivery_Date", count].Style.BackColor = Color.Yellow;
                         dtgv["Client_Request_Date", count].Style.BackColor = Color.Yellow;
-                        ColumnsAlam = "CRISIS";
+                        dtgv["Production_Status", count].Value = "Crisis";
                     }
                     else
                     {
-                        ColumnsAlam = "NOMAL";
+                        dtgv["Production_Status", count].Value = "Normal";
                     }
-                    dtgv["colAlam", count].Value = ColumnsAlam;
+                    //dtgv["colAlam", count].Value = ColumnsAlam;
                     StringBuilder sqlupdate = new StringBuilder();
                     sqlupdate.Append("update t_OCTM set ");
                     sqlupdate.Append(@"TM12 = '" + row.Cells["Shipping_Percent"].Value.ToString() + "',"); //percent
-                    sqlupdate.Append(@"TM11 = '" + ColumnsAlam + "'");
+                    sqlupdate.Append(@"TM11 = '" + dtgv["Production_Status", count].Value.ToString() + "'");
                     sqlupdate.Append(@" where TM02 = '" + row.Cells["Code_Type"].Value.ToString() + "' and TM03 ='" + row.Cells["Code_No"].Value.ToString() + "'");
 
                     sqlCON update = new sqlCON();
@@ -302,33 +316,39 @@ t_octbs.TB14 as NGQuantity,
 t_octbs.TB15 as OKQuantity,
 t_octbs.TB32 as Good_product_ratio,
 t_octbs.TB34 as Production_Rate,
-t_octms.TM10 as Status_Production
+t_octms.TM10 as Production_Status
 from   t_OCTM t_octms 
 left join  t_OCTC t_octcs  on t_octcs.TC02 = t_octms.TM02 and t_octcs.TC03 = t_octms.TM03 
 left join  t_OCTB t_octbs  on t_octcs.TC02 = t_octbs.TB02 and t_octcs.TC03 = t_octbs.TB03 
 
 ");
             sql.Append(" where 1=1 ");
-            if (ChooseDeptoSQLcommand(trv_department) != "")
-            {
-                sql.Append(ChooseDeptoSQLcommand(trv_department));
-
-            }
-            if (cmd_COPTC_TC001.Text != "")
+            if (cmd_COPTC_TC001.Text != "" && cmd_COPTC_TC002.Text != "")
             {
                 sql.Append(" and t_octcs.TC02   = '" + cmd_COPTC_TC001.Text + "'");
-            }
-            if (cmd_COPTC_TC002.Text != "")
-            {
                 sql.Append(" and t_octcs.TC03   = '" + cmd_COPTC_TC002.Text + "'");
+
             }
             else
             {
+
+                if (ChooseDeptoSQLcommand(trv_department) != "")
+                {
+                    sql.Append(ChooseDeptoSQLcommand(trv_department));
+
+                }
+                else
+                {
+                    MessageBox.Show("Please choose departments which you want to search data ! ", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                    return;
+                }
+
                 sql.Append(" and CONVERT(date,t_octcs.TC01)  >= '" + datefrom + "' ");
                 sql.Append(" and CONVERT(date,t_octcs.TC01) <= '" + dateto + "' ");
-                //sql.Append(" and a.TC01 >=" + intdatefrom);
-                //sql.Append(" and a.TC01 <=" + intdateto);
             }
+          
+
+            
             sql.Append(@" group by t_octcs.TC01, t_octcs.TC03 , t_octcs.TC02, t_octcs.TC05, t_octcs.TC06, t_octcs.TC07, t_octcs.TC08,t_octbs.TB13,t_octbs.TB14,t_octbs.TB15,t_octbs.TB32,t_octbs.TB34,t_octms.TM10");
             sql.Append(" order by t_octcs.TC02,  t_octcs.TC03");
             sqlCON con = new sqlCON();

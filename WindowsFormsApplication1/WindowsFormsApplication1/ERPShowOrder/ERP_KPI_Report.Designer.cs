@@ -39,6 +39,7 @@
             this.chb_weekly = new System.Windows.Forms.CheckBox();
             this.btn_toExcel = new System.Windows.Forms.Button();
             this.btn_search = new System.Windows.Forms.Button();
+            this.btn_sendmail = new System.Windows.Forms.Button();
             ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).BeginInit();
             this.groupbox.SuspendLayout();
             this.SuspendLayout();
@@ -181,11 +182,22 @@
             this.btn_search.UseVisualStyleBackColor = false;
             this.btn_search.Click += new System.EventHandler(this.Btn_search_Click);
             // 
+            // btn_sendmail
+            // 
+            this.btn_sendmail.Location = new System.Drawing.Point(746, 112);
+            this.btn_sendmail.Name = "btn_sendmail";
+            this.btn_sendmail.Size = new System.Drawing.Size(119, 55);
+            this.btn_sendmail.TabIndex = 30;
+            this.btn_sendmail.Text = "Send Mail";
+            this.btn_sendmail.UseVisualStyleBackColor = true;
+            this.btn_sendmail.Click += new System.EventHandler(this.Btn_sendmail_Click);
+            // 
             // ERP_KPI_Report
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1203, 677);
+            this.Controls.Add(this.btn_sendmail);
             this.Controls.Add(this.btn_search);
             this.Controls.Add(this.btn_toExcel);
             this.Controls.Add(this.groupbox);
@@ -196,6 +208,7 @@
             this.Controls.SetChildIndex(this.groupbox, 0);
             this.Controls.SetChildIndex(this.btn_toExcel, 0);
             this.Controls.SetChildIndex(this.btn_search, 0);
+            this.Controls.SetChildIndex(this.btn_sendmail, 0);
             ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).EndInit();
             this.groupbox.ResumeLayout(false);
             this.groupbox.PerformLayout();
@@ -217,5 +230,6 @@
         private System.Windows.Forms.DateTimePicker dtp_from;
         private System.Windows.Forms.Button btn_toExcel;
         private System.Windows.Forms.Button btn_search;
+        private System.Windows.Forms.Button btn_sendmail;
     }
 }

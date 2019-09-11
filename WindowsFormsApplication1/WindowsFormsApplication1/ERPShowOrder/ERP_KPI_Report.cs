@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApplication1.Class;
+using System.Net.Mail;
 
 namespace WindowsFormsApplication1.ERPShowOrder
 {
@@ -35,8 +36,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
           //  dgv_show.DataSource = null;
             //  dgv_show = new DataGridView();
             //   dgv_show.DataSource = dtshow;
-            dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-            dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            //dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
             dgv_show.AutoGenerateColumns = true;
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
@@ -190,6 +191,46 @@ where 1=1
 
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
+        }
+
+        private void Btn_sendmail_Click(object sender, EventArgs e)
+        {
+            try
+            {
+                MailMessage mail = new MailMessage();
+                mail.IsBodyHtml = true;
+                SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
+                mail.From = new MailAddress("techlinkvn.2019@gmail.com");
+                mail.To.Add("DUC.NA@techlink.vn");
+                mail.To.Add("tranducan.bkhcm11@gmail.com");
+                mail.To.Add("securitylong100@gmail.com");
+                mail.Subject = "Test Mail - 2";
+                mail.Body = "Dear Sir !\n"+
+                    "I would like to send report to you about Reliablity from Sep 1st - Sep 11th\n"
+                    +"Please refer file attached"
+                    +"Thanks!";
+              
+
+                System.Net.Mail.Attachment attachment;
+                attachment = new System.Net.Mail.Attachment(@"C:\ERP_Temp\20190909 143451.xls");
+                mail.Attachments.Add(attachment);
+
+                SmtpServer.Port = 587;
+                SmtpServer.Credentials = new System.Net.NetworkCredential("techlinkvn.2019", "techlink123");
+                SmtpServer.EnableSsl = true;
+
+                SmtpServer.Send(mail);
+                MessageBox.Show("mail Send");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+        }
+        private void SendEmailWithHtmlTemplate()
+        {
+
         }
     }
         }

@@ -135,6 +135,12 @@
     <Compile Include="ERPShowOrder\ERPShowShipping.Designer.cs">
       <DependentUpon>ERPShowShipping.cs</DependentUpon>
     </Compile>
+    <Compile Include="ERPShowOrder\ERP_KPI_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERP_KPI_Report.Designer.cs">
+      <DependentUpon>ERP_KPI_Report.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\Order-PDC.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -262,6 +268,9 @@
     <EmbeddedResource Include="ERPShowOrder\ERPShowShipping.resx">
       <DependentUpon>ERPShowShipping.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERP_KPI_Report.resx">
+      <DependentUpon>ERP_KPI_Report.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\Order-PDC.resx">
       <DependentUpon>Order-PDC.cs</DependentUpon>
     </EmbeddedResource>
@@ -370,6 +379,9 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="Resources\excel-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTMLPage1.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

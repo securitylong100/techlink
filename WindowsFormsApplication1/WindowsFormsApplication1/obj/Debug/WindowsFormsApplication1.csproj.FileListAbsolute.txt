@@ -251,3 +251,4 @@ D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Tech
 D:\GIT\TechLink\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Techlink.application
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ProductionChart.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csprojAssemblyReference.cache
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERP_KPI_Report.resources
