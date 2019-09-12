@@ -10,24 +10,28 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UploadDataToDatabase.Log;
+using UploadDataToDatabase.Class;
 
 namespace UploadDataToDatabase
 {
-    public partial class Form1 : Form
+    public partial class Form1 : CommonForm
     {
         private string path = Environment.CurrentDirectory;
         string version = "";
         // this timer calls bgWorker again and again after regular intervals
         System.Windows.Forms.Timer tmrCallBgWorker;
-
         // this is our worker
         BackgroundWorker bgWorker;
-
+        System.Windows.Forms.Timer tmrSendMail;
+        // this is our worker
+        BackgroundWorker bgSendMailWorker;
         // this is the timer to make sure that worker gets called
         System.Threading.Timer tmrEnsureWorkerGetsCalled;
-
+        List<ScheduleReportItems> listSchedule;
+        DataTable dt;
         // object used for safe access
         object lockObject = new object();
+        object lockObjectSendMail = new object();
         public Form1()
         {
             InitializeComponent();
@@ -54,6 +58,49 @@ namespace UploadDataToDatabase
             bgWorker.ProgressChanged += BgWorker_ProgressChanged;
             bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
             bgWorker.WorkerReportsProgress = true;
+
+            tmrSendMail = new System.Windows.Forms.Timer();
+            tmrSendMail.Tick += TmrSendMail_Tick;
+
+            //bgSendMailWorker.DoWork += BgSendMailWorker_DoWork;
+            //bgSendMailWorker.RunWorkerCompleted += BgSendMailWorker_RunWorkerCompleted;
+            listSchedule = new List<ScheduleReportItems>();
+            dt = new DataTable();
+        }
+
+        private void BgSendMailWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            
+        }
+
+        private void BgSendMailWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+           
+        }
+
+        private void TmrSendMail_Tick(object sender, EventArgs e)
+        {
+            if (Monitor.TryEnter(lockObject))
+            {
+                try
+                {
+                    // if bgworker is not busy the call the worker
+                    if (!bgWorker.IsBusy)
+                        bgWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObject);
+                }
+
+            }
+            else
+            {
+
+                // as the bgworker is busy we will start a timer that will try to call the bgworker again after some time
+                tmrEnsureWorkerGetsCalled = new System.Threading.Timer(new TimerCallback(tmrEnsureWorkerGetsCalled_Callback), null, 0, 10);
+
+            }
         }
 
         private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -182,7 +229,7 @@ namespace UploadDataToDatabase
                 tmrEnsureWorkerGetsCalled = null;
             }
         }
-        DataTable dt;
+      
         private void UploadDataShipping ( DateTime datefrom ,DateTime dateto)
         {
          
@@ -680,14 +727,6 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 btn_Start.Text = "Start";
             }
 
-
-         
-                
-
-          
-               
-          
-         
             
         }
         private void UploadDatatoDatabase ()
@@ -836,10 +875,62 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 chb_uploadProduction.Checked = false;
                 chb_uploadMaterial.Checked = false;
             }
+            dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
+            dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            dgv_show.AutoGenerateColumns = true;
+            dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
+            dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
+            dgv_show.AllowUserToAddRows = false;
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select reportname, reporttype, hours, day, date, month,subject, attach, comments from t_report_schedule where 1=1 ");
+            sqlCON tf = new sqlCON();
+            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            dgv_show.DataSource = dt;
+            dgv_show.Refresh();
         }
 
- 
+        private void Btn_add_Click(object sender, EventArgs e)
+        {
+            FormConfig.ReportSchechuleForm reportSchechule = new FormConfig.ReportSchechuleForm();
+            reportSchechule.FormClosed += ReportSchechule_FormClosed;
+            reportSchechule.ShowDialog();
+        }
 
-      
+        private void ReportSchechule_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            dt = new DataTable(); 
+              StringBuilder sql = new StringBuilder();
+            sql.Append("select reportname, reporttype, hours, day, date, month,subject, attach, comments from t_report_schedule where 1=1 ");
+            sqlCON tf = new sqlCON();
+            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            dgv_show.DataSource = dt;
+            dgv_show.Refresh();
+            
+
+        }
+
+        private void Btn_Remove_Click(object sender, EventArgs e)
+        {
+            if (dgv_show.RowCount > 0)
+            {
+                int rownumber = dgv_show.SelectedCells[0].RowIndex;
+                string reportname = dgv_show.Rows[rownumber].Cells[0].Value.ToString();
+                string sql = "delete from t_report_schedule where reportname = '" + reportname + "'";
+                sqlCON connect = new sqlCON();
+                connect.sqlExecuteNonQuery(sql, true);
+                dt = new DataTable();
+                StringBuilder sql2 = new StringBuilder();
+                sql2.Append("select reportname, reporttype, hours, day, date, month, subject,attach, comments from t_report_schedule where 1=1 ");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql2.ToString(), ref dt);
+                dgv_show.DataSource = dt;
+                dgv_show.Refresh();
+            }
+        }
+
+        private void Dgv_show_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            if (dgv_show.RowCount > 0) { btn_Remove.Enabled = true; }
+        }
     }
 }

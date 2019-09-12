@@ -8,3 +8,5 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.pdb
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.exe
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources

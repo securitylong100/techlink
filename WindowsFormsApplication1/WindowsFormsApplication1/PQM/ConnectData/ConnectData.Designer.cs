@@ -31,7 +31,7 @@
             this.label1 = new System.Windows.Forms.Label();
             this.cmb_modelcode = new System.Windows.Forms.ComboBox();
             this.tv_model = new System.Windows.Forms.TreeView();
-            this.dataGridView1 = new System.Windows.Forms.DataGridView();
+            this.dgv_show = new System.Windows.Forms.DataGridView();
             this.label2 = new System.Windows.Forms.Label();
             this.cmb_processcode = new System.Windows.Forms.ComboBox();
             this.dtp_to = new System.Windows.Forms.DateTimePicker();
@@ -39,8 +39,7 @@
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
             this.btn_search = new System.Windows.Forms.Button();
-            this.comboBox1 = new System.Windows.Forms.ComboBox();
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -72,16 +71,16 @@
             this.tv_model.Size = new System.Drawing.Size(238, 542);
             this.tv_model.TabIndex = 13;
             // 
-            // dataGridView1
+            // dgv_show
             // 
-            this.dataGridView1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            this.dgv_show.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.dataGridView1.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dataGridView1.Location = new System.Drawing.Point(236, 135);
-            this.dataGridView1.Name = "dataGridView1";
-            this.dataGridView1.Size = new System.Drawing.Size(1066, 467);
-            this.dataGridView1.TabIndex = 14;
+            this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_show.Location = new System.Drawing.Point(236, 135);
+            this.dgv_show.Name = "dgv_show";
+            this.dgv_show.Size = new System.Drawing.Size(1066, 467);
+            this.dgv_show.TabIndex = 14;
             // 
             // label2
             // 
@@ -152,21 +151,11 @@
             this.btn_search.UseVisualStyleBackColor = true;
             this.btn_search.Click += new System.EventHandler(this.btn_search_Click);
             // 
-            // comboBox1
-            // 
-            this.comboBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.comboBox1.FormattingEnabled = true;
-            this.comboBox1.Location = new System.Drawing.Point(1140, 72);
-            this.comboBox1.Name = "comboBox1";
-            this.comboBox1.Size = new System.Drawing.Size(130, 24);
-            this.comboBox1.TabIndex = 22;
-            // 
             // ConnectData
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(1302, 602);
-            this.Controls.Add(this.comboBox1);
             this.Controls.Add(this.btn_search);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
@@ -174,7 +163,7 @@
             this.Controls.Add(this.dtp_to);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.cmb_processcode);
-            this.Controls.Add(this.dataGridView1);
+            this.Controls.Add(this.dgv_show);
             this.Controls.Add(this.tv_model);
             this.Controls.Add(this.label1);
             this.Controls.Add(this.cmb_modelcode);
@@ -184,7 +173,7 @@
             this.Controls.SetChildIndex(this.cmb_modelcode, 0);
             this.Controls.SetChildIndex(this.label1, 0);
             this.Controls.SetChildIndex(this.tv_model, 0);
-            this.Controls.SetChildIndex(this.dataGridView1, 0);
+            this.Controls.SetChildIndex(this.dgv_show, 0);
             this.Controls.SetChildIndex(this.cmb_processcode, 0);
             this.Controls.SetChildIndex(this.label2, 0);
             this.Controls.SetChildIndex(this.dtp_to, 0);
@@ -192,8 +181,7 @@
             this.Controls.SetChildIndex(this.label3, 0);
             this.Controls.SetChildIndex(this.label4, 0);
             this.Controls.SetChildIndex(this.btn_search, 0);
-            this.Controls.SetChildIndex(this.comboBox1, 0);
-            ((System.ComponentModel.ISupportInitialize)(this.dataGridView1)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -204,7 +192,7 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.ComboBox cmb_modelcode;
         private System.Windows.Forms.TreeView tv_model;
-        private System.Windows.Forms.DataGridView dataGridView1;
+        private System.Windows.Forms.DataGridView dgv_show;
         private System.Windows.Forms.Label label2;
         private System.Windows.Forms.ComboBox cmb_processcode;
         private System.Windows.Forms.DateTimePicker dtp_to;
@@ -212,6 +200,5 @@
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;
         private System.Windows.Forms.Button btn_search;
-        private System.Windows.Forms.ComboBox comboBox1;
     }
 }

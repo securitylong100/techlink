@@ -28,4 +28,5 @@ namespace UploadDataToDatabase.Class
         //    public static string Username { get; set; }
         //}
     }
+
 }

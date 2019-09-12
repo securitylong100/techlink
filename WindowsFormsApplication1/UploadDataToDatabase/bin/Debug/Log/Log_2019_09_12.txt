@@ -20,3 +20,10 @@
 [09:54:48.615] Upload  data just Finished  ! 
 [09:59:37.768] Upload  data just Finished  ! 
 [09:59:57.827] Upload  data just Finished  ! 
+[15:01:18.997] Invalid column name 'reportname'.
+Invalid column name 'reporttype'.
+Invalid column name 'hours'.
+Invalid column name 'day'.
+Invalid column name 'date'.
+Invalid column name 'month'.
+Invalid column name 'inputdate'.
