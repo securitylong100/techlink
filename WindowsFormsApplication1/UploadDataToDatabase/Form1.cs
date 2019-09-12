@@ -6,6 +6,7 @@ using System.Drawing;
 using System.IO;
 using System.Linq;
 using System.Text;
+using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using UploadDataToDatabase.Log;
@@ -16,6 +17,17 @@ namespace UploadDataToDatabase
     {
         private string path = Environment.CurrentDirectory;
         string version = "";
+        // this timer calls bgWorker again and again after regular intervals
+        System.Windows.Forms.Timer tmrCallBgWorker;
+
+        // this is our worker
+        BackgroundWorker bgWorker;
+
+        // this is the timer to make sure that worker gets called
+        System.Threading.Timer tmrEnsureWorkerGetsCalled;
+
+        // object used for safe access
+        object lockObject = new object();
         public Form1()
         {
             InitializeComponent();
@@ -26,8 +38,149 @@ namespace UploadDataToDatabase
             version += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
             version += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
             Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " " + version;
-            //timer_update.Start();
+            btn_Start.Text = "Start";
 
+            //timer_update.Start();
+            // this timer calls bgWorker again and again after regular intervals
+            tmrCallBgWorker = new System.Windows.Forms.Timer();
+            tmrCallBgWorker.Tick += new EventHandler(tmrCallBgWorker_Tick);
+            //tmrCallBgWorker.Interval = 10000;
+
+            // this is our worker
+            bgWorker = new BackgroundWorker();
+            
+            // work happens in this method
+            bgWorker.DoWork += new DoWorkEventHandler(bg_DoWork);
+            bgWorker.ProgressChanged += BgWorker_ProgressChanged;
+            bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+            bgWorker.WorkerReportsProgress = true;
+        }
+
+        private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            btn_Start.Text = "Starting";
+            pbar_upload.Value = e.ProgressPercentage;
+
+        }
+
+        void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            System.Diagnostics.Debug.WriteLine("Complete");
+        }
+
+        void bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+            // does a job like writing to serial communication, webservices etc
+            var worker = sender as BackgroundWorker;
+            int intProgress = 0;
+
+          
+            if (checkInvalidDateTimeSpan(dtp_from.Value, dtp_todate.Value))
+            {
+                
+                if (chb_uploadShipping.Checked)
+                {
+
+                    try //Upload Shipping 
+                    {
+                        intProgress += 10;
+                        worker.ReportProgress(intProgress);
+                        UploadDataShipping(dtp_from.Value, dtp_todate.Value);
+                        intProgress +=90;
+                        worker.ReportProgress(intProgress);
+                       
+
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Logfile.Output(StatusLog.Error, "Upload data for Shipping fail : ", ex.Message);
+                    }
+                }
+
+                if (chb_uploadProduction.Checked)
+                {
+                    try //Upload Production
+                    {
+                        intProgress += 10;
+                        worker.ReportProgress(intProgress);
+                        UploadDataProduction(dtp_from.Value, dtp_todate.Value);
+                        intProgress += 90;
+                        worker.ReportProgress(intProgress);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
+                    }
+                }
+                if (chb_uploadMaterial.Checked)
+                {
+                    try //Upload Material 
+                    {
+                        intProgress += 10;
+                        worker.ReportProgress(intProgress);
+                        UploadDataMaterial(dtp_from.Value, dtp_todate.Value);
+                        intProgress += 90;
+                        worker.ReportProgress(intProgress);
+                    }
+                    catch (Exception ex)
+                    {
+
+                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
+                    }
+                }
+                Logfile.Output(StatusLog.Error, "Upload  data just Finished  ! ");
+                //   MessageBox.Show("Upload  data just Finished  ! ");
+            }
+         
+          //  System.Diagnostics.Debug.WriteLine("run !");
+            System.Threading.Thread.Sleep(100);
+        }
+
+        void tmrCallBgWorker_Tick(object sender, EventArgs e)
+        {
+            if (Monitor.TryEnter(lockObject))
+            {
+                try
+                {
+                    // if bgworker is not busy the call the worker
+                    if (!bgWorker.IsBusy)
+                        bgWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObject);
+                }
+
+            }
+            else
+            {
+
+                // as the bgworker is busy we will start a timer that will try to call the bgworker again after some time
+                tmrEnsureWorkerGetsCalled = new System.Threading.Timer(new TimerCallback(tmrEnsureWorkerGetsCalled_Callback), null, 0, 10);
+
+            }
+
+        }
+
+
+        void tmrEnsureWorkerGetsCalled_Callback(object obj)
+        {
+            // this timer was started as the bgworker was busy before now it will try to call the bgworker again
+            if (Monitor.TryEnter(lockObject))
+            {
+                try
+                {
+                    if (!bgWorker.IsBusy)
+                        bgWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObject);
+                }
+                tmrEnsureWorkerGetsCalled = null;
+            }
         }
         DataTable dt;
         private void UploadDataShipping ( DateTime datefrom ,DateTime dateto)
@@ -496,56 +649,63 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
 
         private void Btn_Start_Click(object sender, EventArgs e)
-        {if(timer_update.Enabled ==false)
+        { //pbar_upload.Visible = true;
+            pbar_upload.Minimum =0;
+            pbar_upload.Maximum = 0;
+            pbar_upload.Value = 0;
+            if (chb_uploadShipping.Checked)
+            {
+                pbar_upload.Maximum += 100;
+            }
+            if (chb_uploadProduction.Checked)
+            {
+                pbar_upload.Maximum += 100;
+            }
+            if (chb_uploadMaterial.Checked)
+            {
+                pbar_upload.Maximum += 100;
+            }
+
+            if (btn_Start.Text == "Start")
             {
                 int timerInterval = (int)(num_hours.Value * 3600 + num_minutes.Value * 60 + num_seconds.Value) * 1000;
-                timer_update.Interval = timerInterval;
-                timer_update.Enabled = true;
+
+                tmrCallBgWorker.Interval = timerInterval;
+                tmrCallBgWorker.Start();
+                btn_Start.Text = "Starting";
+            }
+         else
+            {
+                tmrCallBgWorker.Stop() ;
+                btn_Start.Text = "Start";
+            }
+
+
          
-                    timer_update.Start();
-                btn_Start.Text =  "Start";
                 
 
-            }
-        else
-            {
-                timer_update.Stop();
-                timer_update.Enabled = false;
-                btn_Start.Text = "Stop";
-            }
-                
+          
+               
+          
+         
             
         }
         private void UploadDatatoDatabase ()
         {
-            pbar_upload.Visible = true;
-            pbar_upload.Minimum = 1;
-            pbar_upload.Maximum = 0;
-            pbar_upload.Value = 0;
+           
 
             if (checkInvalidDateTimeSpan(dtp_from.Value, dtp_todate.Value))
             {
-                if (chb_uploadShipping.Checked)
-                {
-                    pbar_upload.Maximum += 100;
-                }
-                if (chb_uploadProduction.Checked)
-                {
-                    pbar_upload.Maximum += 100;
-                }
-                if (chb_uploadMaterial.Checked)
-                {
-                    pbar_upload.Maximum += 100;
-                }
+               
                 if (chb_uploadShipping.Checked)
                 {
                     
                     try //Upload Shipping 
                     {
-                        pbar_upload.Value += 10;
+                      //  pbar_upload.Value += 10;
                         UploadDataShipping(dtp_from.Value, dtp_todate.Value);
-                        pbar_upload.Value += 90;
-                     pbar_upload.Update();
+                       // pbar_upload.Value += 90;
+                //     pbar_upload.Update();
 
                     }
                     catch (Exception ex)
@@ -559,10 +719,10 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 {
                     try //Upload Production
                     {
-                        pbar_upload.Value += 10;
+                  //      pbar_upload.Value += 10;
                         UploadDataProduction(dtp_from.Value, dtp_todate.Value);
-                        pbar_upload.Value += 90;
-                        pbar_upload.Update();
+                    //    pbar_upload.Value += 90;
+                   //     pbar_upload.Update();
                     }
                     catch (Exception ex)
                     {
@@ -574,10 +734,10 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 {
                     try //Upload Material 
                     {
-                        pbar_upload.Value += 10;
+                  //      pbar_upload.Value += 10;
                         UploadDataMaterial(dtp_from.Value, dtp_todate.Value);
-                        pbar_upload.Value += 90;
-                        pbar_upload.Update();
+                   //     pbar_upload.Value += 90;
+                   //     pbar_upload.Update();
                     }
                     catch (Exception ex)
                     {
@@ -602,7 +762,11 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
         private void Timer1_Tick(object sender, EventArgs e)
         {
             timer_update.Stop();
-            UploadDatatoDatabase();
+            timer_update.Enabled = false;
+           
+
+        //    UploadDatatoDatabase();
+            timer_update.Enabled = true;
             timer_update.Start();
         }
 
@@ -640,8 +804,8 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
                 if (saveConfigure != null)
                 {
-                    dtp_from.Value = saveConfigure.fromdate;
-                    dtp_todate.Value = saveConfigure.tomdate;
+                    //dtp_from.Value = saveConfigure.fromdate;
+                    //dtp_todate.Value = saveConfigure.tomdate;
                     num_hours.Value = saveConfigure.hours;
                     num_minutes.Value = saveConfigure.minutes;
                     num_seconds.Value = saveConfigure.seconds;
@@ -673,5 +837,9 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 chb_uploadMaterial.Checked = false;
             }
         }
+
+ 
+
+      
     }
 }

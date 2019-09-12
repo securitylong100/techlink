@@ -111,6 +111,18 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.designer.cs">
+      <DependentUpon>AddERPConfigMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\ERPConfigMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\ERPConfigMail.designer.cs">
+      <DependentUpon>ERPConfigMail.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\ERPMaterialShow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -255,6 +267,12 @@
     <Compile Include="Class\sqlCON.cs" />
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPemail\AddERPConfigMail.resx">
+      <DependentUpon>AddERPConfigMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPemail\ERPConfigMail.resx">
+      <DependentUpon>ERPConfigMail.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPMaterialShow.resx">
       <DependentUpon>ERPMaterialShow.cs</DependentUpon>

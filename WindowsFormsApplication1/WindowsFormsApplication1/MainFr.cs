@@ -36,9 +36,9 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("Dept", btn_dept);
             connect.sqlDatatablePermision("PQMShow", btn_pqmshow);
             connect.sqlDatatablePermision("ProcessInspect", btn_process);
-            connect.sqlDatatablePermision("ERPShowOrder", btn_ERPshowmain);
             connect.sqlDatatablePermision("ERPShowMain", btn_ERPshowmain);
-            connect.sqlDatatablePermision("Order-SHOW", btn_tam);
+            connect.sqlDatatablePermision("ERPConfigMail", btn_emailconfig);
+
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -93,6 +93,12 @@ namespace WindowsFormsApplication1
         private void btn_ERPshowmain_Click(object sender, EventArgs e)
         {
             ERPShowOrder.ERPShowMain show = new ERPShowOrder.ERPShowMain();
+            show.ShowDialog();
+        }
+
+        private void Btn_emailconfig_Click(object sender, EventArgs e)
+        {
+            ERPShowOrder.ERPConfigMail show = new ERPShowOrder.ERPConfigMail();
             show.ShowDialog();
         }
     }
