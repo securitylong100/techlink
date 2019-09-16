@@ -10,3 +10,60 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.exe.config
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.exe
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.pdb
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Form1.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Properties.Resources.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.GenerateResource.cache
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CoreCompileInputs.cache
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.exe
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.PrintEmployeeCard.resources
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\concrt140.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\cvextern.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\msvcp140.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\opencv_ffmpeg343_64.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\vcruntime140.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\cvextern.lib
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.UI.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.World.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\ZedGraph.dll
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.UI.xml
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.World.xml
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CopyComplete
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\Human.ico
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\move.cur
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\Resize.cur
+C:\Users\Admin\Source\Repos\securitylong100\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\logo.PNG
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\concrt140.dll
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\cvextern.dll
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\msvcp140.dll
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\opencv_ffmpeg343_64.dll
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\vcruntime140.dll
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\cvextern.lib
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\Human.ico
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\move.cur
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\Resize.cur
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\logo.PNG
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.UI.xml
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Emgu.CV.World.xml
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Form1.resources
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.PrintEmployeeCard.resources
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Properties.Resources.resources
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.GenerateResource.cache
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CoreCompileInputs.cache
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CopyComplete
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Properties\Resources.resx
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Properties\Resources.Designer.cs
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\HR Program.exe.config
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\HR Program.exe
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\HR Program.pdb
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\HR Program.exe
+D:\AN\Project\AddPrintCard\techlink\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\HR Program.pdb
