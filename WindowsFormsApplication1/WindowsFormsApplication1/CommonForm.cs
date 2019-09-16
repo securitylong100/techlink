@@ -20,6 +20,7 @@ namespace WindowsFormsApplication1
 
         private void CommonForm_Load(object sender, EventArgs e)
         {
+            
 
         }
     }

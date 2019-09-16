@@ -88,6 +88,7 @@
     <Reference Include="System.DirectoryServices" />
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
+    <Reference Include="System.Windows.Forms.DataVisualization" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -110,6 +111,18 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.designer.cs">
+      <DependentUpon>AddERPConfigMail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\ERPConfigMail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERPemail\ERPConfigMail.designer.cs">
+      <DependentUpon>ERPConfigMail.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\ERPMaterialShow.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -134,11 +147,23 @@
     <Compile Include="ERPShowOrder\ERPShowShipping.Designer.cs">
       <DependentUpon>ERPShowShipping.cs</DependentUpon>
     </Compile>
+    <Compile Include="ERPShowOrder\ERP_KPI_Report.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ERP_KPI_Report.Designer.cs">
+      <DependentUpon>ERP_KPI_Report.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\Order-PDC.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="ERPShowOrder\Order-PDC.Designer.cs">
       <DependentUpon>Order-PDC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="ERPShowOrder\ProductionChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="ERPShowOrder\ProductionChart.Designer.cs">
+      <DependentUpon>ProductionChart.cs</DependentUpon>
     </Compile>
     <Compile Include="LoginFr.cs">
       <SubType>Form</SubType>
@@ -243,6 +268,12 @@
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPemail\AddERPConfigMail.resx">
+      <DependentUpon>AddERPConfigMail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERPemail\ERPConfigMail.resx">
+      <DependentUpon>ERPConfigMail.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPMaterialShow.resx">
       <DependentUpon>ERPMaterialShow.cs</DependentUpon>
     </EmbeddedResource>
@@ -255,8 +286,14 @@
     <EmbeddedResource Include="ERPShowOrder\ERPShowShipping.resx">
       <DependentUpon>ERPShowShipping.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ERP_KPI_Report.resx">
+      <DependentUpon>ERP_KPI_Report.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\Order-PDC.resx">
       <DependentUpon>Order-PDC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="ERPShowOrder\ProductionChart.resx">
+      <DependentUpon>ProductionChart.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="LoginFr.resx">
       <DependentUpon>LoginFr.cs</DependentUpon>
@@ -351,6 +388,18 @@
       <ProductName>.NET Framework 3.5 SP1</ProductName>
       <Install>false</Install>
     </BootstrapperPackage>
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\picture_Search.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\Search-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <None Include="Resources\excel-icon.png" />
+  </ItemGroup>
+  <ItemGroup>
+    <Content Include="HTMLPage1.html" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

@@ -47,7 +47,7 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             if (cmb_COPTC_TC002.Items != null)
             {
                 cmb_COPTC_TC002.SelectedIndex = 0;
-                //    datashow();
+            //    datashow();
 
             }
 
@@ -84,7 +84,7 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             // dtShow = new DataTable();
             // datashow();
             dtgv_material.DataSource = dt;
-            // dtgv_material.DataSource = dtShow;
+           // dtgv_material.DataSource = dtShow;
             dtgv_material.AutoGenerateColumns = true;
             dtgv_material.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dtgv_material.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
@@ -142,7 +142,7 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             {
                 sql.Append(" and moctas.TA027   = '" + (string)cmb_COPTC_TC002.Text + "'");
             }
-            else
+              else
             {
                 sql.Append(" and CONVERT(date,moctas.CREATE_DATE) >= '" + datefrom + "' ");
                 sql.Append(" and CONVERT(date,moctas.CREATE_DATE) <= '" + dateto + "' ");
@@ -178,7 +178,7 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             sql.Append(" order by moctas.TA002");
             sqlERPCON con = new sqlERPCON();
             con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
-            //  checkdata
+          //  checkdata
             if (dt.Rows.Count > 0)
             {
                 try
@@ -279,7 +279,7 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
         }
         void datashow()
         {
-            DateTime dateto = dtp_to.Value.Date;
+            DateTime dateto = dtp_to.Value.Date ;
             DateTime datefrom = dtp_from.Value.Date;
             dtShow = new DataTable();
             StringBuilder sql = new StringBuilder();
@@ -310,7 +310,7 @@ TD32,
 TD33
 from t_OCTD
 where 1=1");
-
+          
             if (cmb_COPTC_TC001.Text != "")
             {
                 sql.Append(" and TD02  = '" + cmb_COPTC_TC001.Text + "'");
@@ -331,7 +331,7 @@ where 1=1");
             {
                 sql.Append(" and CONVERT(date,TD01) >= '" + datefrom + "' ");
                 sql.Append(" and CONVERT(date,TD01) <= '" + dateto + "' ");
-
+              
             }
             sql.Append("order by TD02");
             sqlCON con = new sqlCON();
@@ -347,7 +347,7 @@ where 1=1");
 
         }
     }
-
+    
 
 
 }

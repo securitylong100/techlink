@@ -17,11 +17,13 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            // Application.Run(new LoginFr());
-             Application.Run(new ERPShowOrder.ERPShowMain());
+           Application.Run(new LoginFr());
+           // Application.Run(new ERPShowOrder.ERPShowMain());
             // Application.Run(new ERPShowOrder.ERPShowShipping());
-           // Application.Run(new ERPShowOrder.ERPMaterialShow());
-           // Application.Run(new ERPShowOrder.ERPShowOrder());
+            // Application.Run(new ERPShowOrder.ERPMaterialShow());
+            // Application.Run(new ERPShowOrder.ERPShowOrder());
+
+         //  Application.Run(new ERPShowOrder.ERP_KPI_Report());
         }
     }
 }

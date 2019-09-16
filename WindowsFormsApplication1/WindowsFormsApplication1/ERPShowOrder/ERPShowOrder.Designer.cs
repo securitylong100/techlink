@@ -65,9 +65,9 @@
             this.groupBox1.Dock = System.Windows.Forms.DockStyle.Top;
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(0, 60);
-            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4);
             this.groupBox1.Size = new System.Drawing.Size(1362, 124);
             this.groupBox1.TabIndex = 3;
             this.groupBox1.TabStop = false;
@@ -78,7 +78,7 @@
             this.cmb_COPTC_TC002.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_COPTC_TC002.FormattingEnabled = true;
             this.cmb_COPTC_TC002.Location = new System.Drawing.Point(246, 41);
-            this.cmb_COPTC_TC002.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_COPTC_TC002.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_COPTC_TC002.Name = "cmb_COPTC_TC002";
             this.cmb_COPTC_TC002.Size = new System.Drawing.Size(154, 25);
             this.cmb_COPTC_TC002.TabIndex = 30;
@@ -98,7 +98,7 @@
             this.cmb_COPTC_TC001.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_COPTC_TC001.FormattingEnabled = true;
             this.cmb_COPTC_TC001.Location = new System.Drawing.Point(37, 41);
-            this.cmb_COPTC_TC001.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_COPTC_TC001.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_COPTC_TC001.Name = "cmb_COPTC_TC001";
             this.cmb_COPTC_TC001.Size = new System.Drawing.Size(154, 25);
             this.cmb_COPTC_TC001.TabIndex = 28;
@@ -129,7 +129,7 @@
             this.cmb_MOCTA_TA002.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_MOCTA_TA002.FormattingEnabled = true;
             this.cmb_MOCTA_TA002.Location = new System.Drawing.Point(247, 92);
-            this.cmb_MOCTA_TA002.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MOCTA_TA002.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_MOCTA_TA002.MaxLength = 8;
             this.cmb_MOCTA_TA002.Name = "cmb_MOCTA_TA002";
             this.cmb_MOCTA_TA002.Size = new System.Drawing.Size(154, 25);
@@ -163,7 +163,7 @@
             this.dtp_from.CustomFormat = "yyyy-MM-dd";
             this.dtp_from.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_from.Location = new System.Drawing.Point(455, 42);
-            this.dtp_from.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_from.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_from.Name = "dtp_from";
             this.dtp_from.Size = new System.Drawing.Size(196, 23);
             this.dtp_from.TabIndex = 22;
@@ -174,7 +174,7 @@
             this.dtp_to.CustomFormat = "yyyy-MM-dd";
             this.dtp_to.Format = System.Windows.Forms.DateTimePickerFormat.Custom;
             this.dtp_to.Location = new System.Drawing.Point(687, 42);
-            this.dtp_to.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dtp_to.Margin = new System.Windows.Forms.Padding(4);
             this.dtp_to.Name = "dtp_to";
             this.dtp_to.Size = new System.Drawing.Size(196, 23);
             this.dtp_to.TabIndex = 21;
@@ -195,7 +195,7 @@
             this.cmb_MOCTA_TA001.Font = new System.Drawing.Font("Microsoft Sans Serif", 8.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_MOCTA_TA001.FormattingEnabled = true;
             this.cmb_MOCTA_TA001.Location = new System.Drawing.Point(37, 92);
-            this.cmb_MOCTA_TA001.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.cmb_MOCTA_TA001.Margin = new System.Windows.Forms.Padding(4);
             this.cmb_MOCTA_TA001.Name = "cmb_MOCTA_TA001";
             this.cmb_MOCTA_TA001.Size = new System.Drawing.Size(154, 25);
             this.cmb_MOCTA_TA001.TabIndex = 1;
@@ -204,7 +204,7 @@
             // btn_search
             // 
             this.btn_search.Location = new System.Drawing.Point(994, 16);
-            this.btn_search.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.btn_search.Margin = new System.Windows.Forms.Padding(4);
             this.btn_search.Name = "btn_search";
             this.btn_search.Size = new System.Drawing.Size(147, 65);
             this.btn_search.TabIndex = 0;
@@ -219,12 +219,13 @@
             | System.Windows.Forms.AnchorStyles.Right)));
             this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
             this.dgv_show.Location = new System.Drawing.Point(0, 192);
-            this.dgv_show.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.dgv_show.Margin = new System.Windows.Forms.Padding(4);
             this.dgv_show.Name = "dgv_show";
             this.dgv_show.ReadOnly = true;
             this.dgv_show.RowHeadersWidth = 51;
             this.dgv_show.Size = new System.Drawing.Size(1362, 688);
             this.dgv_show.TabIndex = 0;
+            this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.dgv_show_CellContentClick);
             // 
             // ERPShowOrder
             // 
@@ -233,7 +234,7 @@
             this.ClientSize = new System.Drawing.Size(1362, 880);
             this.Controls.Add(this.groupBox1);
             this.Controls.Add(this.dgv_show);
-            this.Margin = new System.Windows.Forms.Padding(4, 4, 4, 4);
+            this.Margin = new System.Windows.Forms.Padding(4);
             this.Name = "ERPShowOrder";
             this.Text = "ERPShowOrder";
             this.Load += new System.EventHandler(this.ERPShowOrder_Load);

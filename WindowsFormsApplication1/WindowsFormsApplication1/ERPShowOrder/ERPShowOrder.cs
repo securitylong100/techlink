@@ -19,7 +19,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
         }
         DataTable dt;
         DataTable dtShow;
-
+        DataGridViewButtonColumn dtCol;
         private void btn_search_Click(object sender, EventArgs e)
         {
             getERPdata();
@@ -36,7 +36,9 @@ namespace WindowsFormsApplication1.ERPShowOrder
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 10, FontStyle.Bold);
             MakeAlarmForWarning(dgv_show);
+            addColumn(ref dgv_show);
         }
+
         private void MakeAlarmForWarning(DataGridView dtgv)
         {
             if (dtgv.Rows.Count > 0)
@@ -305,18 +307,18 @@ namespace WindowsFormsApplication1.ERPShowOrder
             //string sql = "select distinct TA001 from MOCTA where TA001 != '' order by TA001";
             //sqlERPCON conERP = new sqlERPCON();
             //conERP.getComboBoxData(sql, ref cmd_MOCTA_TA001);
-//            string sql_cmb_COPTC_TC001 = @"select distinct
-//moctas.TA026 as MaDDH
-//from MOCTA moctas
-//where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
-//            sqlERPCON conERP = new sqlERPCON();
-//            cmb_COPTC_TC001.Items.Clear();
-//            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
-//            if (cmb_COPTC_TC001.Items != null)
-//            {
-//                cmb_COPTC_TC001.SelectedIndex = 0;
+            //            string sql_cmb_COPTC_TC001 = @"select distinct
+            //moctas.TA026 as MaDDH
+            //from MOCTA moctas
+            //where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
+            //            sqlERPCON conERP = new sqlERPCON();
+            //            cmb_COPTC_TC001.Items.Clear();
+            //            conERP.getComboBoxData(sql_cmb_COPTC_TC001, ref cmb_COPTC_TC001);
+            //            if (cmb_COPTC_TC001.Items != null)
+            //            {
+            //                cmb_COPTC_TC001.SelectedIndex = 0;
 
-//            }
+            //            }
             if (Class.valiballecommon.GetStorage().value1 != null)
             {
                 Class.valiballecommon va = Class.valiballecommon.GetStorage();
@@ -388,6 +390,38 @@ where moctas.TA026 != '' and moctas.TA027 != '' and moctas.TA013 = 'Y'";
             }
             cmb_MOCTA_TA001.Text = "";
             cmb_MOCTA_TA002.Text = "";
+        }
+        void addColumn(ref DataGridView dgv)
+        {
+            if (dgv.Rows.Count > 0)
+            {
+
+                if (dgv.Rows[0].Cells[0].Value.ToString() != "Chart")
+                {
+                    dtCol = new DataGridViewButtonColumn();
+                    dtCol.Name = "colChart";
+                    dtCol.Text = "Chart";
+                    dtCol.HeaderText = "ChartShow";
+                    dtCol.UseColumnTextForButtonValue = true;
+                    dgv_show.Columns.Insert(0, dtCol);
+                }
+            }
+        }
+
+        private void dgv_show_CellContentClick(object sender, DataGridViewCellEventArgs e)
+        {
+            int curRow = int.Parse(e.RowIndex.ToString());
+
+            if (dgv_show.Columns[e.ColumnIndex] == dtCol && curRow >= 0)
+            {
+                Class.valiballecommon va = Class.valiballecommon.GetStorage();
+                va.value1 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Production_Planning_Code"].Value.ToString();
+                va.value2 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Production_Planning_No"].Value.ToString();
+                va.value3 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Product_Code"].Value.ToString();
+                va.value4 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells["Product_Name"].Value.ToString();
+                ProductionChart chart = new ProductionChart();
+                chart.ShowDialog();
+            }
         }
     }
 }
