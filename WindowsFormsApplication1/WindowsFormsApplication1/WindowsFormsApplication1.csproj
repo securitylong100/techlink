@@ -111,6 +111,19 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="CrisisReport\Classvalue\ShippingItems.cs" />
+    <Compile Include="CrisisReport\CrisisReportShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\CrisisReportShow.Designer.cs">
+      <DependentUpon>CrisisReportShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\ShippingReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\ShippingReport.Designer.cs">
+      <DependentUpon>ShippingReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -267,6 +280,12 @@
     <Compile Include="Class\sqlCON.cs" />
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\CrisisReportShow.resx">
+      <DependentUpon>CrisisReportShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\ShippingReport.resx">
+      <DependentUpon>ShippingReport.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPemail\AddERPConfigMail.resx">
       <DependentUpon>AddERPConfigMail.cs</DependentUpon>

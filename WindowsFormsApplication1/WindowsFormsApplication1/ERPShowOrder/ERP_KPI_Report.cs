@@ -192,6 +192,10 @@ where 1=1
                 System.Windows.Forms.MessageBox.Show(ex.Message);
             }
         }
+        private void Sendmail()
+        {
+
+        }
 
         private void Btn_sendmail_Click(object sender, EventArgs e)
         {
@@ -201,15 +205,25 @@ where 1=1
                 mail.IsBodyHtml = true;
                 SmtpClient SmtpServer = new SmtpClient("smtp.gmail.com");
                 mail.From = new MailAddress("techlinkvn.2019@gmail.com");
-                mail.To.Add("DUC.NA@techlink.vn");
+           //     mail.To.Add("DUC.NA@techlink.vn");
                 mail.To.Add("tranducan.bkhcm11@gmail.com");
-                mail.To.Add("securitylong100@gmail.com");
+            //    mail.To.Add("securitylong100@gmail.com");
                 mail.Subject = "Test Mail - 2";
-                mail.Body = "Dear Sir !\n"+
-                    "I would like to send report to you about Reliablity from Sep 1st - Sep 11th\n"
-                    +"Please refer file attached"
-                    +"Thanks!";
-              
+                //mail.Body = "Dear Sir !\n"+
+                //    "I would like to send report to you about Reliablity from Sep 1st - Sep 11th\n"
+                //    +"Please refer file attached"
+                //    +"Thanks!";
+                string htmlString = @"<html>
+                      <body>
+                      <p>Dear Ms. Susan,</p>
+                      <p>Thank you for your letter of yesterday inviting me to come for an interview on Friday afternoon, 5th July, at 2:30.
+                              I shall be happy to be there as requested and will bring my diploma and other papers with me.</p>
+                      <p>Sincerely,<br>-Jack</br></p>
+                      </body>
+                      </html>
+                     ";
+                mail.Body= htmlString;
+
 
                 System.Net.Mail.Attachment attachment;
                 attachment = new System.Net.Mail.Attachment(@"C:\ERP_Temp\20190909 143451.xls");

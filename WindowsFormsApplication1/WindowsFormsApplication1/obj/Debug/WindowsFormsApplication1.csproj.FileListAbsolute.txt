@@ -254,3 +254,5 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERP_KPI_Report.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.AddERPConfigMail.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ERPShowOrder.ERPConfigMail.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CrisisReportShow.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.ShippingReport.resources

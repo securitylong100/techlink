@@ -70,6 +70,7 @@
     <Compile Include="Class\SaveConfigure.cs" />
     <Compile Include="Class\SaveObject.cs" />
     <Compile Include="Class\ScheduleReportItems.cs" />
+    <Compile Include="Class\SendMailFunction.cs" />
     <Compile Include="Class\sqlCON.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
     <Compile Include="Class\valiballecommon.cs" />

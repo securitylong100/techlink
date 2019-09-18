@@ -121,7 +121,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
 
         private void btn_search_Click(object sender, EventArgs e)
         {
-        
+            getERPdata();
             datashow();
             if (dtshow != null && dtshow.Rows.Count >0)
             {

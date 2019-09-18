@@ -28,10 +28,14 @@ namespace UploadDataToDatabase
         // this is the timer to make sure that worker gets called
         System.Threading.Timer tmrEnsureWorkerGetsCalled;
         List<ScheduleReportItems> listSchedule;
-        DataTable dt;
+        DataTable dtScheduleSendMail;
+        DataTable dtListEmail;
         // object used for safe access
         object lockObject = new object();
         object lockObjectSendMail = new object();
+        List<ScheduleReportItems> listReport = new List<ScheduleReportItems>();
+        List<EmailNeedSend> listEmail = new List<EmailNeedSend>();
+        
         public Form1()
         {
             InitializeComponent();
@@ -62,47 +66,19 @@ namespace UploadDataToDatabase
             tmrSendMail = new System.Windows.Forms.Timer();
             tmrSendMail.Tick += TmrSendMail_Tick;
 
-            //bgSendMailWorker.DoWork += BgSendMailWorker_DoWork;
-            //bgSendMailWorker.RunWorkerCompleted += BgSendMailWorker_RunWorkerCompleted;
+            bgSendMailWorker = new BackgroundWorker();
+            bgSendMailWorker.DoWork += BgSendMailWorker_DoWork;
+            bgSendMailWorker.RunWorkerCompleted += BgSendMailWorker_RunWorkerCompleted;
+            bgSendMailWorker.WorkerReportsProgress = true;
             listSchedule = new List<ScheduleReportItems>();
-            dt = new DataTable();
+            dtScheduleSendMail = new DataTable();
         }
 
         private void BgSendMailWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            
+            Logfile.Output(StatusLog.Normal, "Send mail complete");
         }
-
-        private void BgSendMailWorker_DoWork(object sender, DoWorkEventArgs e)
-        {
-           
-        }
-
-        private void TmrSendMail_Tick(object sender, EventArgs e)
-        {
-            if (Monitor.TryEnter(lockObject))
-            {
-                try
-                {
-                    // if bgworker is not busy the call the worker
-                    if (!bgWorker.IsBusy)
-                        bgWorker.RunWorkerAsync();
-                }
-                finally
-                {
-                    Monitor.Exit(lockObject);
-                }
-
-            }
-            else
-            {
-
-                // as the bgworker is busy we will start a timer that will try to call the bgworker again after some time
-                tmrEnsureWorkerGetsCalled = new System.Threading.Timer(new TimerCallback(tmrEnsureWorkerGetsCalled_Callback), null, 0, 10);
-
-            }
-        }
-
+      
         private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             btn_Start.Text = "Starting";
@@ -121,8 +97,9 @@ namespace UploadDataToDatabase
             var worker = sender as BackgroundWorker;
             int intProgress = 0;
 
-          
-            if (checkInvalidDateTimeSpan(dtp_from.Value, dtp_todate.Value))
+            //dtp_from.Value = DateTime.Now.AddDays(-90);
+            //dtp_todate.Value = DateTime.Now;
+            if (checkInvalidDateTimeSpan(dtp_from.Value, DateTime.Now))
             {
                 
                 if (chb_uploadShipping.Checked)
@@ -132,7 +109,7 @@ namespace UploadDataToDatabase
                     {
                         intProgress += 10;
                         worker.ReportProgress(intProgress);
-                        UploadDataShipping(dtp_from.Value, dtp_todate.Value);
+                        UploadDataShipping(dtp_from.Value, DateTime.Now);
                         intProgress +=90;
                         worker.ReportProgress(intProgress);
                        
@@ -151,7 +128,7 @@ namespace UploadDataToDatabase
                     {
                         intProgress += 10;
                         worker.ReportProgress(intProgress);
-                        UploadDataProduction(dtp_from.Value, dtp_todate.Value);
+                        UploadDataProduction(dtp_from.Value, DateTime.Now);
                         intProgress += 90;
                         worker.ReportProgress(intProgress);
                     }
@@ -167,7 +144,7 @@ namespace UploadDataToDatabase
                     {
                         intProgress += 10;
                         worker.ReportProgress(intProgress);
-                        UploadDataMaterial(dtp_from.Value, dtp_todate.Value);
+                        UploadDataMaterial(dtp_from.Value, DateTime.Now);
                         intProgress += 90;
                         worker.ReportProgress(intProgress);
                     }
@@ -211,7 +188,23 @@ namespace UploadDataToDatabase
 
         }
 
-
+        void tmrEnsureWorkerSendmailGetsCalled_Callback(object obj)
+        {
+            // this timer was started as the bgworker was busy before now it will try to call the bgworker again
+            if (Monitor.TryEnter(lockObjectSendMail))
+            {
+                try
+                {
+                    if (!bgSendMailWorker.IsBusy)
+                        bgSendMailWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObjectSendMail);
+                }
+                tmrEnsureWorkerGetsCalled = null;
+            }
+        }
         void tmrEnsureWorkerGetsCalled_Callback(object obj)
         {
             // this timer was started as the bgworker was busy before now it will try to call the bgworker again
@@ -233,7 +226,7 @@ namespace UploadDataToDatabase
         private void UploadDataShipping ( DateTime datefrom ,DateTime dateto)
         {
          
-            dt = new DataTable();
+            dtScheduleSendMail = new DataTable();
             StringBuilder sql = new StringBuilder();
             sql.Append(@"select
 CONVERT(date,coptcs.CREATE_DATE) as Create_Date,
@@ -294,28 +287,28 @@ and copths.TH004  = coptds.TD004 ");
                                     ");
             sql.Append("order by coptcs.TC001, coptcs.TC002");
             sqlERPCON con = new sqlERPCON();
-            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
             //checkdata
-            if (dt.Rows.Count > 0)
+            if (dtScheduleSendMail.Rows.Count > 0)
             {
-                for (int i = 0; i < dt.Rows.Count; i++)
+                for (int i = 0; i < dtScheduleSendMail.Rows.Count; i++)
                 {
                     string sqlcheck = "";
 
-                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'", "");
-                    string codeDon = dt.Rows[i]["Code_No"].ToString().Replace("'", "");
-                    string codeSanPham = dt.Rows[i]["Product_Code"].ToString().Replace("'", "");
-                    string ShippingPercent = dt.Rows[i]["Shipping_Percent"].ToString().Replace("'", "");
+                    string MaTaoDon = dtScheduleSendMail.Rows[i]["Code_Type"].ToString().Replace("'", "");
+                    string codeDon = dtScheduleSendMail.Rows[i]["Code_No"].ToString().Replace("'", "");
+                    string codeSanPham = dtScheduleSendMail.Rows[i]["Product_Code"].ToString().Replace("'", "");
+                    string ShippingPercent = dtScheduleSendMail.Rows[i]["Shipping_Percent"].ToString().Replace("'", "");
 
                     sqlcheck = "select COUNT(*) from t_OCTC where TC02 = '" + MaTaoDon + "' and TC03 ='" + codeDon + "' and TC06='" + codeSanPham + "'";
                     sqlCON check = new sqlCON();
                     if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                     {
                         string list = "";
-                        for (int j = 0; j < dt.Columns.Count; j++)
+                        for (int j = 0; j < dtScheduleSendMail.Columns.Count; j++)
                         {
                             list += "'";
-                            list += dt.Rows[i][j].ToString().Replace("'", "") + "',";
+                            list += dtScheduleSendMail.Rows[i][j].ToString().Replace("'", "") + "',";
                         }
                         StringBuilder sqlinsert = new StringBuilder();
                         sqlinsert.Append("insert into t_OCTC ");
@@ -340,8 +333,8 @@ and copths.TH004  = coptds.TD004 ");
 
                         StringBuilder sqlupdate = new StringBuilder();
                         sqlupdate.Append("update t_OCTC set ");
-                        sqlupdate.Append(@"TC13 = '" + dt.Rows[i]["Quanity_Delivery"].ToString().Replace("'", "") + "',");
-                        sqlupdate.Append(@"TC17 = '" + dt.Rows[i]["Delivery_Date"].ToString().Replace("'", "") + "',");
+                        sqlupdate.Append(@"TC13 = '" + dtScheduleSendMail.Rows[i]["Quanity_Delivery"].ToString().Replace("'", "") + "',");
+                        sqlupdate.Append(@"TC17 = '" + dtScheduleSendMail.Rows[i]["Delivery_Date"].ToString().Replace("'", "") + "',");
                         sqlupdate.Append(@"TC32 = '" + ShippingPercent + "',");
                         if (ShippingPercent != "")
                         {
@@ -364,7 +357,7 @@ and copths.TH004  = coptds.TD004 ");
         private void UploadDataProduction(DateTime datefrom, DateTime dateto)
         {
 
-            dt = new DataTable();
+            dtScheduleSendMail = new DataTable();
             StringBuilder sql = new StringBuilder();
             sql.Append(@"
                             select
@@ -414,15 +407,15 @@ and copths.TH004  = coptds.TD004 ");
 
             sql.Append(" order by moctas.TA002");
             sqlERPCON con = new sqlERPCON();
-            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
             //checkdata
-            if (dt.Rows.Count > 0)
+            if (dtScheduleSendMail.Rows.Count > 0)
             {
-                for (int i = 0; i < dt.Rows.Count; i++)
+                for (int i = 0; i < dtScheduleSendMail.Rows.Count; i++)
                 {
 
-                    string MaTaoDon = dt.Rows[i]["Code_Type"].ToString().Replace("'", "");
-                    string codeTaoLenh = dt.Rows[i]["Code_No"].ToString().Replace("'", "");
+                    string MaTaoDon = dtScheduleSendMail.Rows[i]["Code_Type"].ToString().Replace("'", "");
+                    string codeTaoLenh = dtScheduleSendMail.Rows[i]["Code_No"].ToString().Replace("'", "");
                     string sqlcheck = "select COUNT(*) from t_OCTB where TB02 = '" + MaTaoDon + "' and TB03 ='" + codeTaoLenh + "'";
                     double FinishedGoodQty = 0;
                     double NGQty = 0;
@@ -430,9 +423,9 @@ and copths.TH004  = coptds.TD004 ");
                     double PercentofOKQty = 0;
                     try
                     {
-                        FinishedGoodQty = double.Parse(dt.Rows[i]["Finished_Goods"].ToString().Replace("'", ""));
-                        NGQty = double.Parse(dt.Rows[i]["NG_Quanity"].ToString().Replace("'", ""));
-                        OKQty = double.Parse(dt.Rows[i]["Good_Quanity"].ToString().Replace("'", ""));
+                        FinishedGoodQty = double.Parse(dtScheduleSendMail.Rows[i]["Finished_Goods"].ToString().Replace("'", ""));
+                        NGQty = double.Parse(dtScheduleSendMail.Rows[i]["NG_Quanity"].ToString().Replace("'", ""));
+                        OKQty = double.Parse(dtScheduleSendMail.Rows[i]["Good_Quanity"].ToString().Replace("'", ""));
                         if (FinishedGoodQty != 0)
                             PercentofOKQty = Math.Round((OKQty / FinishedGoodQty) * 100, 2);
 
@@ -451,10 +444,10 @@ and copths.TH004  = coptds.TD004 ");
                     if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                     {
                         string list = "";
-                        for (int j = 0; j < dt.Columns.Count; j++)
+                        for (int j = 0; j < dtScheduleSendMail.Columns.Count; j++)
                         {
                             list += "'";
-                            list += dt.Rows[i][j].ToString() + "',";
+                            list += dtScheduleSendMail.Rows[i][j].ToString() + "',";
                         }
                         StringBuilder sqlinsert = new StringBuilder();
                         sqlinsert.Append("insert into t_OCTB ");
@@ -485,10 +478,10 @@ and copths.TH004  = coptds.TD004 ");
                     {
                         StringBuilder sqlupdate = new StringBuilder();
                         sqlupdate.Append("update t_OCTB set ");
-                        sqlupdate.Append(@"TB13 = '" + dt.Rows[i]["Finished_Goods"].ToString() + "',");
-                        sqlupdate.Append(@"TB14 = '" + dt.Rows[i]["NG_Quanity"].ToString() + "',");
-                        sqlupdate.Append(@"TB15 = '" + dt.Rows[i]["Good_Quanity"].ToString() + "',");
-                        sqlupdate.Append(@"TB17 = '" + dt.Rows[i]["Input_Date"].ToString() + "'");
+                        sqlupdate.Append(@"TB13 = '" + dtScheduleSendMail.Rows[i]["Finished_Goods"].ToString() + "',");
+                        sqlupdate.Append(@"TB14 = '" + dtScheduleSendMail.Rows[i]["NG_Quanity"].ToString() + "',");
+                        sqlupdate.Append(@"TB15 = '" + dtScheduleSendMail.Rows[i]["Good_Quanity"].ToString() + "',");
+                        sqlupdate.Append(@"TB17 = '" + dtScheduleSendMail.Rows[i]["Input_Date"].ToString() + "'");
                         if (PercentofOKQty >= 100)
                         {
                             sqlupdate.Append(@", TB31 = 'OK' ,");
@@ -528,7 +521,7 @@ and copths.TH004  = coptds.TD004 ");
         private void UploadDataMaterial (DateTime datefrom, DateTime dateto)
         {
          
-            dt = new DataTable();
+            dtScheduleSendMail = new DataTable();
             StringBuilder sql = new StringBuilder();
             sql.Append(@"
                                                        select distinct
@@ -593,27 +586,27 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
             sql.Append(" order by moctas.TA002");
             sqlERPCON con = new sqlERPCON();
-            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            con.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
             //  checkdata
-            if (dt.Rows.Count > 0)
+            if (dtScheduleSendMail.Rows.Count > 0)
             {
                 try
                 {
 
 
-                    for (int i = 0; i < dt.Rows.Count; i++)
+                    for (int i = 0; i < dtScheduleSendMail.Rows.Count; i++)
                     {
                         string sqlcheck = "";
 
-                        string MaDDH = dt.Rows[i]["Code_Type"].ToString();
-                        string SoDDH = dt.Rows[i]["Code_No"].ToString();
-                        string MaLSX = dt.Rows[i]["Production_Planning_Code"].ToString();
-                        string SoLSX = dt.Rows[i]["Production_Planning_No"].ToString();
-                        string codeSanPham = dt.Rows[i]["Product_Code"].ToString();
-                        string MaVatLieu = dt.Rows[i]["Material_Code"].ToString();
+                        string MaDDH = dtScheduleSendMail.Rows[i]["Code_Type"].ToString();
+                        string SoDDH = dtScheduleSendMail.Rows[i]["Code_No"].ToString();
+                        string MaLSX = dtScheduleSendMail.Rows[i]["Production_Planning_Code"].ToString();
+                        string SoLSX = dtScheduleSendMail.Rows[i]["Production_Planning_No"].ToString();
+                        string codeSanPham = dtScheduleSendMail.Rows[i]["Product_Code"].ToString();
+                        string MaVatLieu = dtScheduleSendMail.Rows[i]["Material_Code"].ToString();
 
-                        double SoNVLCanLanh = (dt.Rows[i]["amount_of_material_receive"] != null && dt.Rows[i]["amount_of_material_receive"].ToString() != "") ? double.Parse(dt.Rows[i]["amount_of_material_receive"].ToString()) : 0;
-                        double SoNVLTrongKho = (dt.Rows[i]["Avaiable_Material_Quanity"] != null && dt.Rows[i]["Avaiable_Material_Quanity"].ToString() != "") ? double.Parse(dt.Rows[i]["Avaiable_Material_Quanity"].ToString()) : 0;
+                        double SoNVLCanLanh = (dtScheduleSendMail.Rows[i]["amount_of_material_receive"] != null && dtScheduleSendMail.Rows[i]["amount_of_material_receive"].ToString() != "") ? double.Parse(dtScheduleSendMail.Rows[i]["amount_of_material_receive"].ToString()) : 0;
+                        double SoNVLTrongKho = (dtScheduleSendMail.Rows[i]["Avaiable_Material_Quanity"] != null && dtScheduleSendMail.Rows[i]["Avaiable_Material_Quanity"].ToString() != "") ? double.Parse(dtScheduleSendMail.Rows[i]["Avaiable_Material_Quanity"].ToString()) : 0;
 
 
                         sqlcheck = @"select COUNT(*) from t_OCTD where TD02 = '" + MaDDH + "' and TD03 ='" + SoDDH + "' and TD04='" + MaLSX + "' and TD05='" + SoLSX
@@ -622,10 +615,10 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                         if (int.Parse(check.sqlExecuteScalarString(sqlcheck)) == 0) //insert
                         {
                             string list = "";
-                            for (int j = 0; j < dt.Columns.Count; j++)
+                            for (int j = 0; j < dtScheduleSendMail.Columns.Count; j++)
                             {
                                 list += "'";
-                                list += dt.Rows[i][j].ToString() + "',";
+                                list += dtScheduleSendMail.Rows[i][j].ToString() + "',";
                             }
                             StringBuilder sqlinsert = new StringBuilder();
                             sqlinsert.Append("insert into t_OCTD ");
@@ -653,10 +646,10 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
                             StringBuilder sqlupdate = new StringBuilder();
                             sqlupdate.Append("update t_OCTD set ");
-                            sqlupdate.Append(@"TD18 = '" + dt.Rows[i]["amount_of_material_receive"].ToString() + "',");
-                            sqlupdate.Append(@"TD18 = '" + dt.Rows[i]["amount_of_material_use"].ToString() + "',");
-                            sqlupdate.Append(@"TD19 = '" + dt.Rows[i]["Avaiable_Material_Quanity"].ToString() + "',");
-                            sqlupdate.Append(@"TD20 = '" + dt.Rows[i]["Production_Material_Quantity"].ToString() + "'");
+                            sqlupdate.Append(@"TD18 = '" + dtScheduleSendMail.Rows[i]["amount_of_material_receive"].ToString() + "',");
+                            sqlupdate.Append(@"TD18 = '" + dtScheduleSendMail.Rows[i]["amount_of_material_use"].ToString() + "',");
+                            sqlupdate.Append(@"TD19 = '" + dtScheduleSendMail.Rows[i]["Avaiable_Material_Quanity"].ToString() + "',");
+                            sqlupdate.Append(@"TD20 = '" + dtScheduleSendMail.Rows[i]["Production_Material_Quantity"].ToString() + "'");
                             if (SoNVLTrongKho > SoNVLCanLanh)
                             {
                                 sqlupdate.Append(@", TD31 = 'OK' ,");
@@ -795,19 +788,11 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 MessageBox.Show("Please choose date to > date from", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
                 return false;
             }
+           
             return true;
         }
 
-        private void Timer1_Tick(object sender, EventArgs e)
-        {
-            timer_update.Stop();
-            timer_update.Enabled = false;
-           
-
-        //    UploadDatatoDatabase();
-            timer_update.Enabled = true;
-            timer_update.Start();
-        }
+      
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
@@ -830,8 +815,7 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 MessageBox.Show("Save configure fail: " + ex.Message, "Error", MessageBoxButtons.OK, MessageBoxIcon.Error);
             }
           
-            timer_update.Stop();
-            timer_update.Tick -= Timer1_Tick;
+      
         }
 
         private void Form1_Load(object sender, EventArgs e)
@@ -882,13 +866,21 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
             dgv_show.AllowUserToAddRows = false;
             StringBuilder sql = new StringBuilder();
-            sql.Append("select reportname, reporttype, hours, day, date, month,subject, attach, comments from t_report_schedule where 1=1 ");
+            sql.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML,subject, attach, comments from t_report_schedule where 1=1 ");
             sqlCON tf = new sqlCON();
-            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
-            dgv_show.DataSource = dt;
+            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
+           
+            dgv_show.DataSource = dtScheduleSendMail;
             dgv_show.Refresh();
+            listReport= Listreport(dtScheduleSendMail);
+            dtListEmail = new DataTable();
+            StringBuilder sqllistmail = new StringBuilder();
+            sqllistmail.Append("select emailaddress, deptcode, status, usingfunction from m_email where 1=1 ");
+            tf = new sqlCON();
+            tf.sqlDataAdapterFillDatatable(sqllistmail.ToString(), ref dtListEmail);
+            listEmail = ListEmailNeedSend(dtListEmail);
         }
-
+        
         private void Btn_add_Click(object sender, EventArgs e)
         {
             FormConfig.ReportSchechuleForm reportSchechule = new FormConfig.ReportSchechuleForm();
@@ -898,14 +890,16 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
         private void ReportSchechule_FormClosed(object sender, FormClosedEventArgs e)
         {
-            dt = new DataTable(); 
+            dtScheduleSendMail = new DataTable(); 
               StringBuilder sql = new StringBuilder();
-            sql.Append("select reportname, reporttype, hours, day, date, month,subject, attach, comments from t_report_schedule where 1=1 ");
+            sql.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML,subject, attach, comments from t_report_schedule where 1=1 ");
             sqlCON tf = new sqlCON();
-            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
-            dgv_show.DataSource = dt;
+            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
+            dgv_show.DataSource = dtScheduleSendMail;
             dgv_show.Refresh();
-            
+            listReport = new List<ScheduleReportItems>();
+            listReport = Listreport(dtScheduleSendMail);
+
 
         }
 
@@ -918,19 +912,200 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                 string sql = "delete from t_report_schedule where reportname = '" + reportname + "'";
                 sqlCON connect = new sqlCON();
                 connect.sqlExecuteNonQuery(sql, true);
-                dt = new DataTable();
+                dtScheduleSendMail = new DataTable();
                 StringBuilder sql2 = new StringBuilder();
-                sql2.Append("select reportname, reporttype, hours, day, date, month, subject,attach, comments from t_report_schedule where 1=1 ");
+                sql2.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML, subject,attach, comments from t_report_schedule where 1=1 ");
                 sqlCON tf = new sqlCON();
-                tf.sqlDataAdapterFillDatatable(sql2.ToString(), ref dt);
-                dgv_show.DataSource = dt;
+                tf.sqlDataAdapterFillDatatable(sql2.ToString(), ref dtScheduleSendMail);
+                dgv_show.DataSource = dtScheduleSendMail;
                 dgv_show.Refresh();
+              
             }
         }
 
         private void Dgv_show_CellContentClick(object sender, DataGridViewCellEventArgs e)
         {
             if (dgv_show.RowCount > 0) { btn_Remove.Enabled = true; }
+        }
+
+        private void Btn_startSendmail_Click(object sender, EventArgs e)
+        {
+           
+            if (btn_startSendmail.Text == "Start")
+            {
+                int timerInterval = (int)(nmr_hoursSendmail.Value * 3600 + nmr_minutesSendMail.Value * 60 + nmr_secondSendmail.Value) * 1000;
+
+                tmrSendMail.Interval = timerInterval;
+                tmrSendMail.Start();
+                btn_startSendmail.Text = "Starting";
+            }
+            else
+            {
+                tmrSendMail.Stop();
+                btn_startSendmail.Text = "Start";
+            }
+        }
+        private List<ScheduleReportItems> Listreport (DataTable dt)
+        {
+            List<ScheduleReportItems> list = new List<ScheduleReportItems>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                ScheduleReportItems item = new ScheduleReportItems();
+                item.ReportName = dt.Rows[i]["reportname"].ToString();
+                item.ReportType = dt.Rows[i]["reporttype"].ToString();
+                item.Hours= dt.Rows[i]["hours"].ToString();
+                item.Day = dt.Rows[i]["day"].ToString();
+                item.Date = dt.Rows[i]["date"].ToString();
+                item.Month = dt.Rows[i]["month"].ToString();
+                item.IsBodyHTML = bool.Parse(dt.Rows[i]["isBodyHTML"].ToString());
+                item.Subject = dt.Rows[i]["subject"].ToString();
+                item.AttachedFolder = dt.Rows[i]["attach"].ToString();
+                item.Contents = dt.Rows[i]["comments"].ToString();
+                list.Add(item);
+            }
+            return list;
+        }
+        private List<EmailNeedSend> ListEmailNeedSend(DataTable dt)
+        {
+            List<EmailNeedSend> list = new List<EmailNeedSend>();
+            for (int i = 0; i < dt.Rows.Count; i++)
+            {
+                EmailNeedSend item = new EmailNeedSend();
+                item.EmailReceive = dt.Rows[i]["emailaddress"].ToString();
+                item.DepartmentCode = dt.Rows[i]["deptcode"].ToString();
+                item.Status = dt.Rows[i]["status"].ToString();
+                item.Function = dt.Rows[i]["usingfunction"].ToString();
+
+                list.Add(item);
+            }
+            return list;
+        }
+        private bool SendEmailStatus()
+        {
+            foreach (var item in listReport)
+            {
+                if (item.ReportType == "Daily")
+                {
+                    if (DateTime.Now.Hour == int.Parse(item.Hours))
+                    {
+                        if (item.isSentMail == false)
+                        {
+                            SendMailFunction sendmail = new SendMailFunction();
+                            if (sendmail.SendMailtoReport(item, listEmail))
+                                item.isSentMail = true;
+                        }
+                    }
+                    else if (DateTime.Now.Hour > int.Parse(item.Hours))
+                    {
+                        item.isSentMail = false;
+                    }
+                }
+                else if (item.ReportType == "Weekly")
+                {
+                    if (DateTime.Now.DayOfWeek.ToString() == item.Day && DateTime.Now.Hour == int.Parse(item.Hours))
+                    {
+                        if (item.isSentMail == false)
+                        {
+                            SendMailFunction sendmail = new SendMailFunction();
+                            if (sendmail.SendMailtoReport(item, listEmail))
+                                item.isSentMail = true;
+                        }
+                    }
+                    else if (DateTime.Now.DayOfWeek.ToString() == item.Day && DateTime.Now.Hour > int.Parse(item.Hours))
+                    {
+                        item.isSentMail = false;
+                    }
+                }
+                else if (item.ReportType == "Monthly")
+                {
+                    if (DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour == int.Parse(item.Hours))
+                    {
+                        if (item.isSentMail == false)
+                        {
+                            SendMailFunction sendmail = new SendMailFunction();
+                            if (sendmail.SendMailtoReport(item, listEmail))
+                                item.isSentMail = true;
+                        }
+                    }
+                    else if (DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour > int.Parse(item.Hours))
+                    {
+                        item.isSentMail = false;
+                    }
+                }
+                else if (item.ReportType == "Yearly")
+                {
+                    if (DateTime.Now.ToString("MMMM") == item.Month && DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour == int.Parse(item.Hours))
+                    {
+                        if (item.isSentMail == false)
+                        {
+                            SendMailFunction sendmail = new SendMailFunction();
+                            if (sendmail.SendMailtoReport(item, listEmail))
+                                item.isSentMail = true;
+                        }
+                    }
+                    else if (DateTime.Now.ToString("MMMM") == item.Month && DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour > int.Parse(item.Hours))
+                    {
+                        item.isSentMail = false;
+                    }
+                }
+
+            }
+            return false;
+        }
+        private void BgSendMailWorker_DoWork(object sender, DoWorkEventArgs e)
+        {
+            var worker = sender as BackgroundWorker;
+            SendEmailStatus();
+
+        }
+
+        private void TmrSendMail_Tick(object sender, EventArgs e)
+        {
+            if (Monitor.TryEnter(lockObjectSendMail))
+            {
+                try
+                {
+                    // if bgworker is not busy the call the worker
+                    if (!bgSendMailWorker.IsBusy)
+                        bgSendMailWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObjectSendMail);
+                }
+
+            }
+            else
+            {
+
+                // as the bgworker is busy we will start a timer that will try to call the bgworker again after some time
+                tmrEnsureWorkerGetsCalled = new System.Threading.Timer(new TimerCallback(tmrEnsureWorkerSendmailGetsCalled_Callback), null, 0, 10);
+
+            }
+        }
+
+        private void Rb_auto_CheckedChanged(object sender, EventArgs e)
+        {
+           if(rb_auto.Checked)
+            {
+                rb_manual.Checked = false;
+            }
+           else
+            {
+                rb_auto.Checked = true;
+            }
+        }
+
+        private void Rb_manual_CheckedChanged(object sender, EventArgs e)
+        {
+            if (rb_manual.Checked)
+            {
+                rb_auto.Checked = false;
+            }
+            else
+            {
+                rb_auto.Checked = true;
+            }
         }
     }
 }
