@@ -34,10 +34,15 @@ namespace WindowsFormsApplication1.CrisisReport
             dtgv_show.Columns[2].HeaderText = "Department";
             dtgv_show.Columns[3].HeaderText = "Production Code";
             dtgv_show.Columns[4].HeaderText = "Target Output";
+            dtgv_show.Columns[4].DefaultCellStyle.Format = "N0";
             dtgv_show.Columns[5].HeaderText = "Actual Output"; ;
+            dtgv_show.Columns[5].DefaultCellStyle.Format = "N0";
             dtgv_show.Columns[6].HeaderText = "Actual Scrap Qty";
-            dtgv_show.Columns[7].HeaderText = "Target Scrap(%)"; 
+            dtgv_show.Columns[6].DefaultCellStyle.Format = "N0";
+            dtgv_show.Columns[7].HeaderText = "Target Scrap(%)";
+            dtgv_show.Columns[7].DefaultCellStyle.Format = "0%";
             dtgv_show.Columns[8].HeaderText = "Actual Scrap (%)";
+            dtgv_show.Columns[7].DefaultCellStyle.Format = "0%";
             ListTP = ListFinishedGoods();
             TScale = TimeScale;
             targetRef = target;

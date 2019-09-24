@@ -206,7 +206,7 @@ namespace WindowsFormsApplication1.ChartDrawing
 
             for (int i = 0; i < XValues.Count(); i++)
             {
-                ChartSeries4.Points.AddXY(XValues[i], targetScrap);
+                ChartSeries4.Points.AddXY(XValues[i], targetScrap*100);
             }
 
             Chart.Series.Add(ChartSeries4);
@@ -215,11 +215,14 @@ namespace WindowsFormsApplication1.ChartDrawing
 
             return;
         }
-        public static void DrawCrisisReport(string[] XValues, int[] YValues, string[] XValues2, int[] YValues2, string[] XValues3, int[] YValues3, ref Chart Chartref, string Tiltle)
+        public static void DrawCrisisReport(string[] XValues, int[] YValues, string[] XValues2, int[] YValues2,
+            string[] XValues3, int[] YValues3 ,ref Chart Chartref, string Tiltle)
         {
             Chartref.Titles.Clear();
+            Chartref.Series.Clear();
+           // Chartref.ChartAreas.Clear();
 
-              Title title = new Title();
+            Title title = new Title();
             title.Font = new Font("Arial", 14, FontStyle.Bold);
             title.Text = Tiltle;
             Chartref.Titles.Add(title);
@@ -246,7 +249,7 @@ namespace WindowsFormsApplication1.ChartDrawing
             chartArea1.AxisY.LabelStyle.Font = new Font("Arial", 12);
             chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
             chartArea1.AxisY.Minimum = 0;
-            chartArea1.AxisY.Maximum = Math.Max(Math.Max(YValues.Max(), YValues2.Max()), YValues3.Max())+1;
+            chartArea1.AxisY.Maximum =Math.Max(Math.Max(YValues.Max(), YValues2.Max()), YValues3.Max())+1;
 
             chartArea1.AxisY.MajorGrid.Enabled = true;
 
@@ -260,8 +263,11 @@ namespace WindowsFormsApplication1.ChartDrawing
 
             Chartref.Text = "chart1";
 
-            while (Chartref.Series.Count > 0)
+            while (Chartref.Series.Count ==2)
+            {
                 Chartref.Series.RemoveAt(0);
+                Chartref.Series.RemoveAt(1);
+            }
 
             System.Windows.Forms.DataVisualization.Charting.Series ChartSeries1 = (new System.Windows.Forms.DataVisualization.Charting.Series());
             ChartSeries1.ChartArea = "ChartArea1";
@@ -292,7 +298,7 @@ namespace WindowsFormsApplication1.ChartDrawing
 
             ChartSeries2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
             ChartSeries2.Legend = "Legend1";
-            ChartSeries2.Name = "BackLog";
+            ChartSeries2.Name = "Back Log";
             ChartSeries2.BorderWidth = 5;
             ChartSeries2.IsValueShownAsLabel = true;
             // ChartSeries2.LabelFormat = "#.#' %'";
@@ -312,13 +318,13 @@ namespace WindowsFormsApplication1.ChartDrawing
 
             ChartSeries3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
             ChartSeries3.Legend = "Legend1";
-            ChartSeries3.Name = "OpenOrder";
+            ChartSeries3.Name = "Open Order";
             ChartSeries3.BorderWidth = 5;
             ChartSeries3.IsValueShownAsLabel = true;
             // ChartSeries2.LabelFormat = "#.#' %'";
             ChartSeries3.Font = new System.Drawing.Font("Arial", 12);
 
-            ChartSeries3.Color = Color.Green;
+            ChartSeries3.Color = Color.Blue;
             for (int i = 0; i < XValues.Count(); i++)
             {
                 for (int j = 0; j < XValues3.Count(); j++)
@@ -337,9 +343,114 @@ namespace WindowsFormsApplication1.ChartDrawing
           
             Chartref.Series.Add(ChartSeries3);
 
+
             Chartref.Visible = true;
 
             return;
         }
+        public static void DrawCrisisReportShipped(string[] XValues, int[] YValues, string[] XValues2, int[] YValues2 ,ref Chart Chartref, string Tiltle)
+        {
+            Chartref.Titles.Clear();
+            Chartref.Series.Clear();
+          //  Chartref.ChartAreas.Clear();
+
+            Title title = new Title();
+            title.Font = new Font("Arial", 14, FontStyle.Bold);
+            title.Text = Tiltle;
+            Chartref.Titles.Add(title);
+
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = (new System.Windows.Forms.DataVisualization.Charting.ChartArea());
+            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = (new System.Windows.Forms.DataVisualization.Charting.Legend());
+
+            chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial", 12);
+            chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial", 12);
+            chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Arial", 12);
+
+            chartArea1.AxisX.Title = "Month";
+            chartArea1.AxisX.LabelStyle.Font = new Font("Arial", 12);
+            chartArea1.AxisX.TitleForeColor = Color.Blue;
+            chartArea1.AxisX.LabelStyle.ForeColor = Color.Blue;
+
+            chartArea1.AxisX.MinorGrid.Interval = 1;
+            chartArea1.AxisX.Interval = 1;
+            chartArea1.AxisX.MajorGrid.Enabled = false;
+
+            chartArea1.AxisY.Title = "Quantity (unit)";
+            chartArea1.AxisY.TitleForeColor = Color.Blue;
+            chartArea1.AxisY.LabelStyle.ForeColor = Color.Blue;
+            chartArea1.AxisY.LabelStyle.Font = new Font("Arial", 12);
+            chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+            chartArea1.AxisY.Minimum = 0;
+            chartArea1.AxisY.Maximum = Math.Max(YValues.Max(), YValues2.Max()) + 1;
+
+            chartArea1.AxisY.MajorGrid.Enabled = true;
+
+            Chartref.ChartAreas.RemoveAt(0);
+            chartArea1.Name = "ChartArea1";
+            Chartref.ChartAreas.Add(chartArea1);
+
+            Chartref.Legends.RemoveAt(0);
+            legend1.Name = "Legend1";
+            Chartref.Legends.Add(legend1);
+
+            Chartref.Text = "chart1";
+
+            while (Chartref.Series.Count == 2)
+            {
+                Chartref.Series.RemoveAt(0);
+              
+            }
+
+            System.Windows.Forms.DataVisualization.Charting.Series ChartSeries1 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+            ChartSeries1.ChartArea = "ChartArea1";
+            ChartSeries1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+            ChartSeries1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;      //<Select primary Axis Y
+            ChartSeries1.Legend = "Legend1";
+            ChartSeries1.Name = "Shipped-Late";
+            ChartSeries1.Font = new System.Drawing.Font("Arial", 12);
+            //  ChartSeries1.LabelForeColor = Color.Red;
+            ChartSeries1.IsValueShownAsLabel = true;
+            ChartSeries1.Color = Color.Orange;
+            //      ChartSeries1.LabelBackColor = Color.Red;
+            for (int i = 0; i < XValues.Count(); i++)
+            {
+                ChartSeries1.Points.AddXY(XValues[i], YValues[i]);
+                ChartSeries1.Points[i].Color = Color.Orange;
+
+
+
+            }
+
+            Chartref.Series.Add(ChartSeries1);
+
+            //}
+            System.Windows.Forms.DataVisualization.Charting.Series ChartSeries2 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+            ChartSeries2.ChartArea = "ChartArea1";
+            ChartSeries2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
+            ChartSeries2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
+            ChartSeries2.Legend = "Legend1";
+            ChartSeries2.Name = "Shipped-On Time";
+            ChartSeries2.BorderWidth = 5;
+            ChartSeries2.IsValueShownAsLabel = true;
+            // ChartSeries2.LabelFormat = "#.#' %'";
+            ChartSeries2.Font = new System.Drawing.Font("Arial", 12);
+
+            ChartSeries2.Color = Color.Green;
+            for (int i = 0; i < XValues2.Count(); i++)
+            {
+                ChartSeries2.Points.AddXY(XValues2[i], YValues2[i]);
+                ChartSeries2.Points[i].Color = Color.Green;
+            }
+            Chartref.Series.Add(ChartSeries2);
+
+           
+
+            Chartref.Visible = true;
+
+            return;
+        }
+
+
     }
 }

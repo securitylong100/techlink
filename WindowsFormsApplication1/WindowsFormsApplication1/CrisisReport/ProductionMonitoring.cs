@@ -127,7 +127,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
 
                 production.ActualOutput = SumOutput;
                 production.ActualDefectQty = SumScrap;
-                production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap) * 100, 1);
+                production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 1);
              
                 if (production.ActualOutput >= production.OutputTarget)
                     production.QuantityEvaluation = "Good";
@@ -350,11 +350,16 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                 dgv_show.Columns[0].HeaderText = "Department";
                 dgv_show.Columns[1].HeaderText = "Production Code";
                 dgv_show.Columns[2].HeaderText = "Target Output ";
+                dgv_show.Columns[2].DefaultCellStyle.Format = "N0";             
                 dgv_show.Columns[3].HeaderText = "Actual Output";
+                dgv_show.Columns[3].DefaultCellStyle.Format = "N0";
                 dgv_show.Columns[4].HeaderText = "Quantity Evaluation";
                 dgv_show.Columns[5].HeaderText = "Actual Scrap Qty";
+                dgv_show.Columns[5].DefaultCellStyle.Format = "N0";
                 dgv_show.Columns[6].HeaderText = "Target Scrap(%)";
+                dgv_show.Columns[6].DefaultCellStyle.Format = "P1";
                 dgv_show.Columns[7].HeaderText = "Actual Scrap (%)";
+                dgv_show.Columns[7].DefaultCellStyle.Format = "P1";
                 dgv_show.Columns[8].HeaderText = "Quality Evaluation";
             }
       
@@ -397,7 +402,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                         production.ProductionCode = item[0].ProductionCode;
                         production.ActualOutput = SumOutput;
                         production.ActualDefectQty = SumScrap;
-                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap) * 100, 1);
+                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 1);
 
                         listSort.Add(production);
 
@@ -430,7 +435,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                         production.ProductionCode = item[0].ProductionCode;
                         production.ActualOutput = SumOutput;
                         production.ActualDefectQty = SumScrap;
-                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap) * 100, 1);
+                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 1);
 
                         listSort.Add(production);
 
@@ -484,7 +489,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
             {
                 target[0] = double.Parse(dt.Rows[0]["output_taget"].ToString());
                 if (target[0] != 0)
-                    target[1] = Math.Round(double.Parse(dt.Rows[0]["ng_taget"].ToString()) *100/ (target[0] + double.Parse(dt.Rows[0]["ng_taget"].ToString())),2);
+                    target[1] = Math.Round(double.Parse(dt.Rows[0]["ng_taget"].ToString())/ (target[0] + double.Parse(dt.Rows[0]["ng_taget"].ToString())),2);
                 
             }
             return target;

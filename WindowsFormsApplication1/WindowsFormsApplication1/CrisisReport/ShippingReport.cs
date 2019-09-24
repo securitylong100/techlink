@@ -27,6 +27,10 @@ namespace WindowsFormsApplication1
         int[] YValueBacklog;
         string[] XlabelOpenOrder;
         int[] YValueOpenOrder;
+        string[] XlabelShippedOntime;
+        int[] YValueShippedOntime;
+        string[] XlabelShippedLate;
+        int[] YValueShippedLate;
         public ShippingReport()
         {
             InitializeComponent();
@@ -117,8 +121,8 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 return;
             }
 
-            sql.Append(" and CONVERT(date,coptcs.CREATE_DATE)  >= '" + datefrom + "' ");
-            sql.Append(" and CONVERT(date,coptcs.CREATE_DATE) <= '" + dateto + "' ");
+            sql.Append(" and CONVERT(date,coptds.TD047)  >= '" + datefrom + "' ");
+            sql.Append(" and CONVERT(date,coptds.TD047) <= '" + dateto + "' ");
 
             sql.Append(@"group by 
                                    coptcs.CREATE_DATE,
@@ -190,6 +194,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
         {
             List<ShippingItems> ListshippingItems = new List<ShippingItems>();
             List<ShippingItems> ListshippingResult = new List<ShippingItems>();
+            List<ShippingItems> Listshipped = new List<ShippingItems>();
             Dictionary<string, double> keyValuePairs = new Dictionary<string, double>();
 
 
@@ -243,13 +248,30 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                         }
                         ListshippingResult.Add(item);
                     }
+                    else
+                    {
+
+                        if (item.DeliveryDate >  item.ClientsRequestDate)
+                        {
+                            item.Status = "Shipped-Late";
+                        }
+
+                        else if (item.DeliveryDate <= item.ClientsRequestDate)
+                        {
+                            item.Status = "Shipped-On Time";
+                        }
+                        ListshippingResult.Add(item);
+                    }
            
           
                     }
 
 
             }
-
+  //          var ListItemsShipped = Listshipped
+  //.GroupBy(u => u.Status)
+  //.Select(grp => grp.ToList())
+  //.ToList();
             var ListItems = ListshippingResult
 .GroupBy(u => u.Status)
 .Select(grp => grp.ToList())
@@ -301,11 +323,24 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                     XlabelOpenOrder = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
                     YValueOpenOrder = ListItems4[i].Select(d => d.Quantity).ToArray();
                 }
+                if (ListItems4[i][0].Status == "Shipped-Late")
+                {
+                    XlabelShippedLate = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueShippedLate = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+                if (ListItems4[i][0].Status == "Shipped-On Time")
+                {
+                    XlabelShippedOntime= ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueShippedOntime = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+
             }
-            string tiltle = "Orders of Clients Status " + "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
-            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog,XlabelOpenOrder,YValueOpenOrder, ref chart_shipping, tiltle);
-       
-         
+            string tiltle = "Shiping - Order for Clients Status " + "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
+            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog,XlabelOpenOrder,YValueOpenOrder,ref chart_Shipping, tiltle);
+            string tiltle2 = "Shipped - Order for Clients Status " + "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
+            ChartDrawing.ChartDrawing.DrawCrisisReportShipped(XlabelShippedLate, YValueShippedLate, XlabelShippedOntime, YValueShippedOntime, ref chart_shipped, tiltle2);
+
+
             ShippingSummary = new List<StatusSumary>();
             foreach (var item in ListItems)
             {
@@ -464,9 +499,16 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 }
                 else if (item.Status == "Open Order")
                 {
+                    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Blue;
+                }
+                else if (item.Status == "Shipped-Late")
+                {
+                    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Orange;
+                }
+                else if (item.Status == "Shipped-On Time")
+                {
                     series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Green;
                 }
-           
 
             }
              
@@ -506,9 +548,16 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 }
                 else if (item.Status == "Open Order")
                 {
+                    series2.Points[series2.Points.Count - 1].Color = System.Drawing.Color.Blue;
+                }
+                else if (item.Status == "Shipped-Late")
+                {
+                    series2.Points[series2.Points.Count - 1].Color = System.Drawing.Color.Orange;
+                }
+                else if (item.Status == "Shipped-On Time")
+                {
                     series2.Points[series2.Points.Count - 1].Color = System.Drawing.Color.Green;
                 }
-             
 
 
             }
@@ -580,11 +629,11 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         private void Chart_shipping_MouseClick(object sender, MouseEventArgs e)
         {
-            HitTestResult hit = chart_shipping.HitTest(e.X, e.Y, ChartElementType.DataPoint);
+            HitTestResult hit = chart_shipped.HitTest(e.X, e.Y, ChartElementType.DataPoint);
 
             if (hit.PointIndex >= 0 && hit.Series != null)
             {
-                DataPoint dp = chart_shipping.Series[0].Points[hit.PointIndex];
+                DataPoint dp = chart_shipped.Series[0].Points[hit.PointIndex];
                 string label = dp.AxisLabel;
                 var dr = listShipingResult.Where( d => d.Status == label).ToList();
                 dtDisplay = ConvertToDataTable(dr);
@@ -625,7 +674,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 saveFileDialog.DefaultExt = "Excel";
                 saveFileDialog.Filter = "Excel files (*.xls)|*.xls";
 
-                saveFileDialog.CheckPathExists = true;
+               saveFileDialog.CheckPathExists = true;
 
                 if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -678,19 +727,19 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         private void Chart_shipping_MouseDoubleClick(object sender, MouseEventArgs e)
         {
-            HitTestResult hit = chart_shipping.HitTest(e.X, e.Y, ChartElementType.DataPoint);
+            HitTestResult hit = chart_shipped.HitTest(e.X, e.Y, ChartElementType.DataPoint);
             Series s = null; string strseri = "";
             if (hit != null) s = hit.Series;
             if (s != null)
             {
                 strseri = s.LegendText != "" ? s.LegendText : s.Name;
             }
-            if (hit.PointIndex >= 0 && hit.Series != null)
+            if (hit.PointIndex >= 0 && hit.Series != null&& hit.PointIndex < chart_shipped.Series[0].Points.Count())
             {
-                DataPoint dp = chart_shipping.Series[0].Points[hit.PointIndex];
+                DataPoint dp = chart_shipped.Series[0].Points[hit.PointIndex];
                 string label = dp.AxisLabel;
                 string Label2 = dp.LegendText;
-                var dr = listShipingResult.Where(d => d.ClientsRequestDate.ToString("MMM")== label && d.Status.Contains(strseri.Substring(0,3))).ToList();
+                var dr = listShipingResult.Where(d => d.ClientsRequestDate.ToString("MMM")== label && d.Status==strseri).ToList();
                 dtDisplay = ConvertToDataTable(dr);
                 CrisisReport.DisplayDetail display = new CrisisReport.DisplayDetail(dtDisplay);
                 display.ShowDialog();
@@ -704,6 +753,31 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             YValueBacklog = new int[2]; 
             XlabelOpenOrder = new string[2]; 
             YValueOpenOrder = new int[2];
+            XlabelShippedLate = new string[2];
+            YValueShippedLate = new int[2];
+            XlabelShippedOntime = new string[2];
+            YValueShippedOntime = new int[2];
+        }
+
+        private void Chart_Shipping_MouseDoubleClick_1(object sender, MouseEventArgs e)
+        {
+            HitTestResult hit = chart_Shipping.HitTest(e.X, e.Y, ChartElementType.DataPoint);
+            Series s = null; string strseri = "";
+            if (hit != null) s = hit.Series;
+            if (s != null)
+            {
+                strseri = s.LegendText != "" ? s.LegendText : s.Name;
+            }
+            if (hit.PointIndex >= 0 && hit.Series != null&& hit.PointIndex < chart_shipped.Series[0].Points.Count())
+            {
+                DataPoint dp = chart_shipped.Series[0].Points[hit.PointIndex];
+                string label = dp.AxisLabel;
+                string Label2 = dp.LegendText;
+                var dr = listShipingResult.Where(d => d.ClientsRequestDate.ToString("MMM") == label && d.Status == strseri).ToList();
+                dtDisplay = ConvertToDataTable(dr);
+                CrisisReport.DisplayDetail display = new CrisisReport.DisplayDetail(dtDisplay);
+                display.ShowDialog();
+            }
         }
     }
 }

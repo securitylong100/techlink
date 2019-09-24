@@ -99,5 +99,15 @@ namespace WindowsFormsApplication1.Properties {
                 return ((System.Drawing.Bitmap)(obj));
             }
         }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] ShippingForm {
+            get {
+                object obj = ResourceManager.GetObject("ShippingForm", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
     }
 }
