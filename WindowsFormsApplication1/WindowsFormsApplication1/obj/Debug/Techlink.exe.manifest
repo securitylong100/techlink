@@ -66,14 +66,26 @@
     </dependentAssembly>
   </dependency>
   <dependency>
-    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Techlink.exe" size="264704">
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Framework.dll" size="245248">
+      <assemblyIdentity name="Framework" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
+      <hash>
+        <dsig:Transforms>
+          <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
+        </dsig:Transforms>
+        <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
+        <dsig:DigestValue>H2T+j4BlFOZstL/JEe96xDnbtKv6Ur/sQp41D8pATYY=</dsig:DigestValue>
+      </hash>
+    </dependentAssembly>
+  </dependency>
+  <dependency>
+    <dependentAssembly dependencyType="install" allowDelayedBinding="true" codebase="Techlink.exe" size="365568">
       <assemblyIdentity name="Techlink" version="1.0.0.0" language="neutral" processorArchitecture="msil" />
       <hash>
         <dsig:Transforms>
           <dsig:Transform Algorithm="urn:schemas-microsoft-com:HashTransforms.Identity" />
         </dsig:Transforms>
         <dsig:DigestMethod Algorithm="http://www.w3.org/2000/09/xmldsig#sha256" />
-        <dsig:DigestValue>xhQ9PJrZRUSJF2UCTmd2WPVLfjJUN2L7tZWGt/KBcvM=</dsig:DigestValue>
+        <dsig:DigestValue>Wncpj4jc2Dd83wPjzJTrFmUVHeVzpsPntoM+qECpRoc=</dsig:DigestValue>
       </hash>
     </dependentAssembly>
   </dependency>

@@ -51,6 +51,7 @@ namespace WindowsFormsApplication1
                 version.Append(deploy.Revision);
 
                 Version_lbl.Text = version.ToString();
+                Class.valiballecommon.GetStorage()._version = Version_lbl.Text;
             }
         }
         bool checkdata()

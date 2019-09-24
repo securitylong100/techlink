@@ -17,6 +17,7 @@ namespace WindowsFormsApplication1.Class
         public string UserName { get; set; }
         public string UserCode { get; set; }
         public string Permission { get; set; }
+        public string _version { get; set; }
         public string value1 { get; set; }
         public string value2 { get; set; }
         public string value3 { get; set; }

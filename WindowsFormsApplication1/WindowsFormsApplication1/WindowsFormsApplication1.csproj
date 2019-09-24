@@ -78,6 +78,9 @@
       <HintPath>..\packages\EntityFramework.6.2.0\lib\net45\EntityFramework.SqlServer.dll</HintPath>
       <Private>True</Private>
     </Reference>
+    <Reference Include="Framework">
+      <HintPath>..\..\..\temp\Framework.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -100,6 +103,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChartDrawing\ChartDrawing.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
     <Compile Include="Class\ToolSupport.cs" />
     <Compile Include="Class\valiballecommon.cs" />
@@ -111,6 +115,45 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="CrisisReport\Classvalue\ProductionItems.cs" />
+    <Compile Include="CrisisReport\Classvalue\SetTimeForReport.cs" />
+    <Compile Include="CrisisReport\Classvalue\ShippingItems.cs" />
+    <Compile Include="CrisisReport\CrisisReportShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\CrisisReportShow.Designer.cs">
+      <DependentUpon>CrisisReportShow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\DiplayChartDatagrid.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\DiplayChartDatagrid.Designer.cs">
+      <DependentUpon>DiplayChartDatagrid.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\DisplayDetail.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\DisplayDetail.Designer.cs">
+      <DependentUpon>DisplayDetail.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\ERPPlan\DailyTagetForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\ERPPlan\DailyTagetForm.designer.cs">
+      <DependentUpon>DailyTagetForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\ProductionMonitoring.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\ProductionMonitoring.Designer.cs">
+      <DependentUpon>ProductionMonitoring.cs</DependentUpon>
+    </Compile>
+    <Compile Include="CrisisReport\ShippingReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CrisisReport\ShippingReport.Designer.cs">
+      <DependentUpon>ShippingReport.cs</DependentUpon>
+    </Compile>
     <Compile Include="ERPShowOrder\ERPemail\AddERPConfigMail.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -178,6 +221,12 @@
       <DependentUpon>MainFr.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\infomesge.cs" />
+    <Compile Include="PQM\ConnectData\Adruino\Adruino.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="PQM\ConnectData\Adruino\Adruino.designer.cs">
+      <DependentUpon>Adruino.cs</DependentUpon>
+    </Compile>
     <Compile Include="PQM\ConnectData\ConnectData.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -268,6 +317,24 @@
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\CrisisReportShow.resx">
+      <DependentUpon>CrisisReportShow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\DiplayChartDatagrid.resx">
+      <DependentUpon>DiplayChartDatagrid.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\DisplayDetail.resx">
+      <DependentUpon>DisplayDetail.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\ERPPlan\DailyTagetForm.resx">
+      <DependentUpon>DailyTagetForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\ProductionMonitoring.resx">
+      <DependentUpon>ProductionMonitoring.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="CrisisReport\ShippingReport.resx">
+      <DependentUpon>ShippingReport.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="ERPShowOrder\ERPemail\AddERPConfigMail.resx">
       <DependentUpon>AddERPConfigMail.cs</DependentUpon>
     </EmbeddedResource>
@@ -300,6 +367,9 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFr.resx">
       <DependentUpon>MainFr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="PQM\ConnectData\Adruino\Adruino.resx">
+      <DependentUpon>Adruino.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PQM\ConnectData\ConnectData.resx">
       <DependentUpon>ConnectData.cs</DependentUpon>
@@ -375,6 +445,7 @@
     </None>
   </ItemGroup>
   <ItemGroup>
+    <Folder Include="CrisisReport\Shipping\" />
     <Folder Include="SettingForm\ItemForm\" />
   </ItemGroup>
   <ItemGroup>

@@ -49,6 +49,7 @@
             this.label9 = new System.Windows.Forms.Label();
             this.txt_subject = new System.Windows.Forms.TextBox();
             this.rtb_comment = new System.Windows.Forms.RichTextBox();
+            this.rtb_IsBodyHTML = new System.Windows.Forms.RadioButton();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_hours)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_date)).BeginInit();
             this.SuspendLayout();
@@ -217,7 +218,7 @@
             // btn_confirm
             // 
             this.btn_confirm.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_confirm.Location = new System.Drawing.Point(638, 590);
+            this.btn_confirm.Location = new System.Drawing.Point(638, 629);
             this.btn_confirm.Name = "btn_confirm";
             this.btn_confirm.Size = new System.Drawing.Size(176, 51);
             this.btn_confirm.TabIndex = 18;
@@ -248,11 +249,11 @@
             // 
             this.label8.AutoSize = true;
             this.label8.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label8.Location = new System.Drawing.Point(24, 456);
+            this.label8.Location = new System.Drawing.Point(24, 419);
             this.label8.Name = "label8";
-            this.label8.Size = new System.Drawing.Size(104, 25);
+            this.label8.Size = new System.Drawing.Size(88, 25);
             this.label8.TabIndex = 21;
-            this.label8.Text = "Comment";
+            this.label8.Text = "Content";
             // 
             // label9
             // 
@@ -269,22 +270,36 @@
             this.txt_subject.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.txt_subject.Location = new System.Drawing.Point(179, 372);
             this.txt_subject.Name = "txt_subject";
-            this.txt_subject.Size = new System.Drawing.Size(635, 30);
+            this.txt_subject.Size = new System.Drawing.Size(443, 30);
             this.txt_subject.TabIndex = 24;
             // 
             // rtb_comment
             // 
-            this.rtb_comment.Location = new System.Drawing.Point(179, 423);
+            this.rtb_comment.Location = new System.Drawing.Point(179, 456);
             this.rtb_comment.Name = "rtb_comment";
             this.rtb_comment.Size = new System.Drawing.Size(635, 153);
             this.rtb_comment.TabIndex = 25;
             this.rtb_comment.Text = "";
             // 
+            // rtb_IsBodyHTML
+            // 
+            this.rtb_IsBodyHTML.AutoSize = true;
+            this.rtb_IsBodyHTML.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.rtb_IsBodyHTML.Location = new System.Drawing.Point(177, 419);
+            this.rtb_IsBodyHTML.Name = "rtb_IsBodyHTML";
+            this.rtb_IsBodyHTML.Size = new System.Drawing.Size(170, 29);
+            this.rtb_IsBodyHTML.TabIndex = 26;
+            this.rtb_IsBodyHTML.TabStop = true;
+            this.rtb_IsBodyHTML.Text = "Is Body HTML";
+            this.rtb_IsBodyHTML.UseVisualStyleBackColor = true;
+            this.rtb_IsBodyHTML.CheckedChanged += new System.EventHandler(this.Rtb_IsBodyHTML_CheckedChanged);
+            // 
             // ReportSchechuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(839, 653);
+            this.ClientSize = new System.Drawing.Size(839, 692);
+            this.Controls.Add(this.rtb_IsBodyHTML);
             this.Controls.Add(this.rtb_comment);
             this.Controls.Add(this.txt_subject);
             this.Controls.Add(this.label9);
@@ -330,6 +345,7 @@
             this.Controls.SetChildIndex(this.label9, 0);
             this.Controls.SetChildIndex(this.txt_subject, 0);
             this.Controls.SetChildIndex(this.rtb_comment, 0);
+            this.Controls.SetChildIndex(this.rtb_IsBodyHTML, 0);
             ((System.ComponentModel.ISupportInitialize)(this.nmr_hours)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_date)).EndInit();
             this.ResumeLayout(false);
@@ -360,5 +376,6 @@
         private System.Windows.Forms.Label label9;
         private System.Windows.Forms.TextBox txt_subject;
         private System.Windows.Forms.RichTextBox rtb_comment;
+        private System.Windows.Forms.RadioButton rtb_IsBodyHTML;
     }
 }

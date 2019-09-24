@@ -18,14 +18,14 @@ namespace WindowsFormsApplication1
             //string username = "SQLUSER";
             //string password = "12345";
 
-            //string datasource = @"MSI\SQLEXPRESS";
+            //string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
             //string database = "TLSOFT";
             //string username = "SQLUSER";
             //string password = "12345";
 
-            string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
-            string database = "TLSOFT";
-            string username = "SQLUSER";
+            string datasource = "172.16.0.12";
+            string database = "ERPSOFT";
+            string username = "ERPUSER";
             string password = "12345";
 
 
@@ -35,19 +35,19 @@ namespace WindowsFormsApplication1
         public static SqlConnection GetERPDBConnection()
         {
             //Data Source = LONG; Initial Catalog = TEST; Integrated Security = True
-            //string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
-            //string database = "TECHLINK";
-            //string username = "soft";
-            //string password = "techlink@!@#";
+            string datasource = "172.16.0.11";
+            string database = "TECHLINK";
+            string username = "soft";
+            string password = "techlink@!@#";
 
             //string datasource = "Long";
             //string database = "TECHLINK";
             //string username = "SQLUSER";
             //string password = "12345";
-            string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
-            string database = "TECHLINK";
-            string username = "SQLUSER";
-            string password = "12345";
+            //string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
+            //string database = "TECHLINK";
+            //string username = "SQLUSER";
+            //string password = "12345";
 
 
             return DBSQLServerUtils.GetERPDBConnection(datasource, database, username, password);

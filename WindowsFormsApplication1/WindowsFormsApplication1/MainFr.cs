@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using WindowsFormsApplication1.SettingForm;
+using WindowsFormsApplication1.CrisisReport;
 
 namespace WindowsFormsApplication1
 {
@@ -35,9 +36,10 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("ModelLine", btn_modelline);
             connect.sqlDatatablePermision("Dept", btn_dept);
             connect.sqlDatatablePermision("PQMShow", btn_pqmshow);
-            connect.sqlDatatablePermision("ProcessInspect", btn_process);
-            connect.sqlDatatablePermision("ERPShowMain", btn_ERPshowmain);
+            connect.sqlDatatablePermision("ProcessInspect", btn_process);      
             connect.sqlDatatablePermision("ERPConfigMail", btn_emailconfig);
+            connect.sqlDatatablePermision("ProductionReport", btn_production);
+            connect.sqlDatatablePermision("ShippingReport", btn_shipping);
 
         }
 
@@ -100,6 +102,18 @@ namespace WindowsFormsApplication1
         {
             ERPShowOrder.ERPConfigMail show = new ERPShowOrder.ERPConfigMail();
             show.ShowDialog();
+        }
+
+        private void Btn_OrderReport_Click(object sender, EventArgs e)
+        {
+            ShippingReport shippingShow = new ShippingReport();
+            shippingShow.ShowDialog();
+        }
+
+        private void Btn_production_Click(object sender, EventArgs e)
+        {
+            ProductionMonitoring productionShow = new ProductionMonitoring();
+            productionShow.ShowDialog();
         }
     }
 }

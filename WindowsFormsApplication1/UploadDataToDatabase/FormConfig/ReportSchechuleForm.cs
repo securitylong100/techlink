@@ -22,12 +22,12 @@ namespace UploadDataToDatabase.FormConfig
         private void Btn_confirm_Click(object sender, EventArgs e)
         {
        
-            ScheduleReportItems.GetStorage().Month = cmb_month.Text.Trim();
+
             sqlCON connect = new sqlCON();
 
-            string sqladd = @"insert into t_report_schedule (reportname, reporttype, hours, day, date,month,subject, attach,comments,inputdate) values ('"
+            string sqladd = @"insert into t_report_schedule (reportname, reporttype, hours, day, date,month,isBodyHTML, subject, attach,comments,inputdate) values ('"
 + txt_ReportName.Text + "','" + cmb_typeReport.Text + "','"
-+ nmr_hours.Value.ToString() + "','" + cmb_day.Text+ "','"+ nmr_date.Value.ToString()+ "','"+ cmb_month.Text+ "','" +txt_subject.Text+ "','"+ txt_attach.Text+ "','"+ rtb_comment.Text+ "',GETDATE())";
++ nmr_hours.Value.ToString() + "','" + cmb_day.Text+ "','"+ nmr_date.Value.ToString()+ "','"+ cmb_month.Text+ "','"+ rtb_IsBodyHTML.Checked.ToString()+"','" +txt_subject.Text+ "','"+ txt_attach.Text+ "','"+ rtb_comment.Text+ "',GETDATE())";
             connect.sqlExecuteNonQuery(sqladd, false);
             this.Close();
         }
@@ -102,6 +102,11 @@ namespace UploadDataToDatabase.FormConfig
             {
                 txt_attach.Text = openFileDialog.SelectedPath;
             }
+        }
+
+        private void Rtb_IsBodyHTML_CheckedChanged(object sender, EventArgs e)
+        {
+
         }
     }
 }
