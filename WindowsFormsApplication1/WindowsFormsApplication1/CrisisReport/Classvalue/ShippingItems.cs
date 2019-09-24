@@ -12,6 +12,9 @@ namespace WindowsFormsApplication1.CrisisReport.Classvalue
         public string OrderCode { get; set; }
         public string Clients { get; set; }
         public string Clients_OrderCode { get; set; }
+        public string Product { get; set; }
+        public double Quantity { get; set; }
+        public double Stock_Quantity { get; set; }
         public DateTime ClientsRequestDate { get; set; }
         public DateTime DeliveryDate { get; set; }
         public double ShippingPercents { get; set; }
@@ -22,6 +25,7 @@ namespace WindowsFormsApplication1.CrisisReport.Classvalue
     {
         public string Status { get; set; }
         public int Quantity { get; set; }
+        public string ClientsRequestDate { get; set; }
 
     }
 }

@@ -10,3 +10,15 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.exe.config
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.exe
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Upload Data To Database.pdb
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.CommonForm.resources
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Form1.resources
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.FormConfig.ReportSchechuleForm.resources
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Properties.Resources.resources
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.GenerateResource.cache
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CoreCompileInputs.cache
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.exe
+G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb

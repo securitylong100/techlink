@@ -18,7 +18,7 @@ namespace WindowsFormsApplication1
             //string username = "SQLUSER";
             //string password = "12345";
 
-            //string datasource = @"MSI\SQLEXPRESS";
+            //string datasource = @"DESKTOP-83OVHRC\SQLEXPRESS";
             //string database = "TLSOFT";
             //string username = "SQLUSER";
             //string password = "12345";
