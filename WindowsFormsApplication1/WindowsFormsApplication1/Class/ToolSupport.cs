@@ -83,7 +83,7 @@ namespace WindowsFormsApplication1.Class
             }
 
         }
-        public void editexcelshipping(string dateupdate, string usersend, string version, string year, DataGridView dgv, string pathSaveExcel)
+        public void editexcelshipping(string dateupdate, string usersend, string version, string year, DataGridView dgv, string pathSaveExcel, string PathTemplate)
         {
             Excel.Application xlApp;
             Excel.Workbook xlWorkBook;
@@ -94,7 +94,7 @@ namespace WindowsFormsApplication1.Class
             try
             {
                 xlApp = new Excel.Application();
-                xlWorkBook = xlApp.Workbooks.Open(@"\\172.16.0.12\Softwarepublish\ShippingForm.xls", 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+                xlWorkBook = xlApp.Workbooks.Open(PathTemplate, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
 
                 #region Sheet 1
                 //Add data in Sheet 1

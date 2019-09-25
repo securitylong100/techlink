@@ -28,18 +28,18 @@
         /// </summary>
         private void InitializeComponent()
         {
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea4 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend4 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series4 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend1 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series1 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea2 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend2 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series2 = new System.Windows.Forms.DataVisualization.Charting.Series();
-            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea3 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
-            System.Windows.Forms.DataVisualization.Charting.Legend legend3 = new System.Windows.Forms.DataVisualization.Charting.Legend();
-            System.Windows.Forms.DataVisualization.Charting.Series series3 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea9 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend9 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series9 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea10 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend10 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series10 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea11 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend11 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series11 = new System.Windows.Forms.DataVisualization.Charting.Series();
+            System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea12 = new System.Windows.Forms.DataVisualization.Charting.ChartArea();
+            System.Windows.Forms.DataVisualization.Charting.Legend legend12 = new System.Windows.Forms.DataVisualization.Charting.Legend();
+            System.Windows.Forms.DataVisualization.Charting.Series series12 = new System.Windows.Forms.DataVisualization.Charting.Series();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel2 = new System.Windows.Forms.TableLayoutPanel();
             this.btn_toExcel = new System.Windows.Forms.Button();
@@ -62,13 +62,13 @@
             this.rd_yearly = new System.Windows.Forms.RadioButton();
             this.tableLayoutPanel5 = new System.Windows.Forms.TableLayoutPanel();
             this.tableLayoutPanel6 = new System.Windows.Forms.TableLayoutPanel();
-            this.chart_shipped = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.tableLayoutPanel7 = new System.Windows.Forms.TableLayoutPanel();
             this.Chart_Percent = new System.Windows.Forms.DataVisualization.Charting.Chart();
             this.chart_Quantity = new System.Windows.Forms.DataVisualization.Charting.Chart();
-            this.dgv_show = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel8 = new System.Windows.Forms.TableLayoutPanel();
             this.chart_Shipping = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.chart_shipped = new System.Windows.Forms.DataVisualization.Charting.Chart();
+            this.dgv_show = new System.Windows.Forms.DataGridView();
             this.tableLayoutPanel1.SuspendLayout();
             this.tableLayoutPanel2.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -78,13 +78,13 @@
             this.groupBox2.SuspendLayout();
             this.tableLayoutPanel5.SuspendLayout();
             this.tableLayoutPanel6.SuspendLayout();
-            ((System.ComponentModel.ISupportInitialize)(this.chart_shipped)).BeginInit();
             this.tableLayoutPanel7.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.Chart_Percent)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Quantity)).BeginInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).BeginInit();
             this.tableLayoutPanel8.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Shipping)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_shipped)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).BeginInit();
             this.SuspendLayout();
             // 
             // tableLayoutPanel1
@@ -223,7 +223,7 @@
             this.label1.Name = "label1";
             this.label1.Size = new System.Drawing.Size(995, 93);
             this.label1.TabIndex = 32;
-            this.label1.Text = "Orders of Clients Status Report";
+            this.label1.Text = "Reliability Shipment Report ";
             this.label1.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
             // 
             // tableLayoutPanel3
@@ -352,6 +352,7 @@
             this.rd_daily.TabIndex = 3;
             this.rd_daily.Text = "Day";
             this.rd_daily.UseVisualStyleBackColor = true;
+            this.rd_daily.Visible = false;
             this.rd_daily.CheckedChanged += new System.EventHandler(this.Rd_daily_CheckedChanged);
             // 
             // rd_weekly
@@ -366,6 +367,7 @@
             this.rd_weekly.TabIndex = 2;
             this.rd_weekly.Text = "Week";
             this.rd_weekly.UseVisualStyleBackColor = true;
+            this.rd_weekly.Visible = false;
             this.rd_weekly.CheckedChanged += new System.EventHandler(this.Rd_weekly_CheckedChanged);
             // 
             // rd_Monthly
@@ -430,28 +432,6 @@
             this.tableLayoutPanel6.Size = new System.Drawing.Size(1093, 560);
             this.tableLayoutPanel6.TabIndex = 0;
             // 
-            // chart_shipped
-            // 
-            this.chart_shipped.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.chart_shipped.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            chartArea4.Name = "ChartArea1";
-            this.chart_shipped.ChartAreas.Add(chartArea4);
-            legend4.Name = "Legend1";
-            this.chart_shipped.Legends.Add(legend4);
-            this.chart_shipped.Location = new System.Drawing.Point(3, 3);
-            this.chart_shipped.Name = "chart_shipped";
-            this.chart_shipped.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series4.ChartArea = "ChartArea1";
-            series4.Legend = "Legend1";
-            series4.Name = "Series1";
-            this.chart_shipped.Series.Add(series4);
-            this.chart_shipped.Size = new System.Drawing.Size(753, 271);
-            this.chart_shipped.TabIndex = 0;
-            this.chart_shipped.Text = "chart1";
-            this.chart_shipped.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Chart_shipping_MouseDoubleClick);
-            // 
             // tableLayoutPanel7
             // 
             this.tableLayoutPanel7.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
@@ -475,17 +455,17 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.Chart_Percent.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            chartArea1.Name = "ChartArea1";
-            this.Chart_Percent.ChartAreas.Add(chartArea1);
-            legend1.Name = "Legend1";
-            this.Chart_Percent.Legends.Add(legend1);
+            chartArea9.Name = "ChartArea1";
+            this.Chart_Percent.ChartAreas.Add(chartArea9);
+            legend9.Name = "Legend1";
+            this.Chart_Percent.Legends.Add(legend9);
             this.Chart_Percent.Location = new System.Drawing.Point(3, 335);
             this.Chart_Percent.Name = "Chart_Percent";
             this.Chart_Percent.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series1.ChartArea = "ChartArea1";
-            series1.Legend = "Legend1";
-            series1.Name = "Series1";
-            this.Chart_Percent.Series.Add(series1);
+            series9.ChartArea = "ChartArea1";
+            series9.Legend = "Legend1";
+            series9.Name = "Series1";
+            this.Chart_Percent.Series.Add(series9);
             this.Chart_Percent.Size = new System.Drawing.Size(316, 216);
             this.Chart_Percent.TabIndex = 2;
             this.Chart_Percent.Text = "chart1";
@@ -497,37 +477,21 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_Quantity.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            chartArea2.Name = "ChartArea1";
-            this.chart_Quantity.ChartAreas.Add(chartArea2);
-            legend2.Name = "Legend1";
-            this.chart_Quantity.Legends.Add(legend2);
+            chartArea10.Name = "ChartArea1";
+            this.chart_Quantity.ChartAreas.Add(chartArea10);
+            legend10.Name = "Legend1";
+            this.chart_Quantity.Legends.Add(legend10);
             this.chart_Quantity.Location = new System.Drawing.Point(3, 3);
             this.chart_Quantity.Name = "chart_Quantity";
             this.chart_Quantity.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series2.ChartArea = "ChartArea1";
-            series2.Legend = "Legend1";
-            series2.Name = "Series1";
-            this.chart_Quantity.Series.Add(series2);
+            series10.ChartArea = "ChartArea1";
+            series10.Legend = "Legend1";
+            series10.Name = "Series1";
+            this.chart_Quantity.Series.Add(series10);
             this.chart_Quantity.Size = new System.Drawing.Size(316, 326);
             this.chart_Quantity.TabIndex = 1;
             this.chart_Quantity.Text = "chart1";
             this.chart_Quantity.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Chart_Quantity_MouseDoubleClick);
-            // 
-            // dgv_show
-            // 
-            this.dgv_show.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
-            | System.Windows.Forms.AnchorStyles.Left) 
-            | System.Windows.Forms.AnchorStyles.Right)));
-            this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_show.Location = new System.Drawing.Point(3, 3);
-            this.dgv_show.Name = "dgv_show";
-            this.dgv_show.RowHeadersWidth = 51;
-            this.dgv_show.RowTemplate.Height = 24;
-            this.dgv_show.Size = new System.Drawing.Size(1, 560);
-            this.dgv_show.TabIndex = 10;
-            this.dgv_show.Visible = false;
-            this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentClick);
-            this.dgv_show.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentDoubleClick);
             // 
             // tableLayoutPanel8
             // 
@@ -552,21 +516,59 @@
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
             this.chart_Shipping.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
-            chartArea3.Name = "ChartArea1";
-            this.chart_Shipping.ChartAreas.Add(chartArea3);
-            legend3.Name = "Legend1";
-            this.chart_Shipping.Legends.Add(legend3);
+            chartArea11.Name = "ChartArea1";
+            this.chart_Shipping.ChartAreas.Add(chartArea11);
+            legend11.Name = "Legend1";
+            this.chart_Shipping.Legends.Add(legend11);
             this.chart_Shipping.Location = new System.Drawing.Point(3, 280);
             this.chart_Shipping.Name = "chart_Shipping";
             this.chart_Shipping.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
-            series3.ChartArea = "ChartArea1";
-            series3.Legend = "Legend1";
-            series3.Name = "Series1";
-            this.chart_Shipping.Series.Add(series3);
+            series11.ChartArea = "ChartArea1";
+            series11.Legend = "Legend1";
+            series11.Name = "Series1";
+            this.chart_Shipping.Series.Add(series11);
             this.chart_Shipping.Size = new System.Drawing.Size(753, 271);
             this.chart_Shipping.TabIndex = 1;
             this.chart_Shipping.Text = "chart1";
             this.chart_Shipping.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Chart_Shipping_MouseDoubleClick_1);
+            // 
+            // chart_shipped
+            // 
+            this.chart_shipped.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.chart_shipped.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(224)))), ((int)(((byte)(224)))), ((int)(((byte)(224)))));
+            chartArea12.Name = "ChartArea1";
+            this.chart_shipped.ChartAreas.Add(chartArea12);
+            legend12.Name = "Legend1";
+            this.chart_shipped.Legends.Add(legend12);
+            this.chart_shipped.Location = new System.Drawing.Point(3, 3);
+            this.chart_shipped.Name = "chart_shipped";
+            this.chart_shipped.Palette = System.Windows.Forms.DataVisualization.Charting.ChartColorPalette.Excel;
+            series12.ChartArea = "ChartArea1";
+            series12.Legend = "Legend1";
+            series12.Name = "Series1";
+            this.chart_shipped.Series.Add(series12);
+            this.chart_shipped.Size = new System.Drawing.Size(753, 271);
+            this.chart_shipped.TabIndex = 0;
+            this.chart_shipped.Text = "chart1";
+            this.chart_shipped.MouseDoubleClick += new System.Windows.Forms.MouseEventHandler(this.Chart_shipping_MouseDoubleClick);
+            // 
+            // dgv_show
+            // 
+            this.dgv_show.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.dgv_show.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
+            this.dgv_show.Location = new System.Drawing.Point(3, 3);
+            this.dgv_show.Name = "dgv_show";
+            this.dgv_show.RowHeadersWidth = 51;
+            this.dgv_show.RowTemplate.Height = 24;
+            this.dgv_show.Size = new System.Drawing.Size(1, 560);
+            this.dgv_show.TabIndex = 10;
+            this.dgv_show.Visible = false;
+            this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentClick);
+            this.dgv_show.CellContentDoubleClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentDoubleClick);
             // 
             // ShippingReport
             // 
@@ -590,13 +592,13 @@
             this.groupBox2.PerformLayout();
             this.tableLayoutPanel5.ResumeLayout(false);
             this.tableLayoutPanel6.ResumeLayout(false);
-            ((System.ComponentModel.ISupportInitialize)(this.chart_shipped)).EndInit();
             this.tableLayoutPanel7.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.Chart_Percent)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.chart_Quantity)).EndInit();
-            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).EndInit();
             this.tableLayoutPanel8.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.chart_Shipping)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.chart_shipped)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.dgv_show)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 

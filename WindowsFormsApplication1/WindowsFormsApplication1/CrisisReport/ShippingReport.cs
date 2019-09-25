@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Data;
 using System.Drawing;
+using System.IO;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -31,9 +32,12 @@ namespace WindowsFormsApplication1
         int[] YValueShippedOntime;
         string[] XlabelShippedLate;
         int[] YValueShippedLate;
+        private string path = Environment.CurrentDirectory+ @"\Resources\ShippingForm.xls";
+
         public ShippingReport()
         {
             InitializeComponent();
+          
         }
 
         private void LoadTreeviewDeptment()
@@ -90,7 +94,7 @@ coptds.TD004 as Product_Code,
 coptds.TD005 as Product_Name,
 coptds.TD010 as Unit,
 coptcs.TC005 as Department,
-coptds.TD047 as Client_Request_Date,
+coptds.TD013 as Client_Request_Date,
 max(coptgs.TG003) as Delivery_Date,
 coptds.TD008 as Order_Quantity,
 sum(copths.TH008) as Delivery_Quantity,
@@ -121,8 +125,8 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 return;
             }
 
-            sql.Append(" and CONVERT(date,coptds.TD047)  >= '" + datefrom + "' ");
-            sql.Append(" and CONVERT(date,coptds.TD047) <= '" + dateto + "' ");
+            sql.Append(" and CONVERT(date,coptds.TD013)  >= '" + datefrom + "' ");
+            sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto + "' ");
 
             sql.Append(@"group by 
                                    coptcs.CREATE_DATE,
@@ -136,7 +140,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                                    coptds.TD008,
                                     coptds.TD010,
                                     coptcs.TC005,
-                                    coptds.TD047,
+                                    coptds.TD013,
                                     copths.TH004,
                                     copths.TH001,
                                     coptjs.TJ008,
@@ -219,29 +223,31 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 Items.ShippingPercents = item19.ToString() == "" ? 0 : Math.Round(double.Parse(item19.ToString()), 2);
                 ListshippingItems.Add(Items);
 
-
-
             }
             var groupedListItems = ListshippingItems
      .GroupBy(u => u.OrderCode)
      .Select(grp => grp.ToList())
      .ToList();
-
+         
             foreach (List<ShippingItems> shippingItems in groupedListItems)
             {
                 foreach (var item in shippingItems)
                 {
                     if (item.ShippingPercents < 1)
                     {
+              
                         if ( item.Stock_Quantity < item.Quantity && DateTime.Now.Date >= item.ClientsRequestDate)
                         {
                             item.Status = "Back Log";
                         }
-                      
+
+                       
                         else if (item.ShippingPercents < 100 && DateTime.Now.Date >= item.ClientsRequestDate/* && item.Stock_Quantity >= item.Quantity*/)
                         {
-                            item.Status = "Late";
+                            
+                                item.Status = "Late";
                         }
+                   
                         else
                         {
                             item.Status = "Open Order";
@@ -335,10 +341,12 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 }
 
             }
-            string tiltle = "Shiping - Order for Clients Status " + "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
-            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog,XlabelOpenOrder,YValueOpenOrder,ref chart_Shipping, tiltle);
-            string tiltle2 = "Shipped - Order for Clients Status " + "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
-            ChartDrawing.ChartDrawing.DrawCrisisReportShipped(XlabelShippedLate, YValueShippedLate, XlabelShippedOntime, YValueShippedOntime, ref chart_shipped, tiltle2);
+            string tiltle = "Reliability On-time Shipment Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
+            
+            string tiltle2 = "Back Log Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
+          
+            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog, XlabelOpenOrder, YValueOpenOrder, ref chart_Shipping, tiltle2);
+            ChartDrawing.ChartDrawing.DrawCrisisReportShipped(XlabelShippedLate, YValueShippedLate, XlabelShippedOntime, YValueShippedOntime, ref chart_shipped, tiltle);
 
 
             ShippingSummary = new List<StatusSumary>();
@@ -395,6 +403,10 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         private void Btn_search_Click(object sender, EventArgs e)
         {
+            try
+            {
+
+           
             SetTimetoSearch();
              listShipingResult = new List<ShippingItems>();
             GetDataShipping();
@@ -422,7 +434,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 dgv_show.Columns[8].HeaderText = "Delivery Date";
                 dgv_show.Columns[9].HeaderText = "Shipping Percernt";
                 dgv_show.Columns[10].HeaderText = "Status";
-                MakeColorForDatagridview(dgv_show);
+            //    MakeColorForDatagridview(dgv_show);
                 DrawingChartForShipping(ShippingSummary);
                 DrawingChartPercentShipping(ShippingSummary);
             }
@@ -431,6 +443,13 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 dgv_show.DataSource = null;
             }
             ClearData();
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+
+                
+            }
         }
         private void MakeColorForDatagridview(DataGridView dtgv)
         {
@@ -468,7 +487,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             Title title = new Title();
             title.Font = new Font("Arial", 12, FontStyle.Bold);
            
-            title.Text = "Orders of Clients Status "+'\n'+ "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
+            title.Text = "Reliability Shipment Summary Report" + '\n'+ "From: " + dtp_from.Value.ToString("dd - MM - yyyy") + " To: " + dtp_to.Value.ToString("dd - MM - yyyy");
           
             this.chart_Quantity.Titles.Add(title);
             
@@ -480,8 +499,17 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             chart_Quantity.ChartAreas[0].AxisX.MajorGrid.Enabled = false;
             chart_Quantity.ChartAreas[0].AxisX.MinorGrid.Enabled = false;
             chart_Quantity.ChartAreas[0].AxisX.LabelStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
-            double Max= list.Max(a => a.Quantity);
+            double Max= list.Max(a => a.Quantity)*1.2;
+            chart_Quantity.ChartAreas[0].AxisX.Title = "Status";
+
+            chart_Quantity.ChartAreas[0].AxisX.TitleForeColor = Color.Blue;
+            chart_Quantity.ChartAreas[0].AxisX.LabelStyle.ForeColor = Color.Blue;
             chart_Quantity.ChartAreas[0].AxisY.Maximum = Max + 1;
+            chart_Quantity.ChartAreas[0].AxisY.Title = "Quantity (pcs)";
+            chart_Quantity.ChartAreas[0].AxisY.TitleForeColor = Color.Blue;
+            chart_Quantity.ChartAreas[0].AxisY.LabelStyle.ForeColor = Color.Blue;
+            chart_Quantity.ChartAreas[0].AxisY.LabelStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
+            chart_Quantity.ChartAreas[0].AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
             //chart_shipping.ChartAreas[0].AxisY.MajorGrid.Enabled = false;
             //chart_shipping.ChartAreas[0].AxisY.MinorGrid.Enabled = false;
             foreach (var item in list)
@@ -520,24 +548,31 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             Title title = new Title();
             title.Font = new Font("Arial", 12, FontStyle.Bold);
 
-            title.Text = "Orders of Clients Status (%)" + '\n' + "From: " + dtp_from.Value.ToString("dd-MM-yyyy") + " To: " + dtp_to.Value.ToString("dd-MM-yyyy");
+            title.Text = "Reliability Shipment Summary (%)" + '\n' + "From: " + dtp_from.Value.ToString("dd-MM-yyyy") + " To: " + dtp_to.Value.ToString("dd-MM-yyyy");
             this.Chart_Percent.Titles.Add(title);
             double Total = list.Sum(a => a.Quantity);
             Series series2 = this.Chart_Percent.Series.Add("Shipping Rate Analysis");
             series2.ChartType = SeriesChartType.Pie;
             // Chart_PercentShipping.Series[.ChartType = SeriesChartType.Pie;
-            series2.LabelFormat = "#' %'";
+            series2.LabelFormat = "0' %'";
            
             series2.IsValueShownAsLabel = true;
              series2.IsVisibleInLegend = true;
             this.Chart_Percent.ChartAreas[0].Area3DStyle.Enable3D = true;
             Chart_Percent.Legends[0].Enabled = true;
+            double test = 0;
             foreach (var item in list)
             {
-                double test = (double)(item.Quantity *100 / Total );
-                series2.Points.AddXY(item.Status, Math.Round((double)(item.Quantity * 100 / Total), 1));
 
-                
+
+                if (item.Status == list[list.Count - 1].Status)
+                    series2.Points.AddXY(item.Status, 100 - test);
+                else
+                {
+                    series2.Points.AddXY(item.Status, Math.Round((double)(item.Quantity * 100 / Total), 0));
+                    test += Math.Round(((double)item.Quantity * 100 / Total), 0);
+                }
+
                 if (item.Status == "Late")
                 {
                     series2.Points[series2.Points.Count - 1].Color = System.Drawing.Color.Red;
@@ -665,6 +700,12 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         private void Btn_toExcel_Click(object sender, EventArgs e)
         {
+          
+            if (File.Exists(path) != true)
+            {
+                MessageBox.Show("File  Export Excel Template don't exists ");
+                return;
+            }
             string pathsave = "";
             try
             {
@@ -674,7 +715,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 saveFileDialog.DefaultExt = "Excel";
                 saveFileDialog.Filter = "Excel files (*.xls)|*.xls";
 
-               saveFileDialog.CheckPathExists = true;
+            //   saveFileDialog.CheckPathExists = true;
 
                 if (saveFileDialog.ShowDialog() == System.Windows.Forms.DialogResult.OK)
                 {
@@ -685,7 +726,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                     string strUser = Class.valiballecommon.GetStorage().UserName;
                     string strVersion = Class.valiballecommon.GetStorage()._version;
                     //  tool.dtgvExport2Excel(dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls");
-                    tool.editexcelshipping(DateTime.Now.ToString("yyyy-MM-dd"), strUser, strVersion, DateTime.Now.ToString("yyyy"), dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls");
+                    tool.editexcelshipping(DateTime.Now.ToString("yyyy-MM-dd"), strUser, strVersion, DateTime.Now.ToString("yyyy"), dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls", path);
                 }
             }
             catch (Exception ex)
@@ -712,6 +753,10 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         private void Chart_Percent_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            try
+            {
+
+           
             HitTestResult hit = Chart_Percent.HitTest(e.X, e.Y, ChartElementType.DataPoint);
 
             if (hit.PointIndex >= 0 && hit.Series != null)
@@ -723,10 +768,20 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 CrisisReport.DisplayDetail display = new CrisisReport.DisplayDetail(dtDisplay);
                 display.ShowDialog();
             }
+            }
+            catch (Exception)
+            {
+
+               
+            }
         }
 
         private void Chart_shipping_MouseDoubleClick(object sender, MouseEventArgs e)
         {
+            try
+            {
+
+        
             HitTestResult hit = chart_shipped.HitTest(e.X, e.Y, ChartElementType.DataPoint);
             Series s = null; string strseri = "";
             if (hit != null) s = hit.Series;
@@ -744,23 +799,34 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 CrisisReport.DisplayDetail display = new CrisisReport.DisplayDetail(dtDisplay);
                 display.ShowDialog();
             }
+            }
+            catch (Exception)
+            {
+
+               
+            }
         }
         private void ClearData()
         {
-            XlabelLate = new string[2];
-            YValueLate =new int[2];
-            XlabelBackLog = new string[2]; 
-            YValueBacklog = new int[2]; 
-            XlabelOpenOrder = new string[2]; 
-            YValueOpenOrder = new int[2];
-            XlabelShippedLate = new string[2];
-            YValueShippedLate = new int[2];
-            XlabelShippedOntime = new string[2];
-            YValueShippedOntime = new int[2];
+            XlabelLate = new string[1];
+            YValueLate =new int[1];
+            XlabelBackLog = new string[1]; 
+            YValueBacklog = new int[1]; 
+            XlabelOpenOrder = new string[1]; 
+            YValueOpenOrder = new int[1];
+            XlabelShippedLate = new string[1];
+            YValueShippedLate = new int[1];
+            XlabelShippedOntime = new string[1];
+            YValueShippedOntime = new int[1];
+            ShippingSummary = new List<StatusSumary>();
         }
 
         private void Chart_Shipping_MouseDoubleClick_1(object sender, MouseEventArgs e)
         {
+            try
+            {
+
+            
             HitTestResult hit = chart_Shipping.HitTest(e.X, e.Y, ChartElementType.DataPoint);
             Series s = null; string strseri = "";
             if (hit != null) s = hit.Series;
@@ -777,6 +843,12 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 dtDisplay = ConvertToDataTable(dr);
                 CrisisReport.DisplayDetail display = new CrisisReport.DisplayDetail(dtDisplay);
                 display.ShowDialog();
+            }
+            }
+            catch (Exception)
+            {
+                
+               
             }
         }
     }
