@@ -725,7 +725,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                     ToolSupport tool = new ToolSupport();
                     string strUser = Class.valiballecommon.GetStorage().UserName;
                     string strVersion = Class.valiballecommon.GetStorage()._version;
-                    //  tool.dtgvExport2Excel(dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls");
+                   //  tool.dtgvExport2Excel(dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls");
                     tool.editexcelshipping(DateTime.Now.ToString("yyyy-MM-dd"), strUser, strVersion, DateTime.Now.ToString("yyyy"), dgv_show, pathsave + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xls", path);
                 }
             }
