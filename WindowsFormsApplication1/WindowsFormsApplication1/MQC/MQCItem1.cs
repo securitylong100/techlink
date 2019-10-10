@@ -1,0 +1,60 @@
+﻿using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
+
+namespace WindowsFormsApplication1.MQC
+{
+    class MQCItem1
+    {
+        public string department { get; set; }
+        public string process { get; set; }
+        public string product { get; set; }
+        public string PO { get; set; }
+        public double TotalOutput { get; set; }
+        public double InputSFT { get; set; }
+        public double InputMaterialNotYet { get; set; }
+        public double TotalNG { get; set; }
+        public double percentNG { get; set; }
+        public double TotalRework { get; set; }
+        public double percentRework { get; set; }
+        public List<NGItems> listNGItems { get; set; }
+        public List<NGItems> listRWItems { get; set; }
+
+    }
+    public class NGItems
+    {
+        public string NGKey { get; set; }
+        public string NGName { get; set; }
+        public string NGType { get; set; }
+        public double NGQuantity { get; set; }
+    }
+    public class NGItemsMapping
+    {
+        public string Department{ get; set; }
+        public string NGCode_Process { get; set; }
+        public string NGCodeName_Process { get; set; }
+        public string NGCode_SFT { get; set; }
+        public string NGCodeName_SFT { get; set; }
+    }
+    public class MQCDataItems
+    {
+        public string serno { get; set; }
+        public string lot { get; set; }
+        public string model { get; set; }
+        public string site { get; set; }
+        public string factory { get; set; }
+        public string line { get; set; }
+        public string process { get; set; }
+        public string item { get; set; }
+        public DateTime inspectdate { get; set; }
+        public TimeSpan inspecttime { get; set; }
+        public double data { get; set; }
+        public string judge { get; set; }
+        public string status { get; set; }
+        public string remark { get; set; }
+    }
+
+}
+

@@ -48,28 +48,7 @@ namespace WindowsFormsApplication1.ChartDrawing
             }
          
         }
-        public static void DrawingColumsChartRightYAXis(string[] XValues, double[] YValues, ref Chart Chart, string Tiltle)
-        {
-            if (XValues.Count() != YValues.Count())
-                return;
-            Chart.Series.Clear();
-            Chart.Titles.Clear();
-            Title title = new Title();
-            title.Font = new Font("Arial", 12, FontStyle.Bold);
-
-            title.Text = Tiltle;
-
-            Chart.Titles.Add(title);
-            System.Windows.Forms.DataVisualization.Charting.Series ChartSeries2 = (new System.Windows.Forms.DataVisualization.Charting.Series());
-            ChartSeries2.ChartArea = "ChartArea0";
-            ChartSeries2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
-            ChartSeries2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;        //<Select secondary Axis Y2
-            ChartSeries2.Legend = "Legend1";
-            ChartSeries2.Name = "Power";
-            ChartSeries2.Points.DataBindXY(XValues, YValues);
-            
-
-        }
+    
       public static void DrawTwoChartInside(string[] XValues, double[] YValues, double[] YValues2, double TargetOutput, double targetScrap, ref Chart Chart, string Tiltle)
         {
            
@@ -82,48 +61,27 @@ namespace WindowsFormsApplication1.ChartDrawing
 
            
             chartArea1.AxisX.Title = "Date";
-        //    chartArea1.AxisX.Minimum = 0;
-          //  chartArea1.AxisX.Maximum = 
-            //chartArea1.AxisX.Interval = 60;                 //Axis marker every #
-            //chartArea1.AxisX.LabelStyle.Interval = 300;     //Label the axis every #
-            //chartArea1.AxisX.MajorGrid.Interval = 60;
+
             double Max = YValues.Max();//Grid line every #
             double min = YValues.Min();//Grid line every #
             double count = YValues.Count();//Grid line every #
             chartArea1.AxisX.MinorGrid.Interval = 1;
-            //chartArea1.AxisX.MajorGrid.LineColor = System.Drawing.Color.DarkGray;
-            //chartArea1.AxisX.MinorGrid.LineColor = System.Drawing.Color.DarkGray;
+
             chartArea1.AxisX.Interval = 1;
             chartArea1.AxisX.MajorGrid.Enabled = false;
-
-
-
 
             chartArea1.AxisY.Title = "Output Quantity";
             chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
             chartArea1.AxisY.Minimum = 0;
             chartArea1.AxisY.Maximum =(Max > TargetOutput) ?  Max + 1 : TargetOutput+1;
             chartArea1.AxisY.MajorGrid.Enabled = false;
-            //  chartArea1.AxisY.Interval =(int) (Max / count);                 //Axis marker every #
-            //chartArea1.AxisY.LabelStyle.Interval = 10;      //Label the axis every #
-            //chartArea1.AxisY.MajorGrid.Interval = 5;        //Grid line every #
-            //chartArea1.AxisY.MinorGrid.Interval = 1;
-            //chartArea1.AxisY.MajorGrid.LineColor = System.Drawing.Color.DarkGray;
-            //chartArea1.AxisY.MinorGrid.LineColor = System.Drawing.Color.DarkGray;
 
             chartArea1.AxisY2.Title = "% Scrap";
             chartArea1.AxisY2.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
             chartArea1.AxisY2.Minimum = 0;
-            chartArea1.AxisY2.Maximum =(YValues2.Max()  > targetScrap) ? YValues2.Max()  + 0.1 : targetScrap+0.1;
-            //chartArea1.AxisY2.Interval = (double)(YValues2.Max() / YValues2.Count());              //Axis marker every #
-            //chartArea1.AxisY2.LabelStyle.Interval = 0.01;    //Label the axis every #
-            //chartArea1.AxisY2.MajorGrid.Interval = 100;     //Grid line every #
-            //chartArea1.AxisY2.MinorGrid.Interval = 10;
+
 
             chartArea1.AxisY2.MajorGrid.Enabled = false;    //Hide the grid lines across the chart area
-            //chartArea1.AxisY2.MajorGrid.LineColor = System.Drawing.Color.DarkGray;
-            //chartArea1.AxisY2.MinorGrid.LineColor = System.Drawing.Color.DarkGray;
-
 
            Chart.ChartAreas.RemoveAt(0);
             chartArea1.Name = "ChartArea1";
@@ -216,150 +174,261 @@ namespace WindowsFormsApplication1.ChartDrawing
             return;
         }
 
+
         public static void DrawCrisisReport(string[] XValues, int[] YValues, string[] XValues2, int[] YValues2,
-            string[] XValues3, int[] YValues3 ,ref Chart Chartref, string Tiltle)
+
+             string[] XValues3, int[] YValues3, ref Chart Chartref, string Tiltle)
+
         {
+
             Chartref.Titles.Clear();
+
             Chartref.Series.Clear();
+
             Title title = new Title();
+
             title.Font = new Font("Arial", 14, FontStyle.Bold);
+
             title.Text = Tiltle;
+
             Chartref.Titles.Add(title);
 
-            Dictionary<string, int> dicMonthConvert;
-            if (XValues[0] != null)
-            {
-                //  Chartref.ChartAreas.Clear();
 
-               
+
+            Dictionary<string, int> dicMonthConvert;
+
+            if (XValues[0] != null)
+
+            {
+
                 System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = (new System.Windows.Forms.DataVisualization.Charting.ChartArea());
+
                 System.Windows.Forms.DataVisualization.Charting.Legend legend1 = (new System.Windows.Forms.DataVisualization.Charting.Legend());
 
+
+
                 chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial", 12);
+
                 chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial", 12);
+
                 chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Arial", 12);
 
                 chartArea1.AxisX.Title = "Month";
+
                 chartArea1.AxisX.LabelStyle.Font = new Font("Arial", 12);
+
                 chartArea1.AxisX.TitleForeColor = Color.Blue;
+
                 chartArea1.AxisX.LabelStyle.ForeColor = Color.Blue;
 
                 chartArea1.AxisX.MinorGrid.Interval = 1;
+
                 chartArea1.AxisX.Interval = 1;
+
                 chartArea1.AxisX.MajorGrid.Enabled = false;
 
                 chartArea1.AxisY.Title = "Quantity (pcs)";
+
                 chartArea1.AxisY.TitleForeColor = Color.Blue;
+
                 chartArea1.AxisY.LabelStyle.ForeColor = Color.Blue;
+
                 chartArea1.AxisY.LabelStyle.Font = new Font("Arial", 12);
+
                 chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+
                 chartArea1.AxisY.Minimum = 0;
+
                 chartArea1.AxisY.Maximum = Math.Max(Math.Max(YValues.Max(), YValues2.Max()), YValues3.Max()) * 1.2;
 
                 chartArea1.AxisY.MajorGrid.Enabled = true;
 
                 Chartref.ChartAreas.RemoveAt(0);
+
                 chartArea1.Name = "ChartArea1";
+
                 Chartref.ChartAreas.Add(chartArea1);
 
                 Chartref.Legends.RemoveAt(0);
+
                 legend1.Name = "Legend1";
+
                 Chartref.Legends.Add(legend1);
 
                 Chartref.Text = "chart1";
 
+
+
                 while (Chartref.Series.Count == 2)
+
                 {
                     Chartref.Series.RemoveAt(0);
+
                     Chartref.Series.RemoveAt(1);
+
                 }
+
+
 
                 System.Windows.Forms.DataVisualization.Charting.Series ChartSeries1 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+
                 ChartSeries1.ChartArea = "ChartArea1";
+
                 ChartSeries1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
                 ChartSeries1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
+
                 ChartSeries1.XAxisType = AxisType.Primary;//<Select primary Axis X
+
                 ChartSeries1.Legend = "Legend1";
+
                 ChartSeries1.Name = "Late";
+
                 ChartSeries1.Font = new System.Drawing.Font("Arial", 10);
+
                 //  ChartSeries1.LabelForeColor = Color.Red;
-                ChartSeries1.IsValueShownAsLabel = true;
+
+             //   ChartSeries1.IsValueShownAsLabel = true;
+
                 ChartSeries1.Color = Color.Red;
 
-                 dicMonthConvert = new Dictionary<string, int>();
+                dicMonthConvert = new Dictionary<string, int>();
+
                 dicMonthConvert = DicConvertMonthInYears(XValues, YValues);
+
                 for (int i = 0; i < dicMonthConvert.Count(); i++)
+
                 {
+
                     string tem = dicMonthConvert.ToList()[i].Key;
+
                     int intTem = dicMonthConvert.ToList()[i].Value;
+
                     ChartSeries1.Points.AddXY(tem, intTem);
-                    ChartSeries1.Points[i].Color = Color.Red;
-                  
+                    if (intTem == 0)
+                        ChartSeries1.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries1.Points[i].IsValueShownAsLabel = true;
+
+
+
                 }
+
+
+
 
 
                 Chartref.Series.Add(ChartSeries1);
+
             }
+
             if (XValues2[0] != null)
+
             {
 
+
+
                 //}
+
                 System.Windows.Forms.DataVisualization.Charting.Series ChartSeries2 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+
                 ChartSeries2.ChartArea = "ChartArea1";
+
                 ChartSeries2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
                 ChartSeries2.XAxisType = AxisType.Primary;
+
                 ChartSeries2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
+
                 ChartSeries2.Legend = "Legend1";
+
                 ChartSeries2.Name = "Back Log";
+
                 ChartSeries2.BorderWidth = 5;
-                ChartSeries2.IsValueShownAsLabel = true;
+
+           //     ChartSeries2.IsValueShownAsLabel = true;
+
                 // ChartSeries2.LabelFormat = "#.#' %'";
+
                 ChartSeries2.Font = new System.Drawing.Font("Arial", 10);
 
-                ChartSeries2.Color = Color.Yellow;
-                dicMonthConvert = DicConvertMonthInYears(XValues2, YValues2);
-                for (int i = 0; i < dicMonthConvert.Count(); i++)
-                {
-                    string tem = dicMonthConvert.ToList()[i].Key;
-                    int intTem = dicMonthConvert.ToList()[i].Value;
-                    ChartSeries2.Points.AddXY(tem, intTem);
 
+
+                ChartSeries2.Color = Color.Yellow;
+
+                dicMonthConvert = DicConvertMonthInYears(XValues2, YValues2);
+
+                for (int i = 0; i < dicMonthConvert.Count(); i++)
+
+                {
+
+                    string tem = dicMonthConvert.ToList()[i].Key;
+
+                    int intTem = dicMonthConvert.ToList()[i].Value;
+
+                    ChartSeries2.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries2.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries2.Points[i].IsValueShownAsLabel = true;
 
                 }
 
                 Chartref.Series.Add(ChartSeries2);
+
             }
+
             if (XValues3[0] != null)
+
             {
+
                 System.Windows.Forms.DataVisualization.Charting.Series ChartSeries3 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+
                 ChartSeries3.ChartArea = "ChartArea1";
+
                 ChartSeries3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+
                 ChartSeries3.XAxisType = AxisType.Primary;//<Select primary Axis X
+
                 ChartSeries3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
+
                 ChartSeries3.Legend = "Legend1";
+
                 ChartSeries3.Name = "Open Order";
+
                 ChartSeries3.BorderWidth = 5;
-                ChartSeries3.IsValueShownAsLabel = true;
-                // ChartSeries2.LabelFormat = "#.#' %'";
+
+             //   ChartSeries3.IsValueShownAsLabel = true;
+
                 ChartSeries3.Font = new System.Drawing.Font("Arial", 10);
 
+
+
                 ChartSeries3.Color = Color.Blue;
+
                 dicMonthConvert = DicConvertMonthInYears(XValues3, YValues3);
+
                 for (int i = 0; i < dicMonthConvert.Count(); i++)
+
                 {
                     string tem = dicMonthConvert.ToList()[i].Key;
+
                     int intTem = dicMonthConvert.ToList()[i].Value;
+
                     ChartSeries3.Points.AddXY(tem, intTem);
-
-
+                    if (intTem == 0)
+                        ChartSeries3.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries3.Points[i].IsValueShownAsLabel = true;
                 }
 
                 Chartref.Series.Add(ChartSeries3);
+
             }
 
             Chartref.Visible = true;
 
+
+
             return;
+
         }
         public static void DrawCrisisReportShipped(string[] XValues, int[] YValues, string[] XValues2, int[] YValues2 ,ref Chart Chartref, string Tiltle)
         {
@@ -425,7 +494,7 @@ namespace WindowsFormsApplication1.ChartDrawing
                 ChartSeries1.Name = "Shipped-Late";
                 ChartSeries1.Font = new System.Drawing.Font("Arial", 10);
                 //  ChartSeries1.LabelForeColor = Color.Red;
-                ChartSeries1.IsValueShownAsLabel = true;
+             //   ChartSeries1.IsValueShownAsLabel = true;
                 ChartSeries1.Color = Color.Orange;
 
                  dicMonthConvert = new Dictionary<string, int>();
@@ -435,6 +504,9 @@ namespace WindowsFormsApplication1.ChartDrawing
                     string tem = dicMonthConvert.ToList()[i].Key;
                     int intTem = dicMonthConvert.ToList()[i].Value;
                     ChartSeries1.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries1.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries1.Points[i].IsValueShownAsLabel = true;
                 }
 
 
@@ -452,7 +524,7 @@ namespace WindowsFormsApplication1.ChartDrawing
                 ChartSeries2.Legend = "Legend1";
                 ChartSeries2.Name = "Shipped-On Time";
                 ChartSeries2.BorderWidth = 5;
-                ChartSeries2.IsValueShownAsLabel = true;
+              //  ChartSeries2.IsValueShownAsLabel = true;
                 // ChartSeries2.LabelFormat = "#.#' %'";
                 ChartSeries2.Font = new System.Drawing.Font("Arial", 10);
 
@@ -463,11 +535,213 @@ namespace WindowsFormsApplication1.ChartDrawing
                     string tem = dicMonthConvert.ToList()[i].Key;
                     int intTem = dicMonthConvert.ToList()[i].Value;
                     ChartSeries2.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries2.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries2.Points[i].IsValueShownAsLabel = true;
                 }
                 Chartref.Series.Add(ChartSeries2);
 
             }
 
+            Chartref.Visible = true;
+
+            return;
+        }
+
+        public static void DrawChartDateInMonths(DateTime dateTime,string[] XValues, double[] YValues, string[] XValues2, double[] YValues2,
+           string[] XValues3, double[] YValues3, string[] XValues4, double[] YValues4,ref Chart Chartref, string Tiltle)
+        {
+            Chartref.Titles.Clear();
+            Chartref.Series.Clear();
+            Title title = new Title();
+            title.Font = new Font("Arial", 14, FontStyle.Bold);
+            title.Text = Tiltle;
+            Chartref.Titles.Add(title);
+
+            Dictionary<string, double> dicMonthConvert;
+            if (XValues[0] != null)
+            {
+
+
+                System.Windows.Forms.DataVisualization.Charting.ChartArea chartArea1 = (new System.Windows.Forms.DataVisualization.Charting.ChartArea());
+                System.Windows.Forms.DataVisualization.Charting.Legend legend1 = (new System.Windows.Forms.DataVisualization.Charting.Legend());
+
+                chartArea1.AxisX.TitleFont = new System.Drawing.Font("Arial", 12);
+                chartArea1.AxisY.TitleFont = new System.Drawing.Font("Arial", 12);
+                chartArea1.AxisY2.TitleFont = new System.Drawing.Font("Arial", 12);
+
+                chartArea1.AxisX.Title = "Date";
+                chartArea1.AxisX.LabelStyle.Font = new Font("Arial", 12,FontStyle.Bold);
+                chartArea1.AxisX.TitleForeColor = Color.Black;
+                chartArea1.AxisX.LabelStyle.ForeColor = Color.Black;
+
+                chartArea1.AxisX.MinorGrid.Interval = 1;
+                chartArea1.AxisX.Interval = 1;
+                chartArea1.AxisX.MajorGrid.Enabled = false;
+
+                chartArea1.AxisY.Title = "Quantity (pcs)";
+                chartArea1.AxisY2.Title = "Scrap Rate (%)";
+                chartArea1.AxisY.TitleForeColor = Color.Green;
+                chartArea1.AxisY.LabelStyle.ForeColor = Color.Green;
+                chartArea1.AxisY2.TitleForeColor = Color.Blue;
+                chartArea1.AxisY2.LabelStyle.ForeColor = Color.Blue;
+                chartArea1.AxisY.LabelStyle.Font = new Font("Arial", 12);
+                chartArea1.AxisY.TextOrientation = System.Windows.Forms.DataVisualization.Charting.TextOrientation.Rotated270;
+                chartArea1.AxisY.Minimum = 0;
+                chartArea1.AxisY.Maximum = (Math.Max(YValues.Max(), YValues2.Max())) * 1.2;
+                chartArea1.AxisY2.Maximum = (Math.Max(YValues3.Max(), YValues4.Max())) * 1.2;
+                LabelStyle label = new LabelStyle();
+                label.ForeColor = Color.Blue;
+                label.Font = new Font("Arial", 12);
+                label.Format = "0%";
+                chartArea1.AxisY2.LabelStyle = label;
+              //  chartArea1.AxisY2.la
+
+                chartArea1.AxisY.MajorGrid.Enabled = false;
+                chartArea1.AxisY2.MajorGrid.Enabled = false;
+
+                Chartref.ChartAreas.RemoveAt(0);
+                chartArea1.Name = "ChartArea1";
+                Chartref.ChartAreas.Add(chartArea1);
+
+                Chartref.Legends.RemoveAt(0);
+                legend1.Name = "Legend1";
+                Chartref.Legends.Add(legend1);
+
+                //Chartref.Text = "chart1";
+                //Chartref.Legends["Legend1"].Position.Auto = false;
+                //Chartref.Legends["Legend1"].Position = new ElementPosition(30, 5, 100, 20);
+                Chartref.Legends["Legend1"].Font = new Font("Arial", 14);
+                Chartref.Legends["Legend1"].Docking = Docking.Bottom;
+                Chartref.Legends["Legend1"].DockedToChartArea = "ChartArea1";
+                Chartref.Legends["Legend1"].IsDockedInsideChartArea = false;
+                Chartref.Legends["Legend1"].Alignment = StringAlignment.Center;
+                while (Chartref.Series.Count == 2)
+                {
+                    Chartref.Series.RemoveAt(0);
+                    Chartref.Series.RemoveAt(1);
+                }
+
+                System.Windows.Forms.DataVisualization.Charting.Series ChartSeries1 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+                ChartSeries1.ChartArea = "ChartArea1";
+                ChartSeries1.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+                ChartSeries1.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;
+                ChartSeries1.XAxisType = AxisType.Primary;//<Select primary Axis X
+                ChartSeries1.Legend = "Legend1";
+                ChartSeries1.Name = "Actual Output";
+                ChartSeries1.Font = new System.Drawing.Font("Arial", 10);
+                //  ChartSeries1.LabelForeColor = Color.Red;
+              //  ChartSeries1.IsValueShownAsLabel = true;
+                ChartSeries1.Color = Color.Green;
+
+                dicMonthConvert = new Dictionary<string, double>();
+                dicMonthConvert =DicConvertDateInMonth(dateTime,XValues, YValues);
+                for (int i = 0; i < dicMonthConvert.Count(); i++)
+                {
+                    string tem = dicMonthConvert.ToList()[i].Key;
+                    double intTem = dicMonthConvert.ToList()[i].Value;
+                    ChartSeries1.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries1.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries1.Points[i].IsValueShownAsLabel = true;
+                }
+
+                Chartref.Series.Add(ChartSeries1);
+            }
+            if (XValues2[0] != null)
+            {
+
+                //}
+                System.Windows.Forms.DataVisualization.Charting.Series ChartSeries2 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+                ChartSeries2.ChartArea = "ChartArea1";
+                ChartSeries2.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Column;
+                ChartSeries2.XAxisType = AxisType.Primary;
+                ChartSeries2.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Primary;        //<Select secondary Axis Y2
+                ChartSeries2.Legend = "Legend1";
+                ChartSeries2.Name = "Target Output";
+                ChartSeries2.BorderWidth = 5;
+             //   ChartSeries2.IsValueShownAsLabel = true;
+                // ChartSeries2.LabelFormat = "#.#' %'";
+                ChartSeries2.Font = new System.Drawing.Font("Arial", 10);
+
+                ChartSeries2.Color = Color.Yellow;
+                dicMonthConvert = new Dictionary<string, double>();
+                dicMonthConvert = DicConvertDateInMonth(dateTime, XValues2, YValues2);
+                for (int i = 0; i < dicMonthConvert.Count(); i++)
+                {
+                    string tem = dicMonthConvert.ToList()[i].Key;
+                    double intTem = dicMonthConvert.ToList()[i].Value;
+                    ChartSeries2.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries2.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries2.Points[i].IsValueShownAsLabel = true;
+                }
+
+                Chartref.Series.Add(ChartSeries2);
+            }
+            if (XValues3[0] != null)
+            {
+                System.Windows.Forms.DataVisualization.Charting.Series ChartSeries3 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+                ChartSeries3.ChartArea = "ChartArea1";
+                ChartSeries3.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                ChartSeries3.XAxisType = AxisType.Primary;//<Select primary Axis X
+                ChartSeries3.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;        //<Select secondary Axis Y2
+                
+                ChartSeries3.Legend = "Legend1";
+                ChartSeries3.Name = "Actual Scrap(%)";
+                ChartSeries3.BorderWidth = 3;
+              //  ChartSeries3.IsValueShownAsLabel = true;
+                ChartSeries3.LabelFormat = "0%";
+                ChartSeries3.Font = new System.Drawing.Font("Arial", 10);
+
+                ChartSeries3.Color = Color.Blue;
+                dicMonthConvert = new Dictionary<string, double>();
+                dicMonthConvert = DicConvertDateInMonth(dateTime, XValues3, YValues3);
+                for (int i = 0; i < dicMonthConvert.Count(); i++)
+                {
+                    string tem = dicMonthConvert.ToList()[i].Key;
+                    double intTem = dicMonthConvert.ToList()[i].Value;
+                    ChartSeries3.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries3.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries3.Points[i].IsValueShownAsLabel = true;
+
+                }
+
+                Chartref.Series.Add(ChartSeries3);
+            }
+
+                if (XValues4[0] != null)
+                {
+                    System.Windows.Forms.DataVisualization.Charting.Series ChartSeries4 = (new System.Windows.Forms.DataVisualization.Charting.Series());
+                    ChartSeries4.ChartArea = "ChartArea1";
+                    ChartSeries4.ChartType = System.Windows.Forms.DataVisualization.Charting.SeriesChartType.Line;
+                    ChartSeries4.XAxisType = AxisType.Primary;//<Select primary Axis X
+                    ChartSeries4.YAxisType = System.Windows.Forms.DataVisualization.Charting.AxisType.Secondary;        //<Select secondary Axis Y2
+                    ChartSeries4.Legend = "Legend1";
+                    ChartSeries4.Name = "Target Scrap(%)";
+                    ChartSeries4.BorderWidth = 3;
+                 //  ChartSeries4.IsValueShownAsLabel = true;
+                ChartSeries4.LabelFormat = "0%";
+                ChartSeries4.Font = new System.Drawing.Font("Arial", 10);
+
+                    ChartSeries4.Color = Color.OrangeRed;
+                dicMonthConvert = new Dictionary<string, double>();
+                dicMonthConvert = DicConvertDateInMonth(dateTime, XValues4, YValues4);
+                for (int i = 0; i < dicMonthConvert.Count(); i++)
+                {
+                    string tem = dicMonthConvert.ToList()[i].Key;
+                    double intTem = dicMonthConvert.ToList()[i].Value;
+                    ChartSeries4.Points.AddXY(tem, intTem);
+                    if (intTem == 0)
+                        ChartSeries4.Points[i].IsValueShownAsLabel = false;
+                    else ChartSeries4.Points[i].IsValueShownAsLabel = true;
+
+                }
+
+                Chartref.Series.Add(ChartSeries4);
+                }
+                
             Chartref.Visible = true;
 
             return;
@@ -499,6 +773,38 @@ namespace WindowsFormsApplication1.ChartDrawing
          
             return dic;
         }
+
+        public static Dictionary<string, double> DicConvertDateInMonth(DateTime dt , string[] dates, double[] Axis)
+        {
+            Dictionary<string, double> dic = new Dictionary<string, double>();
+
+            int Month = dt.Month;
+           DateTime dateTime  = new DateTime(dt.Year, dt.Month, 1);
+
+            for (int i = 0; i < dt.Date.Day; i++)
+            {
+                string temp = dateTime.ToString("dd/MM");
+
+                if (dateTime.Month == Month )
+                {
+                    dic.Add(dateTime.ToString("dd/MM"), 0);
+
+                }
+                dateTime= dateTime.AddDays(1);
+            }
+
+            for (int i = 0; i < dates.Count(); i++)
+            {
+                if (dates[i] != null && dic.ContainsKey(dates[i]))
+                {
+                    dic[dates[i]] = Axis[i];
+                }
+            }
+            return dic;
+        }
+
+
+
 
 
     }

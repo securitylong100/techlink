@@ -21,6 +21,7 @@ namespace WindowsFormsApplication1.CrisisReport.Classvalue
     }
     class ProductionSummary
     {
+       
         public string Dept { get; set; }
         public string ProductionCode { get; set; }
         public double OutputTarget { get; set; }

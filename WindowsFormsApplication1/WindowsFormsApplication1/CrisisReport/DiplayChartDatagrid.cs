@@ -42,7 +42,7 @@ namespace WindowsFormsApplication1.CrisisReport
             dtgv_show.Columns[7].HeaderText = "Target Scrap(%)";
             dtgv_show.Columns[7].DefaultCellStyle.Format = "0%";
             dtgv_show.Columns[8].HeaderText = "Actual Scrap (%)";
-            dtgv_show.Columns[7].DefaultCellStyle.Format = "0%";
+            dtgv_show.Columns[8].DefaultCellStyle.Format = "0%";
             ListTP = ListFinishedGoods();
             TScale = TimeScale;
             targetRef = target;
@@ -51,20 +51,26 @@ namespace WindowsFormsApplication1.CrisisReport
         string[] strDate;
         string[] strTime;
         double[] dobOutput;
+        double[] dobTargetOutput;
         double[] dobScrap;
         double[] dobScrapRate;
+        double[] dobTargetScrapRate;
         private void GetDataForDrawing( DataTable dt, double[] target)
         {
             strDate = dt.AsEnumerable().Select(s => s.Field<DateTime>("Date").ToString("dd/MM")).ToArray<string>();
             dobOutput = dt.AsEnumerable().Select(s => s.Field<double>("ActualOutput")).ToArray<double>();
+            dobTargetOutput = dt.AsEnumerable().Select(s => s.Field<double>("OutputTarget")).ToArray<double>();
             dobScrap = dt.AsEnumerable().Select(s => s.Field<double>("ActualDefectQty")).ToArray<double>();
+            dobTargetScrapRate = dt.AsEnumerable().Select(s => s.Field<double>("ScrapTargetRate")).ToArray<double>();
             dobScrapRate = dt.AsEnumerable().Select(s => s.Field<double>("ScrapActualtRate")).ToArray<double>();
+
             strTime = dt.AsEnumerable().OrderBy(d => d.Field<TimeSpan>("Time")).Select(s => s.Field<TimeSpan>("Time").ToString()).ToArray<string>();
 
             if (TScale == "Monthly")
             {
-           
-                ChartDrawing.ChartDrawing.DrawTwoChartInside(strDate, dobOutput, dobScrapRate, target[0], target[1], ref ch_production, "Production Management");
+                ChartDrawing.ChartDrawing.DrawChartDateInMonths(DateTime.Now,strDate, dobOutput,  strDate, dobTargetOutput, strDate, dobScrapRate, strDate, dobTargetScrapRate, ref ch_production, "Production Management");
+
+                // ChartDrawing.ChartDrawing.DrawTwoChartInside(strDate, dobOutput, dobScrapRate, target[0], target[1], ref ch_production, "Production Management");
             }
             if (TScale == "Daily")
             {

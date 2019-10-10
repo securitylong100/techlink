@@ -1,4 +1,3 @@
-D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Form1.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.Properties.Resources.resources
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.GenerateResource.cache
@@ -22,3 +21,8 @@ G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debu
 G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.CoreCompileInputs.cache
 G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.exe
 G:\Backup\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\Upload Data To Database.pdb
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csproj.ResolveComReference.cache
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\BackLogForm.xls
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\EmailTemplate.html
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\BackLogForm2.xlsx

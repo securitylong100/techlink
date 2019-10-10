@@ -120,6 +120,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                 ProductionSummary production = new ProductionSummary();
                 var SumOutput = item.Sum(a => a.ActualOutput);
                 var SumScrap = item.Sum(a => a.ActualDefectQty);
+           
                 production.Dept = item[0].Dept;
                 production.ProductionCode = item[0].ProductionCode;
                 production.OutputTarget = item[0].OutputTarget;
@@ -127,7 +128,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
 
                 production.ActualOutput = SumOutput;
                 production.ActualDefectQty = SumScrap;
-                production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 1);
+                production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 2);
              
                 if (production.ActualOutput >= production.OutputTarget)
                     production.QuantityEvaluation = "Good";
@@ -357,9 +358,9 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                 dgv_show.Columns[5].HeaderText = "Actual Scrap Qty";
                 dgv_show.Columns[5].DefaultCellStyle.Format = "N0";
                 dgv_show.Columns[6].HeaderText = "Target Scrap(%)";
-                dgv_show.Columns[6].DefaultCellStyle.Format = "P1";
+                dgv_show.Columns[6].DefaultCellStyle.Format = "0%";
                 dgv_show.Columns[7].HeaderText = "Actual Scrap (%)";
-                dgv_show.Columns[7].DefaultCellStyle.Format = "P1";
+                dgv_show.Columns[7].DefaultCellStyle.Format = "0%";
                 dgv_show.Columns[8].HeaderText = "Quality Evaluation";
             }
       
@@ -402,7 +403,7 @@ where 1=1 and c.TC004 != '' and c.TC005 != '' ");
                         production.ProductionCode = item[0].ProductionCode;
                         production.ActualOutput = SumOutput;
                         production.ActualDefectQty = SumScrap;
-                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 1);
+                        production.ScrapActualtRate = Math.Round(SumScrap / (SumOutput + SumScrap), 2);
 
                         listSort.Add(production);
 

@@ -10,8 +10,8 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.Windows.Forms.DataVisualization.Charting;
 using WindowsFormsApplication1.Class;
-using WindowsFormsApplication1.CrisisReport.Classvalue;
 using WindowsFormsApplication1.ERPShowOrder;
+using WindowsFormsApplication1.CrisisReport;
 
 namespace WindowsFormsApplication1
 {
@@ -39,7 +39,6 @@ namespace WindowsFormsApplication1
             InitializeComponent();
           
         }
-
         private void LoadTreeviewDeptment()
         {
 
@@ -87,7 +86,7 @@ namespace WindowsFormsApplication1
 CONVERT(date,coptcs.CREATE_DATE) as Create_Date, 
 coptcs.TC001 as Code_Type, 
 coptcs.TC002 as Code_No,
-coptcs.TC005 as Department_code,
+cmsmes.ME002 as Department_code,
 copmas.MA002 as Clients_Name,
 coptcs.TC012 as Clients_Order_Code,
 coptds.TD004 as Product_Code,
@@ -96,24 +95,25 @@ coptds.TD010 as Unit,
 coptcs.TC005 as Department,
 coptds.TD013 as Client_Request_Date,
 max(coptgs.TG003) as Delivery_Date,
-coptds.TD008 as Order_Quantity,
+sum(coptds.TD008) as Order_Quantity,
+sum(coptds.TD009) as SLDaGiao,
 sum(copths.TH008) as Delivery_Quantity,
-copths.TH001 as Delivery_Code,
-coptjs.TJ008 as Return_Quantity,
-coptis.TI003 as Return_Date,
- (sum(copths.TH008)/coptds.TD008) as Shipping_Percent,
-invmbs.MB064 as Stock_Qty
+invmbs.MB064 as Stock_Qty,
+coptds.TD016 as StatusOFCode
  from COPTC coptcs
 left join COPTD  coptds on coptcs.TC002 = coptds.TD002  and coptcs.TC001 = coptds.TD001 -- cong doan tao don
 left join MOCTB  moctbs on coptcs.TC002 = moctbs.TB002  and coptcs.TC001 = moctbs.TB001
 inner join COPMA copmas on copmas.MA001 = coptcs.TC004
 left join COPTH copths on coptcs.TC002 = copths.TH015 and  coptcs.TC001 = copths.TH014 and copths.TH004 =coptds.TD004
 left join COPTG coptgs on copths.TH002  = coptgs.TG002 and copths.TH001  = coptgs.TG001 --cong doan giao hang
-left join COPTJ coptjs on coptcs.TC002 = coptjs.TJ019 and coptcs.TC001 = coptjs.TJ018-- cong doan tra hang
-left join COPTI coptis on coptjs.TJ002 = coptis.TI002 and coptjs.TJ001 = coptis.TI001 --cong doan tra hang
+--left join COPTJ coptjs on coptcs.TC002 = coptjs.TJ019 and coptcs.TC001 = coptjs.TJ018-- cong doan tra hang
+--left join COPTI coptis on coptjs.TJ002 = coptis.TI002 and coptjs.TJ001 = coptis.TI001 --cong doan tra hang
 left join INVMB invmbs on invmbs.MB001 = coptds.TD004
+left join CMSME cmsmes on cmsmes.ME001 = coptcs.TC005
 where 1=1  
-and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
+and  coptcs.TC027 = 'Y' 
+and coptgs.TG023 ='Y'
+");
             if (ChooseDeptoSQLcommand(trv_department) != "")
             {
                 sql.Append(ChooseDeptoSQLcommand(trv_department));
@@ -129,23 +129,20 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto + "' ");
 
             sql.Append(@"group by 
-                                   coptcs.CREATE_DATE,
+                                    coptcs.CREATE_DATE,
                                     coptcs.TC001 ,
                                     coptcs.TC002 ,
-                                    coptcs.TC005 ,
+                                    cmsmes.ME002 ,
                                     copmas.MA002, 
-                                   coptcs.TC012,
-                                    coptds.TD005,
+                                    coptcs.TC012,
                                     coptds.TD004,
-                                   coptds.TD008,
+									 coptds.TD005,
                                     coptds.TD010,
                                     coptcs.TC005,
                                     coptds.TD013,
-                                    copths.TH004,
-                                    copths.TH001,
-                                    coptjs.TJ008,
-                                    coptis.TI003,
-                                    invmbs.MB064
+                                    invmbs.MB064,
+									coptds.TD016
+
                                     ");
             sql.Append("order by coptcs.TC001, coptcs.TC002");
             sqlERPCON con = new sqlERPCON();
@@ -194,171 +191,7 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
         }
       
-        private List<ShippingItems> ListItemShowShipping(DataTable dta)
-        {
-            List<ShippingItems> ListshippingItems = new List<ShippingItems>();
-            List<ShippingItems> ListshippingResult = new List<ShippingItems>();
-            List<ShippingItems> Listshipped = new List<ShippingItems>();
-            Dictionary<string, double> keyValuePairs = new Dictionary<string, double>();
-
-
-            for (int i = 0; i < dta.Rows.Count; i++)
-            {
-                ShippingItems Items = new ShippingItems();
-                object item0 = dta.Rows[i][0];//Create_date
-                object item11 = dta.Rows[i][10];//client request date
-                object item16 = dta.Rows[i][11];
-                object item19 = dta.Rows[i][17];
-                object item20 = dta.Rows[i][18];
-
-                Items.CreateTime = DateTime.Parse(dta.Rows[i][0].ToString());
-                Items.OrderCode = (string)dta.Rows[i][1] + "-" + (string)dta.Rows[i][2];
-                Items.Clients = (string)dta.Rows[i][4];
-                Items.Clients_OrderCode = (string)dta.Rows[i][5];
-                Items.Product = (string)dta.Rows[i][6];
-                Items.Quantity = double.Parse(dta.Rows[i][12].ToString());
-                Items.Stock_Quantity = item20.ToString() == "" ? 0 : Math.Round(double.Parse(item20.ToString()), 2);
-                Items.ClientsRequestDate = (item11.ToString()=="")? DateTime.MinValue:  DateTime.Parse(item11.ToString().Insert(4, "-").Insert(7, "-"));
-                Items.DeliveryDate = (item16.ToString().Count() != 8) ? DateTime.MinValue : DateTime.Parse(item16.ToString().Insert(4, "-").Insert(7, "-"));
-                Items.ShippingPercents = item19.ToString() == "" ? 0 : Math.Round(double.Parse(item19.ToString()), 2);
-                ListshippingItems.Add(Items);
-
-            }
-            var groupedListItems = ListshippingItems
-     .GroupBy(u => u.OrderCode)
-     .Select(grp => grp.ToList())
-     .ToList();
-         
-            foreach (List<ShippingItems> shippingItems in groupedListItems)
-            {
-                foreach (var item in shippingItems)
-                {
-                    if (item.ShippingPercents < 1)
-                    {
-              
-                        if ( item.Stock_Quantity < item.Quantity && DateTime.Now.Date >= item.ClientsRequestDate)
-                        {
-                            item.Status = "Back Log";
-                        }
-
-                       
-                        else if (item.ShippingPercents < 100 && DateTime.Now.Date >= item.ClientsRequestDate/* && item.Stock_Quantity >= item.Quantity*/)
-                        {
-                            
-                                item.Status = "Late";
-                        }
-                   
-                        else
-                        {
-                            item.Status = "Open Order";
-                        }
-                        ListshippingResult.Add(item);
-                    }
-                    else
-                    {
-
-                        if (item.DeliveryDate >  item.ClientsRequestDate)
-                        {
-                            item.Status = "Shipped-Late";
-                        }
-
-                        else if (item.DeliveryDate <= item.ClientsRequestDate)
-                        {
-                            item.Status = "Shipped-On Time";
-                        }
-                        ListshippingResult.Add(item);
-                    }
-           
-          
-                    }
-
-
-            }
-  //          var ListItemsShipped = Listshipped
-  //.GroupBy(u => u.Status)
-  //.Select(grp => grp.ToList())
-  //.ToList();
-            var ListItems = ListshippingResult
-.GroupBy(u => u.Status)
-.Select(grp => grp.ToList())
-.ToList();
-
-            var ListItems2 = ListshippingResult
- .OrderBy(o => o.ClientsRequestDate)
-.GroupBy(u => u.ClientsRequestDate.Month)
-.Select(grp => grp.ToList())
-.ToList();
-
-            List<StatusSumary> ShippingSummary2 = new List<StatusSumary>();
-
-            foreach (var item in ListItems2)
-            {
-                var ListItems3 = item
-.GroupBy(u => u.Status)
-.Select(grp => grp.ToList())
-.ToList();
-                foreach (var item2 in ListItems3)
-                {
-                    StatusSumary st = new StatusSumary();
-                    st.Status = item2[0].Status;
-                    st.Quantity = item2.Count;
-                    st.ClientsRequestDate = item2[0].ClientsRequestDate.ToString("MMM");
-                    ShippingSummary2.Add(st);
-                }
-            }
-
-            var ListItems4 = ShippingSummary2
-.GroupBy(u => u.Status)
-.Select(grp => grp.ToList())
-.ToList();
-         
-            for (int i = 0; i < ListItems4.Count; i++)
-            {
-                if(ListItems4[i][0].Status == "Late")
-                {
-                    XlabelLate = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
-                    YValueLate = ListItems4[i].Select(d => d.Quantity).ToArray();
-                }
-                if (ListItems4[i][0].Status == "Back Log")
-                {
-                    XlabelBackLog = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
-                    YValueBacklog = ListItems4[i].Select(d => d.Quantity).ToArray();
-                }
-                if (ListItems4[i][0].Status == "Open Order")
-                {
-                    XlabelOpenOrder = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
-                    YValueOpenOrder = ListItems4[i].Select(d => d.Quantity).ToArray();
-                }
-                if (ListItems4[i][0].Status == "Shipped-Late")
-                {
-                    XlabelShippedLate = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
-                    YValueShippedLate = ListItems4[i].Select(d => d.Quantity).ToArray();
-                }
-                if (ListItems4[i][0].Status == "Shipped-On Time")
-                {
-                    XlabelShippedOntime= ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
-                    YValueShippedOntime = ListItems4[i].Select(d => d.Quantity).ToArray();
-                }
-
-            }
-            string tiltle = "Reliability On-time Shipment Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
-            
-            string tiltle2 = "Back Log Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
-          
-            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog, XlabelOpenOrder, YValueOpenOrder, ref chart_Shipping, tiltle2);
-            ChartDrawing.ChartDrawing.DrawCrisisReportShipped(XlabelShippedLate, YValueShippedLate, XlabelShippedOntime, YValueShippedOntime, ref chart_shipped, tiltle);
-
-
-            ShippingSummary = new List<StatusSumary>();
-            foreach (var item in ListItems)
-            {
-                StatusSumary st = new StatusSumary();
-                st.Status = item[0].Status;
-                st.Quantity = item.Count;
-                ShippingSummary.Add(st);
-            }
-            return ListshippingResult;
-        }
+     
 
       
 
@@ -407,41 +240,38 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
             {
 
            
-            SetTimetoSearch();
-             listShipingResult = new List<ShippingItems>();
-            GetDataShipping();
-            if (dtShipping != null && dtShipping.Rows.Count > 0)
-            {
-                listShipingResult = ListItemShowShipping(dtShipping);
-            }
-            if (listShipingResult != null && listShipingResult.Count > 0)
-            {
-                dgv_show.DataSource = listShipingResult;
-                dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
-                dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
-                dgv_show.AutoGenerateColumns = true;
-                dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
-                dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
-                dgv_show.AllowUserToAddRows = false;
-                dgv_show.Columns[0].HeaderText = "Date";
-                dgv_show.Columns[1].HeaderText = "Order Code";
-                dgv_show.Columns[2].HeaderText = "Clients";
-                dgv_show.Columns[3].HeaderText = "Clients Order";
-                dgv_show.Columns[4].HeaderText = "Product";
-                dgv_show.Columns[5].HeaderText = "Order Qty";
-                dgv_show.Columns[6].HeaderText = "Finished Goods Qty";
-                dgv_show.Columns[7].HeaderText = "Clients Request Date";
-                dgv_show.Columns[8].HeaderText = "Delivery Date";
-                dgv_show.Columns[9].HeaderText = "Shipping Percernt";
-                dgv_show.Columns[10].HeaderText = "Status";
-            //    MakeColorForDatagridview(dgv_show);
+               SetTimetoSearch();
+                DoJobForReliability();
                 DrawingChartForShipping(ShippingSummary);
                 DrawingChartPercentShipping(ShippingSummary);
-            }
-            else
-            {
-                dgv_show.DataSource = null;
-            }
+            //    if (listShipingResult != null && listShipingResult.Count > 0)
+            //{
+            //    dgv_show.DataSource = listShipingResult;
+            //    dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.AllCells;
+            //    dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
+            //    dgv_show.AutoGenerateColumns = true;
+            //    dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
+            //    dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
+            //    dgv_show.AllowUserToAddRows = false;
+            //    dgv_show.Columns[0].HeaderText = "Date";
+            //    dgv_show.Columns[1].HeaderText = "Order Code";
+            //    dgv_show.Columns[2].HeaderText = "Clients";
+            //    dgv_show.Columns[3].HeaderText = "Clients Order";
+            //    dgv_show.Columns[4].HeaderText = "Product";
+            //    dgv_show.Columns[5].HeaderText = "Order Qty";
+            //    dgv_show.Columns[6].HeaderText = "Finished Goods Qty";
+            //    dgv_show.Columns[7].HeaderText = "Clients Request Date";
+            //    dgv_show.Columns[8].HeaderText = "Delivery Date";
+            //    dgv_show.Columns[9].HeaderText = "Shipping Percernt";
+            //    dgv_show.Columns[10].HeaderText = "Status";
+            ////    MakeColorForDatagridview(dgv_show);
+            //    DrawingChartForShipping(ShippingSummary);
+            //    DrawingChartPercentShipping(ShippingSummary);
+            //}
+            //else
+            //{
+            //    dgv_show.DataSource = null;
+            //}
             ClearData();
             }
             catch (Exception ex)
@@ -450,6 +280,89 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
 
                 
             }
+        }
+        private void DoJobForReliability()
+        {
+            ReliabilitySummary reliability = new ReliabilitySummary();
+            List<FinalItemsReport> List = reliability.GetDataBackLogToExport(dtp_from.Value, dtp_to.Value);
+            List<FinalItemsReport> ListSort = List.Where(d => d.Status == "Back Log" || d.Status == "Late" || d.Status == "Open Order").ToList();
+            var ListItems = ListSort
+      .GroupBy(u => u.Status)
+      .Select(grp => grp.ToList())
+      .ToList();
+            ShippingSummary = new List<StatusSumary>();
+            foreach (var item in ListItems)
+            {
+                StatusSumary st = new StatusSumary();
+                st.Status = item[0].Status;
+                st.Quantity = item.Count;
+                ShippingSummary.Add(st);
+            }
+           
+            var ListItems2 = ListSort
+.OrderBy(o => o.ClientsRequestDate)
+.GroupBy(u => u.ClientsRequestDate.Month)
+.Select(grp => grp.ToList())
+.ToList();
+
+
+            List<StatusSumary> ShippingSummary2 = new List<StatusSumary>();
+
+            foreach (var item in ListItems2)
+            {
+                var ListItems3 = item
+.GroupBy(u => new { u.Status })
+.Select(grp => grp.ToList())
+.ToList();
+                foreach (var item2 in ListItems3)
+                {
+                    StatusSumary st = new StatusSumary();
+                    st.Status = item2[0].Status;
+                    st.Quantity = item2.Count;
+                    st.ClientsRequestDate = item2[0].ClientsRequestDate.ToString("MMM");
+                    ShippingSummary2.Add(st);
+                }
+            }
+            var ListItems4 = ShippingSummary2
+.GroupBy(u => u.Status)
+.Select(grp => grp.ToList())
+.ToList();
+
+            for (int i = 0; i < ListItems4.Count; i++)
+            {
+                if (ListItems4[i][0].Status == "Late")
+                {
+                    XlabelLate = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueLate = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+                if (ListItems4[i][0].Status == "Back Log")
+                {
+                    XlabelBackLog = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueBacklog = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+                if (ListItems4[i][0].Status == "Open Order")
+                {
+                    XlabelOpenOrder = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueOpenOrder = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+                if (ListItems4[i][0].Status == "Shipped-Late")
+                {
+                    XlabelShippedLate = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueShippedLate = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+                if (ListItems4[i][0].Status == "Shipped-On Time")
+                {
+                    XlabelShippedOntime = ListItems4[i].Select(d => d.ClientsRequestDate).ToArray();
+                    YValueShippedOntime = ListItems4[i].Select(d => d.Quantity).ToArray();
+                }
+
+            }
+            string tiltle = "Reliability On-time Shipment Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
+
+            string tiltle2 = "Back Log Report " + "from: " + dtp_from.Value.ToString("dd - MM - yyyy") + " to: " + dtp_to.Value.ToString("dd - MM - yyyy");
+
+            ChartDrawing.ChartDrawing.DrawCrisisReport(XlabelLate, YValueLate, XlabelBackLog, YValueBacklog, XlabelOpenOrder, YValueOpenOrder, ref chart_Shipping, tiltle2);
+           // ChartDrawing.ChartDrawing.DrawCrisisReportShipped(XlabelShippedLate, YValueShippedLate, XlabelShippedOntime, YValueShippedOntime, ref chart_shipped, tiltle);
         }
         private void MakeColorForDatagridview(DataGridView dtgv)
         {
@@ -529,14 +442,14 @@ and copths.TH004  = coptds.TD004 and coptds.TD008 != 0 ");
                 {
                     series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Blue;
                 }
-                else if (item.Status == "Shipped-Late")
-                {
-                    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Orange;
-                }
-                else if (item.Status == "Shipped-On Time")
-                {
-                    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Green;
-                }
+                //else if (item.Status == "Shipped-Late")
+                //{
+                //    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Orange;
+                //}
+                //else if (item.Status == "Shipped-On Time")
+                //{
+                //    series.Points[series.Points.Count - 1].Color = System.Drawing.Color.Green;
+                //}
 
             }
              

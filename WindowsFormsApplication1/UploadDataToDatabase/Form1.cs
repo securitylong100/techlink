@@ -27,21 +27,26 @@ namespace UploadDataToDatabase
         BackgroundWorker bgSendMailWorker;
         // this is the timer to make sure that worker gets called
         System.Threading.Timer tmrEnsureWorkerGetsCalled;
-        List<ScheduleReportItems> listSchedule;
+     
         DataTable dtScheduleSendMail;
         DataTable dtListEmail;
+        
         // object used for safe access
         object lockObject = new object();
         object lockObjectSendMail = new object();
         List<ScheduleReportItems> listReport = new List<ScheduleReportItems>();
-        List<EmailNeedSend> listEmail = new List<EmailNeedSend>();
+
+
+        string PathFoler = @"C:\ERP_Temp\";
+        bool isExportExcel = false;
+        enum ReportType {Daily,Weekly,Monthly,Yearly,Non}
+
         
         public Form1()
         {
             InitializeComponent();
-            dtp_from.Value = DateTime.Now.AddDays(-30);
-            dtp_todate.Value = DateTime.Now;
 
+            CreateFolderDeleteFilesExcelold();
             version = System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Major.ToString(); //AssemblyVersion을 가져온다.
             version += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Minor.ToString();
             version += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
@@ -50,9 +55,9 @@ namespace UploadDataToDatabase
 
             //timer_update.Start();
             // this timer calls bgWorker again and again after regular intervals
-            tmrCallBgWorker = new System.Windows.Forms.Timer();
+            tmrCallBgWorker = new System.Windows.Forms.Timer();//Timer for do task
             tmrCallBgWorker.Tick += new EventHandler(tmrCallBgWorker_Tick);
-            //tmrCallBgWorker.Interval = 10000;
+            tmrCallBgWorker.Interval = 10000;
 
             // this is our worker
             bgWorker = new BackgroundWorker();
@@ -70,25 +75,66 @@ namespace UploadDataToDatabase
             bgSendMailWorker.DoWork += BgSendMailWorker_DoWork;
             bgSendMailWorker.RunWorkerCompleted += BgSendMailWorker_RunWorkerCompleted;
             bgSendMailWorker.WorkerReportsProgress = true;
-            listSchedule = new List<ScheduleReportItems>();
-            dtScheduleSendMail = new DataTable();
+         
+        }
+        private void CreateFolderDeleteFilesExcelold()
+        {
+            bool exists = System.IO.Directory.Exists(PathFoler);
+            if (!exists)
+                System.IO.Directory.CreateDirectory(PathFoler);
+            try
+            {
+
+           
+            DirectoryInfo d = new DirectoryInfo(PathFoler);//Assuming Test is your Folder
+            FileInfo[] Files = d.GetFiles(); 
+            foreach (FileInfo file in Files)
+            {
+
+                File.Delete(file.FullName);
+            }
+            }
+            catch (Exception ex)
+            {
+
+                Logfile.Output(StatusLog.Error, "DeleteFilesExcel : Fail ", ex.Message);
+            }
         }
 
-        private void BgSendMailWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+       
+      private void LoadSchedule_ListEmail()
         {
-            Logfile.Output(StatusLog.Normal, "Send mail complete");
+            try
+            {
+             
+                dtScheduleSendMail = new DataTable();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML,subject, attach, comments from t_report_schedule where 1=1 ");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
+                dgv_show.DataSource = dtScheduleSendMail;
+                dgv_show.Refresh();
+                listReport = new List<ScheduleReportItems>();
+                listReport = Listreport(dtScheduleSendMail);
+            }
+            catch (Exception ex)
+            {
+                Logfile.Output(StatusLog.Error, "Load from t_report_schedule in SQL fail: ", ex.Message);
+
+            }
+           
         }
-      
         private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
             btn_Start.Text = "Starting";
-            pbar_upload.Value = e.ProgressPercentage;
+         
 
         }
 
         void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            System.Diagnostics.Debug.WriteLine("Complete");
+            LoadSchedule_ListEmail();
+
         }
 
         void bg_DoWork(object sender, DoWorkEventArgs e)
@@ -96,72 +142,20 @@ namespace UploadDataToDatabase
             // does a job like writing to serial communication, webservices etc
             var worker = sender as BackgroundWorker;
             int intProgress = 0;
-
-            //dtp_from.Value = DateTime.Now.AddDays(-90);
-            //dtp_todate.Value = DateTime.Now;
-            if (checkInvalidDateTimeSpan(dtp_from.Value, DateTime.Now))
+            foreach (var item in listReport)
             {
-                
-                if (chb_uploadShipping.Checked)
+                if(item.ReportName == "BackLogReport" && item.AttachedFolder != "")
                 {
-
-                    try //Upload Shipping 
+                    if (cb_Backlog2Excel.Checked)
                     {
-                        intProgress += 10;
-                        worker.ReportProgress(intProgress);
-                        UploadDataShipping(dtp_from.Value, DateTime.Now);
-                        intProgress +=90;
-                        worker.ReportProgress(intProgress);
-                       
-
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload data for Shipping fail : ", ex.Message);
+                        ExportDataBackLogToExcel(item.ReportName, int.Parse(item.Hours)-1);
                     }
                 }
-
-                if (chb_uploadProduction.Checked)
-                {
-                    try //Upload Production
-                    {
-                        intProgress += 10;
-                        worker.ReportProgress(intProgress);
-                        UploadDataProduction(dtp_from.Value, DateTime.Now);
-                        intProgress += 90;
-                        worker.ReportProgress(intProgress);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
-                    }
-                }
-                if (chb_uploadMaterial.Checked)
-                {
-                    try //Upload Material 
-                    {
-                        intProgress += 10;
-                        worker.ReportProgress(intProgress);
-                        UploadDataMaterial(dtp_from.Value, DateTime.Now);
-                        intProgress += 90;
-                        worker.ReportProgress(intProgress);
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
-                    }
-                }
-                Logfile.Output(StatusLog.Error, "Upload  data just Finished  ! ");
-                //   MessageBox.Show("Upload  data just Finished  ! ");
             }
-         
-          //  System.Diagnostics.Debug.WriteLine("run !");
+          
+            //  System.Diagnostics.Debug.WriteLine("run !");
             System.Threading.Thread.Sleep(100);
         }
-
         void tmrCallBgWorker_Tick(object sender, EventArgs e)
         {
             if (Monitor.TryEnter(lockObject))
@@ -187,24 +181,6 @@ namespace UploadDataToDatabase
             }
 
         }
-
-        void tmrEnsureWorkerSendmailGetsCalled_Callback(object obj)
-        {
-            // this timer was started as the bgworker was busy before now it will try to call the bgworker again
-            if (Monitor.TryEnter(lockObjectSendMail))
-            {
-                try
-                {
-                    if (!bgSendMailWorker.IsBusy)
-                        bgSendMailWorker.RunWorkerAsync();
-                }
-                finally
-                {
-                    Monitor.Exit(lockObjectSendMail);
-                }
-                tmrEnsureWorkerGetsCalled = null;
-            }
-        }
         void tmrEnsureWorkerGetsCalled_Callback(object obj)
         {
             // this timer was started as the bgworker was busy before now it will try to call the bgworker again
@@ -222,7 +198,30 @@ namespace UploadDataToDatabase
                 tmrEnsureWorkerGetsCalled = null;
             }
         }
-      
+        private void BgSendMailWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+
+
+        }
+        void tmrEnsureWorkerSendmailGetsCalled_Callback(object obj)
+        {
+            // this timer was started as the bgworker was busy before now it will try to call the bgworker again
+            if (Monitor.TryEnter(lockObjectSendMail))
+            {
+                try
+                {
+                    if (!bgSendMailWorker.IsBusy)
+                        bgSendMailWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObjectSendMail);
+                }
+                tmrEnsureWorkerGetsCalled = null;
+            }
+        }
+
+        #region Code cu: upload to database and get data to show
         private void UploadDataShipping ( DateTime datefrom ,DateTime dateto)
         {
          
@@ -687,24 +686,10 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             }
         }
 
-
+        #endregion
         private void Btn_Start_Click(object sender, EventArgs e)
-        { //pbar_upload.Visible = true;
-            pbar_upload.Minimum =0;
-            pbar_upload.Maximum = 0;
-            pbar_upload.Value = 0;
-            if (chb_uploadShipping.Checked)
-            {
-                pbar_upload.Maximum += 100;
-            }
-            if (chb_uploadProduction.Checked)
-            {
-                pbar_upload.Maximum += 100;
-            }
-            if (chb_uploadMaterial.Checked)
-            {
-                pbar_upload.Maximum += 100;
-            }
+        { 
+        
 
             if (btn_Start.Text == "Start")
             {
@@ -722,89 +707,23 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
             
         }
-        private void UploadDatatoDatabase ()
-        {
-           
-
-            if (checkInvalidDateTimeSpan(dtp_from.Value, dtp_todate.Value))
-            {
-               
-                if (chb_uploadShipping.Checked)
-                {
-                    
-                    try //Upload Shipping 
-                    {
-                      //  pbar_upload.Value += 10;
-                        UploadDataShipping(dtp_from.Value, dtp_todate.Value);
-                       // pbar_upload.Value += 90;
-                //     pbar_upload.Update();
-
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload data for Shipping fail : ", ex.Message);
-                    }
-                }
-
-                if (chb_uploadProduction.Checked)
-                {
-                    try //Upload Production
-                    {
-                  //      pbar_upload.Value += 10;
-                        UploadDataProduction(dtp_from.Value, dtp_todate.Value);
-                    //    pbar_upload.Value += 90;
-                   //     pbar_upload.Update();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
-                    }
-                }
-                if (chb_uploadMaterial.Checked)
-                {
-                    try //Upload Material 
-                    {
-                  //      pbar_upload.Value += 10;
-                        UploadDataMaterial(dtp_from.Value, dtp_todate.Value);
-                   //     pbar_upload.Value += 90;
-                   //     pbar_upload.Update();
-                    }
-                    catch (Exception ex)
-                    {
-
-                        Logfile.Output(StatusLog.Error, "Upload  data for Production fail : ", ex.Message);
-                    }
-                }
-                Logfile.Output(StatusLog.Error, "Upload  data just Finished  ! ");
-             //   MessageBox.Show("Upload  data just Finished  ! ");
-            }
-        }
-        private bool checkInvalidDateTimeSpan(DateTime from, DateTime to)
-        {
-            if(to.Date < from.Date)
-            {
-                MessageBox.Show("Please choose date to > date from", "Warning", MessageBoxButtons.OK, MessageBoxIcon.Warning);
-                return false;
-            }
-           
-            return true;
-        }
-
+     
+    
+  
       
 
         private void Form1_FormClosing(object sender, FormClosingEventArgs e)
         {
             SaveConfigure saveConfigure = new SaveConfigure();
-            saveConfigure.fromdate = dtp_from.Value;
-            saveConfigure.tomdate = dtp_todate.Value;
+          
             saveConfigure.hours = (int)num_hours.Value;
             saveConfigure.minutes = (int)num_minutes.Value;
             saveConfigure.seconds = (int)num_seconds.Value;
-            saveConfigure.UpdateShipping = chb_uploadShipping.Checked;
-            saveConfigure.UpdateProduction= chb_uploadProduction.Checked;
-            saveConfigure.UpdateMaterial = chb_uploadMaterial.Checked;
+            saveConfigure.hours_mail = (int)nmr_hoursSendmail.Value;
+            saveConfigure.minutes_mail= (int)nmr_minutesSendMail.Value;
+            saveConfigure.seconds_mail = (int)nmr_secondSendmail.Value;
+
+
             try
             {
                 SaveObject.Save_data(path + @"\Configure.ini", saveConfigure);
@@ -832,32 +751,32 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
                     num_hours.Value = saveConfigure.hours;
                     num_minutes.Value = saveConfigure.minutes;
                     num_seconds.Value = saveConfigure.seconds;
-                    chb_uploadShipping.Checked = saveConfigure.UpdateShipping;
-                    chb_uploadProduction.Checked = saveConfigure.UpdateProduction;
-                    chb_uploadMaterial.Checked = saveConfigure.UpdateMaterial;
+                    nmr_hoursSendmail.Value = saveConfigure.hours_mail;
+                    nmr_minutesSendMail.Value = saveConfigure.minutes_mail;
+                    nmr_secondSendmail.Value = saveConfigure.seconds_mail;
+
                 }
                 else
                 {
-                    dtp_from.Value = DateTime.Now.AddDays(-30);
-                    dtp_todate.Value = DateTime.Now;
+                   
                     num_hours.Value = 0;
                     num_minutes.Value = 0;
                     num_seconds.Value = 10;
-                    chb_uploadShipping.Checked = false;
-                    chb_uploadProduction.Checked = false;
-                   chb_uploadMaterial.Checked = false;
+                    nmr_hoursSendmail.Value = 0;
+                    nmr_minutesSendMail.Value = 0;
+                    nmr_secondSendmail.Value = 0;
                 }
             }
             else
             {
-                dtp_from.Value =DateTime.Now.AddDays(-30);
-                dtp_todate.Value = DateTime.Now;
+           
                 num_hours.Value = 0;
                 num_minutes.Value = 0;
                 num_seconds.Value = 10;
-                chb_uploadShipping.Checked = false;
-                chb_uploadProduction.Checked = false;
-                chb_uploadMaterial.Checked = false;
+                nmr_hoursSendmail.Value = 0;
+                nmr_minutesSendMail.Value = 0;
+                nmr_secondSendmail.Value = 10;
+
             }
             dgv_show.AutoSizeColumnsMode = DataGridViewAutoSizeColumnsMode.ColumnHeader;
             dgv_show.AutoSizeRowsMode = DataGridViewAutoSizeRowsMode.AllCells;
@@ -865,20 +784,9 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             dgv_show.DefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Regular);
             dgv_show.ColumnHeadersDefaultCellStyle.Font = new Font("Verdana", 8, FontStyle.Bold);
             dgv_show.AllowUserToAddRows = false;
-            StringBuilder sql = new StringBuilder();
-            sql.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML,subject, attach, comments from t_report_schedule where 1=1 ");
-            sqlCON tf = new sqlCON();
-            tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtScheduleSendMail);
-           
-            dgv_show.DataSource = dtScheduleSendMail;
-            dgv_show.Refresh();
-            listReport= Listreport(dtScheduleSendMail);
-            dtListEmail = new DataTable();
-            StringBuilder sqllistmail = new StringBuilder();
-            sqllistmail.Append("select emailaddress, deptcode, status, usingfunction from m_email where 1=1 ");
-            tf = new sqlCON();
-            tf.sqlDataAdapterFillDatatable(sqllistmail.ToString(), ref dtListEmail);
-            listEmail = ListEmailNeedSend(dtListEmail);
+            LoadSchedule_ListEmail();
+
+
         }
         
         private void Btn_add_Click(object sender, EventArgs e)
@@ -890,6 +798,8 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
         private void ReportSchechule_FormClosed(object sender, FormClosedEventArgs e)
         {
+            try
+            {
             dtScheduleSendMail = new DataTable(); 
               StringBuilder sql = new StringBuilder();
             sql.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML,subject, attach, comments from t_report_schedule where 1=1 ");
@@ -899,7 +809,12 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             dgv_show.Refresh();
             listReport = new List<ScheduleReportItems>();
             listReport = Listreport(dtScheduleSendMail);
+            }
+            catch (Exception ex)
+            {
 
+                Logfile.Output(StatusLog.Error, "Load data from SQL fail: ", ex.Message);
+            }
 
         }
 
@@ -909,9 +824,22 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             {
                 int rownumber = dgv_show.SelectedCells[0].RowIndex;
                 string reportname = dgv_show.Rows[rownumber].Cells[0].Value.ToString();
-                string sql = "delete from t_report_schedule where reportname = '" + reportname + "'";
+                string reportType = dgv_show.Rows[rownumber].Cells[1].Value.ToString();
+                string hours = dgv_show.Rows[rownumber].Cells[2].Value.ToString() ;
+                string day = dgv_show.Rows[rownumber].Cells[3].Value.ToString();
+                string date = dgv_show.Rows[rownumber].Cells[4].Value.ToString();
+                string month = dgv_show.Rows[rownumber].Cells[5].Value.ToString();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("delete from t_report_schedule where ");
+                sql.Append("reportname = '" + reportname + "' and ");
+                sql.Append("reporttype = '" + reportType + "' and ");
+                sql.Append("hours = '" + hours + "' and ");
+                sql.Append("day = '" + day + "' and ");
+                sql.Append("date = '" + date + "' and ");
+                sql.Append("month = '" + month + "'");
+        
                 sqlCON connect = new sqlCON();
-                connect.sqlExecuteNonQuery(sql, true);
+                connect.sqlExecuteNonQuery(sql.ToString(), true);
                 dtScheduleSendMail = new DataTable();
                 StringBuilder sql2 = new StringBuilder();
                 sql2.Append("select reportname, reporttype, hours, day, date, month,isBodyHTML, subject,attach, comments from t_report_schedule where 1=1 ");
@@ -980,73 +908,96 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             }
             return list;
         }
-        private bool SendEmailStatus()
+        private bool SendEmailStatus(List<ScheduleReportItems> listReport)
         {
             foreach (var item in listReport)
             {
                 if (item.ReportType == "Daily")
                 {
+       
                     if (DateTime.Now.Hour == int.Parse(item.Hours))
                     {
-                        if (item.isSentMail == false)
+                        List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
+                        emailNeeds = EmailNeedSends(item.ReportName);
+                        if (CheckIsSentMailComplete(item) == false)
                         {
-                            SendMailFunction sendmail = new SendMailFunction();
-                            if (sendmail.SendMailtoReport(item, listEmail))
-                                item.isSentMail = true;
+                            if (emailNeeds != null && emailNeeds.Count > 0)
+                            {
+                                SendMailFunction sendmail = new SendMailFunction();
+                                if (sendmail.SendMailtoReport(item, emailNeeds))
+                                {
+                                    InsertSendMailtoRecord(item, item.AttachedFolder);
+                                    isExportExcel = false;
+                                }
+                            }
                         }
                     }
-                    else if (DateTime.Now.Hour > int.Parse(item.Hours))
-                    {
-                        item.isSentMail = false;
-                    }
+                   
                 }
                 else if (item.ReportType == "Weekly")
                 {
+                   
                     if (DateTime.Now.DayOfWeek.ToString() == item.Day && DateTime.Now.Hour == int.Parse(item.Hours))
                     {
-                        if (item.isSentMail == false)
+                        List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
+                        emailNeeds = EmailNeedSends(item.ReportName);
+                        if (CheckIsSentMailComplete(item) == false)
                         {
-                            SendMailFunction sendmail = new SendMailFunction();
-                            if (sendmail.SendMailtoReport(item, listEmail))
-                                item.isSentMail = true;
+
+                            if (emailNeeds != null && emailNeeds.Count > 0)
+                            {
+                                SendMailFunction sendmail = new SendMailFunction();
+                                if (sendmail.SendMailtoReport(item, emailNeeds))
+                                {
+                                    InsertSendMailtoRecord(item, item.AttachedFolder);
+                                }
+                            }
                         }
                     }
-                    else if (DateTime.Now.DayOfWeek.ToString() == item.Day && DateTime.Now.Hour > int.Parse(item.Hours))
-                    {
-                        item.isSentMail = false;
-                    }
+                  
                 }
                 else if (item.ReportType == "Monthly")
                 {
+
                     if (DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour == int.Parse(item.Hours))
                     {
-                        if (item.isSentMail == false)
+                        List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
+                        emailNeeds = EmailNeedSends(item.ReportName);
+                        if (CheckIsSentMailComplete(item) == false)
                         {
-                            SendMailFunction sendmail = new SendMailFunction();
-                            if (sendmail.SendMailtoReport(item, listEmail))
-                                item.isSentMail = true;
+
+                            if (emailNeeds != null && emailNeeds.Count > 0)
+                            {
+                                SendMailFunction sendmail = new SendMailFunction();
+                                if (sendmail.SendMailtoReport(item, emailNeeds))
+                                {
+                                    InsertSendMailtoRecord(item, item.AttachedFolder);
+                                }
+                            }
                         }
                     }
-                    else if (DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour > int.Parse(item.Hours))
-                    {
-                        item.isSentMail = false;
-                    }
+                   
                 }
                 else if (item.ReportType == "Yearly")
                 {
                     if (DateTime.Now.ToString("MMMM") == item.Month && DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour == int.Parse(item.Hours))
                     {
-                        if (item.isSentMail == false)
+                        List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
+                        emailNeeds = EmailNeedSends(item.ReportName);
+                        if (CheckIsSentMailComplete(item) == false)
                         {
-                            SendMailFunction sendmail = new SendMailFunction();
-                            if (sendmail.SendMailtoReport(item, listEmail))
-                                item.isSentMail = true;
+
+                            if (emailNeeds != null && emailNeeds.Count > 0)
+                            {
+                                SendMailFunction sendmail = new SendMailFunction();
+                                if (sendmail.SendMailtoReport(item, emailNeeds))
+                                {
+                                    InsertSendMailtoRecord(item, item.AttachedFolder);
+                                }
+                            }
                         }
                     }
-                    else if (DateTime.Now.ToString("MMMM") == item.Month && DateTime.Now.Date.ToString() == item.Date && DateTime.Now.Hour > int.Parse(item.Hours))
-                    {
-                        item.isSentMail = false;
-                    }
+                  
                 }
 
             }
@@ -1055,7 +1006,12 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
         private void BgSendMailWorker_DoWork(object sender, DoWorkEventArgs e)
         {
             var worker = sender as BackgroundWorker;
-            SendEmailStatus();
+          
+            if(listReport != null && listReport.Count > 0)
+            {
+                SendEmailStatus(listReport);
+            }
+           
 
         }
 
@@ -1083,29 +1039,180 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
             }
         }
-
-        private void Rb_auto_CheckedChanged(object sender, EventArgs e)
+        private bool CheckIsSentMailComplete (ScheduleReportItems scheduleReport)
+        {if(scheduleReport.ReportType == "Daily")
+            {
+                DataTable dtRecord = new DataTable();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select reportname,reporttype,hours,day,date,month,subject,attach,inputdate from t_email_record where ");
+                sql.Append("reportname = '" + scheduleReport.ReportName + "' and ");
+                sql.Append("reporttype = '" + scheduleReport.ReportType + "' and ");
+                sql.Append("hours = '" + scheduleReport.Hours + "' and ");
+                sql.Append("inputdate > '" + DateTime.Now.Date + "'");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtRecord);
+                if (dtRecord.Rows.Count > 0)
+                    return true;
+                else return false;
+            }
+          else  if (scheduleReport.ReportType == "Weekly")
+            {
+                DataTable dtRecord = new DataTable();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select reportname,reporttype,hours,day,date,month,subject,attach,inputdate from t_email_record where ");
+                sql.Append("reportname = '" + scheduleReport.ReportName + "' and ");
+                sql.Append("reporttype = '" + scheduleReport.ReportType + "' and ");
+                sql.Append("day = '" + scheduleReport.Day + "' and ");
+                sql.Append("hours = '" + scheduleReport.Hours + "' and ");
+                sql.Append("inputdate > '" + DateTime.Now.Date + "'");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtRecord);
+                if (dtRecord.Rows.Count > 0)
+                    return true;
+                else return false;
+            }
+            else if (scheduleReport.ReportType == "Monthly")
+            {
+                DataTable dtRecord = new DataTable();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select reportname,reporttype,hours,day,date,month,subject,attach,inputdate from t_email_record where ");
+                sql.Append("reportname = '" + scheduleReport.ReportName + "' and ");
+                sql.Append("reporttype = '" + scheduleReport.ReportType + "' and ");
+                sql.Append("date = '" + scheduleReport.Date + "' and ");
+                sql.Append("hours = '" + scheduleReport.Hours + "' and ");
+                sql.Append("inputdate > '" + DateTime.Now.Date + "'");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtRecord);
+                if (dtRecord.Rows.Count > 0)
+                    return true;
+                else return false;
+            }
+            else if (scheduleReport.ReportType == "Yearly")
+            {
+                DataTable dtRecord = new DataTable();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select reportname,reporttype,hours,day,date,month,subject,attach,inputdate from t_email_record where ");
+                sql.Append("reportname = '" + scheduleReport.ReportName + "' and ");
+                sql.Append("reporttype = '" + scheduleReport.ReportType + "' and ");
+                sql.Append("month = '" + scheduleReport.Month + "' and ");
+                sql.Append("date = '" + scheduleReport.Date + "' and ");
+                sql.Append("hours = '" + scheduleReport.Hours + "' and ");
+                sql.Append("inputdate > '" + DateTime.Now.Date + "'");
+                sqlCON tf = new sqlCON();
+                tf.sqlDataAdapterFillDatatable(sql.ToString(), ref dtRecord);
+                if (dtRecord.Rows.Count > 0)
+                    return true;
+                else return false;
+            }
+            return false;
+        }
+        private bool InsertSendMailtoRecord (ScheduleReportItems schedule,string attachFile)
         {
-           if(rb_auto.Checked)
+            StringBuilder sqlinsert = new StringBuilder();
+            sqlinsert.Append("insert into t_email_record ");
+            sqlinsert.Append(@"(reportname,reporttype,hours,day,date,month,subject,attach,inputdate) values ('");
+            sqlinsert.Append(schedule.ReportName + "' , '" + schedule.ReportType + "' , '" + schedule.Hours + "', '" + "" + "' , '" + "" + "', '");
+            sqlinsert.Append("" + "' , '" + schedule.Subject + "' , '" + attachFile + "' , '" + DateTime.Now + "' )");
+            sqlCON insert = new sqlCON();
+            insert.sqlExecuteNonQuery(sqlinsert.ToString(), false);
+            return true;
+        }
+        private List<EmailNeedSend> EmailNeedSends(string reportName)
+        {
+            List<EmailNeedSend> listEmailsend = new List<EmailNeedSend>();
+            try
             {
-                rb_manual.Checked = false;
+           
+               dtListEmail = new DataTable();
+            StringBuilder sqllistmail = new StringBuilder();
+            sqllistmail.Append("select emailaddress, deptcode, status, usingfunction from m_email where status = 'YES' and usingfunction = '" + reportName+"'");
+            sqlCON tf = new sqlCON();
+            tf.sqlDataAdapterFillDatatable(sqllistmail.ToString(), ref dtListEmail);
+            listEmailsend = ListEmailNeedSend(dtListEmail);
+
             }
-           else
+            catch (Exception ex)
             {
-                rb_auto.Checked = true;
+
+                Logfile.Output(StatusLog.Error, "Load list email send fail ", ex.Message);
             }
+
+            return listEmailsend;
+        }
+        #region Codding For Task Run
+        private void ExportDataBackLogToExcel(string FileName,int hour)
+        {
+            if (DateTime.Now.Hour == hour   /*&& DateTime.Now.Minute   < 30*/)
+            {
+                if (isExportExcel == false)
+                {
+                    UploadDataToDatabase.BackLogReport.BacklogReport backlog = new BackLogReport.BacklogReport();
+
+                    if (backlog.ExportExcelToReport(ref dgv_export, FileName, PathFoler, version))
+                    {
+                        //  MessageBox.Show("Upload  data just Finished  ! ");
+                        Logfile.Output(StatusLog.Normal, "Export Excel File Complete ! ");
+                        isExportExcel = true;
+                    }
+                    else
+                    {
+                        isExportExcel = false;
+                        Logfile.Output(StatusLog.Normal, "Export Excel File fail ! ");
+                    }
+
+                }
+                
+            }
+          
+            
         }
 
-        private void Rb_manual_CheckedChanged(object sender, EventArgs e)
+        #endregion
+
+      
+       
+
+
+        private void Button1_Click_1(object sender, EventArgs e)
         {
-            if (rb_manual.Checked)
+            UploadDataToDatabase.BackLogReport.BacklogReport backlog = new BackLogReport.BacklogReport();
+            string FileName = "BackLog Report";
+            if (backlog.ExportExcelToReport(ref dgv_export, FileName, PathFoler, version))
             {
-                rb_auto.Checked = false;
+
+                Logfile.Output(StatusLog.Normal, "Export Excel File Complete ! ");
+
             }
             else
             {
-                rb_auto.Checked = true;
+                Logfile.Output(StatusLog.Normal, "Export Excel File fail ! ");
+            }
+        }
+
+        private void Button2_Click(object sender, EventArgs e)
+        {
+            SendMailFunction sendmail = new SendMailFunction();
+            sendmail.SendMailtoReporttest();
+        }
+
+        private void Button3_Click(object sender, EventArgs e)
+        {
+            SendMailFunction sendmail = new SendMailFunction();
+            foreach (var report in listReport)
+            {
+                if(report.ReportName =="BackLogReport")
+                {
+                    List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
+                    emailNeeds = EmailNeedSends(report.ReportName);
+           var isOK =  sendmail.SendMailwithExportExcel(report, emailNeeds, ref dgv_export, report.ReportName, PathFoler, "");
+                    if(isOK)
+                    {
+                        MessageBox.Show("Send Email OK");
+                    }
+
+                }
             }
         }
     }
+    
 }

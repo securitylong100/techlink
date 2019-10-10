@@ -52,9 +52,9 @@
             this.lbl_header.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(192)))), ((int)(((byte)(255)))));
             this.lbl_header.Font = new System.Drawing.Font("Microsoft Sans Serif", 20.25F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_header.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(0)))), ((int)(((byte)(0)))), ((int)(((byte)(192)))));
-            this.lbl_header.Location = new System.Drawing.Point(286, 7);
+            this.lbl_header.Location = new System.Drawing.Point(235, 9);
             this.lbl_header.Name = "lbl_header";
-            this.lbl_header.Size = new System.Drawing.Size(301, 31);
+            this.lbl_header.Size = new System.Drawing.Size(375, 39);
             this.lbl_header.TabIndex = 1;
             this.lbl_header.Text = "SOFTWARE SYSTEM";
             // 
@@ -65,13 +65,13 @@
             this.lbl_username.ForeColor = System.Drawing.Color.Green;
             this.lbl_username.Location = new System.Drawing.Point(300, 44);
             this.lbl_username.Name = "lbl_username";
-            this.lbl_username.Size = new System.Drawing.Size(51, 16);
+            this.lbl_username.Size = new System.Drawing.Size(59, 20);
             this.lbl_username.TabIndex = 2;
             this.lbl_username.Text = "label1";
             // 
             // CommonForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(610, 226);
             this.Controls.Add(this.lbl_username);

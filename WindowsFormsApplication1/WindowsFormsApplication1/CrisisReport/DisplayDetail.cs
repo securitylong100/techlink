@@ -36,9 +36,13 @@ namespace WindowsFormsApplication1.CrisisReport
             dtgv_show.Columns[6].DefaultCellStyle.Format = "N0";
             dtgv_show.Columns[7].HeaderText = "Clients Request Date";
             dtgv_show.Columns[8].HeaderText = "Delivery Date";
-            dtgv_show.Columns[9].HeaderText = "Shipping Percernt";
-            dtgv_show.Columns[9].DefaultCellStyle.Format = "0%";
-            dtgv_show.Columns[10].HeaderText = "Status";
+            dtgv_show.Columns[9].HeaderText = "Shipped Qty";
+            dtgv_show.Columns[9].DefaultCellStyle.Format = "N0";
+            dtgv_show.Columns[10].HeaderText = "Remain Qty";
+            dtgv_show.Columns[10].DefaultCellStyle.Format = "N0";
+            dtgv_show.Columns[11].HeaderText = "Shipping Percernt";
+            dtgv_show.Columns[11].DefaultCellStyle.Format = "0%";
+            dtgv_show.Columns[12].HeaderText = "Status";
         }
 
 

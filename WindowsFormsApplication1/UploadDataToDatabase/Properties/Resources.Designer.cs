@@ -61,6 +61,26 @@ namespace UploadDataToDatabase.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] BackLogForm {
+            get {
+                object obj = ResourceManager.GetObject("BackLogForm", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] BackLogForm2 {
+            get {
+                object obj = ResourceManager.GetObject("BackLogForm2", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap excel_icon {

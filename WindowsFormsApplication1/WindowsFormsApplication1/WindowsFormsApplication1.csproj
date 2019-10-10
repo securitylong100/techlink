@@ -26,7 +26,7 @@
     <InstallUrl>\\172.16.0.12\Softwarepublish\</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.html</WebPage>
-    <ApplicationRevision>19</ApplicationRevision>
+    <ApplicationRevision>21</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -81,6 +81,16 @@
     <Reference Include="Framework">
       <HintPath>..\..\..\temp\Framework.dll</HintPath>
     </Reference>
+    <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
+    </Reference>
+    <Reference Include="MetroFramework.Design, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Design.1.2.0.3\lib\net40\MetroFramework.Design.dll</HintPath>
+      <Private>False</Private>
+    </Reference>
+    <Reference Include="MetroFramework.Fonts, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
+      <HintPath>..\packages\MetroFramework.Fonts.1.2.0.3\lib\net40\MetroFramework.Fonts.dll</HintPath>
+    </Reference>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
@@ -115,6 +125,12 @@
     </Compile>
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
+    <Compile Include="CommonFormMetro.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="CommonFormMetro.Designer.cs">
+      <DependentUpon>CommonFormMetro.cs</DependentUpon>
+    </Compile>
     <Compile Include="CrisisReport\Classvalue\ProductionItems.cs" />
     <Compile Include="CrisisReport\Classvalue\SetTimeForReport.cs" />
     <Compile Include="CrisisReport\Classvalue\ShippingItems.cs" />
@@ -148,6 +164,7 @@
     <Compile Include="CrisisReport\ProductionMonitoring.Designer.cs">
       <DependentUpon>ProductionMonitoring.cs</DependentUpon>
     </Compile>
+    <Compile Include="CrisisReport\ReliabilitySummary.cs" />
     <Compile Include="CrisisReport\ShippingReport.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -221,6 +238,27 @@
       <DependentUpon>MainFr.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\infomesge.cs" />
+    <Compile Include="MQC\LoadDataMQC.cs" />
+    <Compile Include="MQC\LoadDefectMapping.cs" />
+    <Compile Include="MQC\MQCItem1.cs" />
+    <Compile Include="MQC\MQCShowForm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\MQCShowForm.Designer.cs">
+      <DependentUpon>MQCShowForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQC\NGPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MQC\NGPanel.Designer.cs">
+      <DependentUpon>NGPanel.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQC\RWPanel.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MQC\RWPanel.Designer.cs">
+      <DependentUpon>RWPanel.cs</DependentUpon>
+    </Compile>
     <Compile Include="PQM\ConnectData\Adruino\Adruino.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -317,6 +355,9 @@
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="CommonFormMetro.resx">
+      <DependentUpon>CommonFormMetro.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="CrisisReport\CrisisReportShow.resx">
       <DependentUpon>CrisisReportShow.cs</DependentUpon>
     </EmbeddedResource>
@@ -367,6 +408,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MainFr.resx">
       <DependentUpon>MainFr.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\MQCShowForm.resx">
+      <DependentUpon>MQCShowForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\NGPanel.resx">
+      <DependentUpon>NGPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\RWPanel.resx">
+      <DependentUpon>RWPanel.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PQM\ConnectData\Adruino\Adruino.resx">
       <DependentUpon>Adruino.cs</DependentUpon>
@@ -474,6 +524,7 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
+    <Content Include="MetroFramework.txt" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 

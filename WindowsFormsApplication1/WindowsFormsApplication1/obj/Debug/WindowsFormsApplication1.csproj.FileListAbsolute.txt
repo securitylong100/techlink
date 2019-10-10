@@ -314,3 +314,9 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.csproj.CopyComplete
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Techlink.exe
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\Techlink.pdb
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\MetroFramework.dll
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\MetroFramework.Fonts.dll
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MQC.MQCShowForm.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.CommonFormMetro.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MQC.NGPanel.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MQC.RWPanel.resources
