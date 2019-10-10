@@ -1,0 +1,70 @@
+[08:51:59.420] Starting ImportDataToDatabase 1.0.0
+[08:51:59.445] Loaded Configure
+[08:56:22.218] Starting ImportDataToDatabase 1.0.0
+[08:56:22.249] Loaded Configure
+[09:01:17.466] Starting ImportDataToDatabase 1.0.0
+[09:01:17.486] Loaded Configure
+[09:01:51.422] CompareFormat(string[] files)Input string was not in a correct format.
+[09:01:54.799] CompareFormat(string[] files)Input string was not in a correct format.
+[09:01:58.173] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:01.567] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:04.996] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:08.405] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:11.834] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:15.268] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:18.661] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:22.086] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:25.488] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:28.904] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:32.261] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:35.690] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:39.052] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:42.422] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:45.844] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:49.277] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:52.625] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:56.039] CompareFormat(string[] files)Input string was not in a correct format.
+[09:02:59.442] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:02.933] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:06.392] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:09.780] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:13.199] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:16.600] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:20.024] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:23.471] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:26.926] CompareFormat(string[] files)Input string was not in a correct format.
+[09:03:30.285] CompareFormat(string[] files)Input string was not in a correct format.
+[09:05:22.947] Starting ImportDataToDatabase 1.0.0
+[09:05:23.210] Loaded Configure
+[09:06:44.979] CompareFormat(string[] files)Input string was not in a correct format.
+[09:07:37.762] CompareFormat(string[] files)Input string was not in a correct format.
+[09:09:13.685] Starting ImportDataToDatabase 1.0.0
+[09:09:13.712] Loaded Configure
+[09:13:46.007] Starting ImportDataToDatabase 1.0.0
+[09:13:46.031] Loaded Configure
+[09:27:39.653] Starting ImportDataToDatabase 1.0.0
+[09:27:39.683] Loaded Configure
+[09:28:40.319] Starting ImportDataToDatabase 1.0.0
+[09:28:40.346] Loaded Configure
+[09:38:19.307] Starting ImportDataToDatabase 1.0.0
+[09:38:19.337] Loaded Configure
+[09:38:48.121]  InsertdataToSFT(string barcode, string output, string NG)Input string was not in a correct format.
+[09:38:55.548]  UpdatedataToSFT(string barcode)Input string was not in a correct format.
+[09:44:54.805] Starting ImportDataToDatabase 1.0.0
+[09:44:54.837] Loaded Configure
+[09:58:11.677] Starting ImportDataToDatabase 1.0.0
+[09:58:11.721] Loaded Configure
+[13:19:50.768] Starting ImportDataToDatabase 1.0.3
+[13:19:50.849] Loaded Configure
+[13:49:13.841] Starting ImportDataToDatabase 1.0.3
+[13:49:14.108] Loaded Configure
+[13:50:17.732] Starting ImportDataToDatabase 1.0.3
+[13:50:17.778] Loaded Configure
+[15:38:56.672] Starting ImportDataToDatabase 1.0.3
+[15:38:56.797] Loaded Configure
+[15:39:27.025] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER'.
+The statement has been terminated.
+[15:42:10.890] Starting ImportDataToDatabase 1.0.3
+[15:42:10.931] Loaded Configure
+[15:42:19.420] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER'.
+The statement has been terminated.

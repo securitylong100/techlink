@@ -1,0 +1,107 @@
+[09:03:48.409] Starting ImportDataToDatabase 1.0.3
+[09:03:48.463] Loaded Configure
+[09:23:49.620] Starting ImportDataToDatabase 1.0.3
+[09:23:49.669] Loaded Configure
+[09:26:37.924] Starting ImportDataToDatabase 1.0.3
+[09:26:37.972] Loaded Configure
+[09:43:33.512] Starting ImportDataToDatabase 1.0.3
+[09:43:33.555] Loaded Configure
+[09:43:52.738] Starting ImportDataToDatabase 1.0.3
+[09:43:52.794] Loaded Configure
+[09:53:55.965] Starting ImportDataToDatabase 1.0.3
+[09:53:56.012] Loaded Configure
+[09:55:00.539] Starting ImportDataToDatabase 1.0.3
+[09:55:00.611] Loaded Configure
+[10:24:14.214] Starting ImportDataToDatabase 1.0.3
+[10:24:14.263] Loaded Configure
+[10:24:40.986] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Invalid column name 'ERP'.
+[10:25:28.718] Starting ImportDataToDatabase 1.0.3
+[10:25:28.765] Loaded Configure
+[10:26:48.155] Starting ImportDataToDatabase 1.0.3
+[10:26:48.198] Loaded Configure
+[11:20:36.937] Starting ImportDataToDatabase 1.0.3
+[11:20:36.990] Loaded Configure
+[11:43:42.511] Starting ImportDataToDatabase 1.0.3
+[11:43:42.565] Loaded Configure
+[11:44:19.838] Starting ImportDataToDatabase 1.0.3
+[11:44:19.884] Loaded Configure
+[12:00:57.163] Starting ImportDataToDatabase 1.0.3
+[12:00:57.214] Loaded Configure
+[13:05:34.210] Starting ImportDataToDatabase 1.0.3
+[13:05:34.235] Loaded Configure
+[13:05:52.459] Starting ImportDataToDatabase 1.0.3
+[13:05:52.481] Loaded Configure
+[13:36:23.856] Starting ImportDataToDatabase 1.0.3
+[13:36:23.879] Loaded Configure
+[13:36:45.580] Starting ImportDataToDatabase 1.0.3
+[13:36:45.603] Loaded Configure
+[13:37:11.421] Starting ImportDataToDatabase 1.0.3
+[13:37:11.449] Loaded Configure
+[13:39:20.862] Starting ImportDataToDatabase 1.0.3
+[13:39:20.893] Loaded Configure
+[14:00:23.438] Starting ImportDataToDatabase 1.0.3
+[14:00:23.463] Loaded Configure
+[14:02:31.845] Starting ImportDataToDatabase 1.0.3
+[14:02:31.868] Loaded Configure
+[14:04:05.053] Starting ImportDataToDatabase 1.0.3
+[14:04:05.074] Loaded Configure
+[15:28:35.008] Starting ImportDataToDatabase 1.0.3
+[15:28:35.039] Loaded Configure
+[15:28:47.530] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:31:27.258] Starting ImportDataToDatabase 1.0.3
+[15:31:27.290] Loaded Configure
+[15:31:51.821] Starting ImportDataToDatabase 1.0.3
+[15:31:51.852] Loaded Configure
+[15:32:28.114] Starting ImportDataToDatabase 1.0.3
+[15:32:28.144] Loaded Configure
+[15:32:33.793] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:45:04.657] Starting ImportDataToDatabase 1.0.3
+[15:45:04.689] Loaded Configure
+[15:45:32.857] Starting ImportDataToDatabase 1.0.3
+[15:45:32.891] Loaded Configure
+[15:45:52.110] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:45:52.236] CompareFormat(string[] files)There is no row at position 0.
+[15:45:55.352] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:45:55.378] CompareFormat(string[] files)There is no row at position 0.
+[15:45:58.527] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:45:58.560] CompareFormat(string[] files)There is no row at position 0.
+[15:46:16.670] Starting ImportDataToDatabase 1.0.3
+[15:46:16.704] Loaded Configure
+[15:46:26.317] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:46:26.348] CompareFormat(string[] files)There is no row at position 0.
+[15:46:29.505] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:46:29.560] CompareFormat(string[] files)There is no row at position 0.
+[15:46:32.663] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:46:32.703] CompareFormat(string[] files)There is no row at position 0.
+[15:47:50.994] Starting ImportDataToDatabase 1.0.3
+[15:47:51.026] Loaded Configure
+[15:48:18.634] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:48:18.706] CompareFormat(string[] files)There is no row at position 0.
+[15:48:30.996] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:49:35.589] CompareFormat(string[] files)There is no row at position 0.
+[15:55:05.539] Starting ImportDataToDatabase 1.0.3
+[15:55:05.569] Loaded Configure
+[15:55:17.573] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[15:59:25.885] Starting ImportDataToDatabase 1.0.3
+[15:59:25.919] Loaded Configure
+[16:00:24.298] Starting ImportDataToDatabase 1.0.3
+[16:00:24.337] Loaded Configure
+[16:00:37.722] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[16:02:02.861] Starting ImportDataToDatabase 1.0.3
+[16:02:02.892] Loaded Configure
+[16:02:39.112] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_OP_EXCEPT'. Cannot insert duplicate key in object 'dbo.SFT_OP_EXCEPT'.
+The statement has been terminated.
+[16:02:43.468] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[16:02:44.837] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[16:02:48.425] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[16:02:51.894] sqlExecuteScalarString(string sql, StringBuilder stringBuilder)Object reference not set to an instance of an object.
+[16:04:38.282] Starting ImportDataToDatabase 1.0.3
+[16:04:38.314] Loaded Configure
+[16:06:54.915] Starting ImportDataToDatabase 1.0.3
+[16:06:54.949] Loaded Configure
+[16:07:32.067] Starting ImportDataToDatabase 1.0.3
+[16:07:32.100] Loaded Configure
+[16:09:27.518] Starting ImportDataToDatabase 1.0.3
+[16:09:27.550] Loaded Configure
+[16:10:03.212] Starting ImportDataToDatabase 1.0.3
+[16:10:03.247] Loaded Configure

@@ -1,0 +1,39 @@
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe.config
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.pdb
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csprojResolveAssemblyReference.cache
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.FormGroup.MainForm.resources
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.Properties.Resources.resources
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.GenerateResource.Cache
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
+D:\TECHLINK\MyGit-master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe.config
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.FormGroup.MainForm.resources
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.Properties.Resources.resources
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.GenerateResource.cache
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.CoreCompileInputs.cache
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
+D:\AN\Project\Backup\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe.config
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.FormGroup.MainForm.resources
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.Properties.Resources.resources
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.GenerateResource.cache
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.CoreCompileInputs.cache
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
+D:\AN\Project\Backup\Version 1.0.2\Version 1.0.2\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe.config
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.FormGroup.MainForm.resources
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.Properties.Resources.resources
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.GenerateResource.cache
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.CoreCompileInputs.cache
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
+D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb
