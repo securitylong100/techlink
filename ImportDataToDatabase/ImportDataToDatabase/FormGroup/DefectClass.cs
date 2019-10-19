@@ -151,18 +151,16 @@ where 1=1
             return strDefectItem;
         }
 
-        public bool InsertToSFT_OP_EXCEPT(string codeSX,string PLCNG, int QTYNG)
+        public bool InsertToSFT_OP_EXCEPT(string codeSX,string PLCNG, int QTYNG, int sequence)
 
         {
             try
-            {
-
-            
+            {            
             string SFTNGCode = GetCodeNGFrom_process("B01", PLCNG);
             string[] DefectSFTArray = GetDefectItemFromSFT(SFTNGCode);
-            int _sequence = GetSequence_SFT_OP_EXCEPT(codeSX, "defect", DefectSFTArray[0], DefectSFTArray[1],  "10", "B01", "B01");
-            var insert = InsertDefect2SFT_OP_EXCEPT(codeSX, _sequence, QTYNG, "B01---B01", "ERP", "defect", DefectSFTArray[0],
-             DefectSFTArray[1], "10", "B01", 0, 0);
+         //   int _sequence = GetSequence_SFT_OP_EXCEPT(codeSX, "defect", DefectSFTArray[0], DefectSFTArray[1],  "10", "B01", "B01");
+            var insert = InsertDefect2SFT_OP_EXCEPT(codeSX, sequence, QTYNG, "B01---B01", "ERP", "defect", DefectSFTArray[0],
+             DefectSFTArray[1], "0010", "B01", 0, 0);
             }
             catch (Exception ex)
             {

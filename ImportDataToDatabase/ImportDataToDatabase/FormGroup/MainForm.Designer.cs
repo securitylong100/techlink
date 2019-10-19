@@ -47,12 +47,10 @@
             this.btnStart = new System.Windows.Forms.Button();
             this.numTimer = new System.Windows.Forms.NumericUpDown();
             this.btnExit = new System.Windows.Forms.Button();
-            this.bwSendData = new System.ComponentModel.BackgroundWorker();
             this.groupBox4 = new System.Windows.Forms.GroupBox();
             this.lbl_barcode = new System.Windows.Forms.Label();
             this.lbl_NG = new System.Windows.Forms.Label();
             this.lbl_OK = new System.Windows.Forms.Label();
-            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1.SuspendLayout();
             this.groupBox3.SuspendLayout();
             this.statusStrip1.SuspendLayout();
@@ -67,9 +65,11 @@
             this.groupBox1.Controls.Add(this.txtFolderSource);
             this.groupBox1.Controls.Add(this.label2);
             this.groupBox1.Controls.Add(this.btnFSource);
-            this.groupBox1.Location = new System.Drawing.Point(12, 12);
+            this.groupBox1.Location = new System.Drawing.Point(18, 19);
+            this.groupBox1.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(260, 82);
+            this.groupBox1.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox1.Size = new System.Drawing.Size(390, 126);
             this.groupBox1.TabIndex = 2;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Folder Source";
@@ -77,34 +77,38 @@
             // lbNumCSV
             // 
             this.lbNumCSV.AutoSize = true;
-            this.lbNumCSV.Location = new System.Drawing.Point(127, 55);
+            this.lbNumCSV.Location = new System.Drawing.Point(190, 85);
+            this.lbNumCSV.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbNumCSV.Name = "lbNumCSV";
-            this.lbNumCSV.Size = new System.Drawing.Size(13, 13);
+            this.lbNumCSV.Size = new System.Drawing.Size(18, 20);
             this.lbNumCSV.TabIndex = 4;
             this.lbNumCSV.Text = "0";
             // 
             // txtFolderSource
             // 
-            this.txtFolderSource.Location = new System.Drawing.Point(6, 19);
+            this.txtFolderSource.Location = new System.Drawing.Point(9, 29);
+            this.txtFolderSource.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFolderSource.Name = "txtFolderSource";
-            this.txtFolderSource.Size = new System.Drawing.Size(167, 20);
+            this.txtFolderSource.Size = new System.Drawing.Size(248, 26);
             this.txtFolderSource.TabIndex = 1;
             this.txtFolderSource.Text = "D:\\CSV";
             // 
             // label2
             // 
             this.label2.AutoSize = true;
-            this.label2.Location = new System.Drawing.Point(3, 55);
+            this.label2.Location = new System.Drawing.Point(4, 85);
+            this.label2.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(106, 13);
+            this.label2.Size = new System.Drawing.Size(154, 20);
             this.label2.TabIndex = 3;
             this.label2.Text = "Numbers of file .csv :";
             // 
             // btnFSource
             // 
-            this.btnFSource.Location = new System.Drawing.Point(179, 17);
+            this.btnFSource.Location = new System.Drawing.Point(269, 26);
+            this.btnFSource.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFSource.Name = "btnFSource";
-            this.btnFSource.Size = new System.Drawing.Size(75, 23);
+            this.btnFSource.Size = new System.Drawing.Size(112, 35);
             this.btnFSource.TabIndex = 2;
             this.btnFSource.Text = "Browser";
             this.btnFSource.UseVisualStyleBackColor = true;
@@ -114,26 +118,30 @@
             // 
             this.groupBox3.Controls.Add(this.txtFolderSave);
             this.groupBox3.Controls.Add(this.btnFSave);
-            this.groupBox3.Location = new System.Drawing.Point(12, 100);
+            this.groupBox3.Location = new System.Drawing.Point(18, 154);
+            this.groupBox3.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox3.Name = "groupBox3";
-            this.groupBox3.Size = new System.Drawing.Size(260, 53);
+            this.groupBox3.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox3.Size = new System.Drawing.Size(390, 81);
             this.groupBox3.TabIndex = 4;
             this.groupBox3.TabStop = false;
             this.groupBox3.Text = "Wrong Format Folder";
             // 
             // txtFolderSave
             // 
-            this.txtFolderSave.Location = new System.Drawing.Point(6, 19);
+            this.txtFolderSave.Location = new System.Drawing.Point(9, 29);
+            this.txtFolderSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.txtFolderSave.Name = "txtFolderSave";
-            this.txtFolderSave.Size = new System.Drawing.Size(167, 20);
+            this.txtFolderSave.Size = new System.Drawing.Size(248, 26);
             this.txtFolderSave.TabIndex = 9;
             this.txtFolderSave.Text = "D:\\CSV_Backup";
             // 
             // btnFSave
             // 
-            this.btnFSave.Location = new System.Drawing.Point(179, 17);
+            this.btnFSave.Location = new System.Drawing.Point(269, 26);
+            this.btnFSave.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnFSave.Name = "btnFSave";
-            this.btnFSave.Size = new System.Drawing.Size(75, 23);
+            this.btnFSave.Size = new System.Drawing.Size(112, 35);
             this.btnFSave.TabIndex = 2;
             this.btnFSave.Text = "Browser";
             this.btnFSave.UseVisualStyleBackColor = true;
@@ -147,9 +155,10 @@
             this.tsStatus,
             this.toolStripStatusLabel1,
             this.tsTimer});
-            this.statusStrip1.Location = new System.Drawing.Point(0, 248);
+            this.statusStrip1.Location = new System.Drawing.Point(0, 383);
             this.statusStrip1.Name = "statusStrip1";
-            this.statusStrip1.Size = new System.Drawing.Size(552, 24);
+            this.statusStrip1.Padding = new System.Windows.Forms.Padding(1, 0, 21, 0);
+            this.statusStrip1.Size = new System.Drawing.Size(828, 36);
             this.statusStrip1.TabIndex = 5;
             this.statusStrip1.Text = "statusStrip1";
             // 
@@ -157,28 +166,28 @@
             // 
             this.toolStripStatusLabel2.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.toolStripStatusLabel2.Name = "toolStripStatusLabel2";
-            this.toolStripStatusLabel2.Size = new System.Drawing.Size(49, 19);
+            this.toolStripStatusLabel2.Size = new System.Drawing.Size(73, 29);
             this.toolStripStatusLabel2.Text = "Status :";
             // 
             // tsStatus
             // 
             this.tsStatus.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsStatus.Name = "tsStatus";
-            this.tsStatus.Size = new System.Drawing.Size(415, 19);
+            this.tsStatus.Size = new System.Drawing.Size(625, 29);
             this.tsStatus.Spring = true;
             // 
             // toolStripStatusLabel1
             // 
             this.toolStripStatusLabel1.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Left;
             this.toolStripStatusLabel1.Name = "toolStripStatusLabel1";
-            this.toolStripStatusLabel1.Size = new System.Drawing.Size(48, 19);
+            this.toolStripStatusLabel1.Size = new System.Drawing.Size(69, 29);
             this.toolStripStatusLabel1.Text = "Timer :";
             // 
             // tsTimer
             // 
             this.tsTimer.BorderSides = System.Windows.Forms.ToolStripStatusLabelBorderSides.Right;
             this.tsTimer.Name = "tsTimer";
-            this.tsTimer.Size = new System.Drawing.Size(25, 19);
+            this.tsTimer.Size = new System.Drawing.Size(39, 29);
             this.tsTimer.Text = "0 s";
             // 
             // groupBox2
@@ -187,9 +196,11 @@
             this.groupBox2.Controls.Add(this.btnStop);
             this.groupBox2.Controls.Add(this.btnStart);
             this.groupBox2.Controls.Add(this.numTimer);
-            this.groupBox2.Location = new System.Drawing.Point(12, 159);
+            this.groupBox2.Location = new System.Drawing.Point(18, 245);
+            this.groupBox2.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox2.Name = "groupBox2";
-            this.groupBox2.Size = new System.Drawing.Size(200, 84);
+            this.groupBox2.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox2.Size = new System.Drawing.Size(300, 129);
             this.groupBox2.TabIndex = 7;
             this.groupBox2.TabStop = false;
             this.groupBox2.Text = "Timer";
@@ -197,17 +208,19 @@
             // label1
             // 
             this.label1.AutoSize = true;
-            this.label1.Location = new System.Drawing.Point(6, 21);
+            this.label1.Location = new System.Drawing.Point(9, 32);
+            this.label1.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(56, 13);
+            this.label1.Size = new System.Drawing.Size(82, 20);
             this.label1.TabIndex = 10;
             this.label1.Text = "Timer set :";
             // 
             // btnStop
             // 
-            this.btnStop.Location = new System.Drawing.Point(87, 45);
+            this.btnStop.Location = new System.Drawing.Point(130, 69);
+            this.btnStop.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStop.Name = "btnStop";
-            this.btnStop.Size = new System.Drawing.Size(75, 23);
+            this.btnStop.Size = new System.Drawing.Size(112, 35);
             this.btnStop.TabIndex = 9;
             this.btnStop.Text = "Stop";
             this.btnStop.UseVisualStyleBackColor = true;
@@ -215,9 +228,10 @@
             // 
             // btnStart
             // 
-            this.btnStart.Location = new System.Drawing.Point(6, 45);
+            this.btnStart.Location = new System.Drawing.Point(9, 69);
+            this.btnStart.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnStart.Name = "btnStart";
-            this.btnStart.Size = new System.Drawing.Size(75, 23);
+            this.btnStart.Size = new System.Drawing.Size(112, 35);
             this.btnStart.TabIndex = 8;
             this.btnStart.Text = "Start";
             this.btnStart.UseVisualStyleBackColor = true;
@@ -225,9 +239,10 @@
             // 
             // numTimer
             // 
-            this.numTimer.Location = new System.Drawing.Point(87, 19);
+            this.numTimer.Location = new System.Drawing.Point(130, 29);
+            this.numTimer.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.numTimer.Name = "numTimer";
-            this.numTimer.Size = new System.Drawing.Size(75, 20);
+            this.numTimer.Size = new System.Drawing.Size(112, 26);
             this.numTimer.TabIndex = 7;
             this.numTimer.TextAlign = System.Windows.Forms.HorizontalAlignment.Right;
             this.numTimer.Value = new decimal(new int[] {
@@ -238,31 +253,25 @@
             // 
             // btnExit
             // 
-            this.btnExit.Location = new System.Drawing.Point(218, 180);
+            this.btnExit.Location = new System.Drawing.Point(327, 278);
+            this.btnExit.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.btnExit.Name = "btnExit";
-            this.btnExit.Size = new System.Drawing.Size(48, 47);
+            this.btnExit.Size = new System.Drawing.Size(72, 72);
             this.btnExit.TabIndex = 8;
             this.btnExit.Text = "Exit";
             this.btnExit.UseVisualStyleBackColor = true;
             this.btnExit.Click += new System.EventHandler(this.btnExit_Click);
             // 
-            // bwSendData
-            // 
-            this.bwSendData.WorkerReportsProgress = true;
-            this.bwSendData.WorkerSupportsCancellation = true;
-            this.bwSendData.DoWork += new System.ComponentModel.DoWorkEventHandler(this.bwSendData_DoWork);
-            this.bwSendData.ProgressChanged += new System.ComponentModel.ProgressChangedEventHandler(this.bwSendData_ProgressChanged);
-            this.bwSendData.RunWorkerCompleted += new System.ComponentModel.RunWorkerCompletedEventHandler(this.bwSendData_RunWorkerCompleted);
-            // 
             // groupBox4
             // 
-            this.groupBox4.Controls.Add(this.button1);
             this.groupBox4.Controls.Add(this.lbl_barcode);
             this.groupBox4.Controls.Add(this.lbl_NG);
             this.groupBox4.Controls.Add(this.lbl_OK);
-            this.groupBox4.Location = new System.Drawing.Point(278, 12);
+            this.groupBox4.Location = new System.Drawing.Point(417, 19);
+            this.groupBox4.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.groupBox4.Name = "groupBox4";
-            this.groupBox4.Size = new System.Drawing.Size(254, 231);
+            this.groupBox4.Padding = new System.Windows.Forms.Padding(4, 5, 4, 5);
+            this.groupBox4.Size = new System.Drawing.Size(381, 355);
             this.groupBox4.TabIndex = 9;
             this.groupBox4.TabStop = false;
             this.groupBox4.Text = "Data";
@@ -270,45 +279,38 @@
             // lbl_barcode
             // 
             this.lbl_barcode.AutoSize = true;
-            this.lbl_barcode.Location = new System.Drawing.Point(13, 27);
+            this.lbl_barcode.Location = new System.Drawing.Point(19, 41);
+            this.lbl_barcode.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_barcode.Name = "lbl_barcode";
-            this.lbl_barcode.Size = new System.Drawing.Size(50, 13);
+            this.lbl_barcode.Size = new System.Drawing.Size(73, 20);
             this.lbl_barcode.TabIndex = 11;
             this.lbl_barcode.Text = "Barcode:";
             // 
             // lbl_NG
             // 
             this.lbl_NG.AutoSize = true;
-            this.lbl_NG.Location = new System.Drawing.Point(13, 88);
+            this.lbl_NG.Location = new System.Drawing.Point(19, 135);
+            this.lbl_NG.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_NG.Name = "lbl_NG";
-            this.lbl_NG.Size = new System.Drawing.Size(26, 13);
+            this.lbl_NG.Size = new System.Drawing.Size(37, 20);
             this.lbl_NG.TabIndex = 5;
             this.lbl_NG.Text = "NG:";
             // 
             // lbl_OK
             // 
             this.lbl_OK.AutoSize = true;
-            this.lbl_OK.Location = new System.Drawing.Point(13, 55);
+            this.lbl_OK.Location = new System.Drawing.Point(19, 85);
+            this.lbl_OK.Margin = new System.Windows.Forms.Padding(4, 0, 4, 0);
             this.lbl_OK.Name = "lbl_OK";
-            this.lbl_OK.Size = new System.Drawing.Size(25, 13);
+            this.lbl_OK.Size = new System.Drawing.Size(35, 20);
             this.lbl_OK.TabIndex = 4;
             this.lbl_OK.Text = "OK:";
             // 
-            // button1
-            // 
-            this.button1.Location = new System.Drawing.Point(107, 134);
-            this.button1.Name = "button1";
-            this.button1.Size = new System.Drawing.Size(75, 23);
-            this.button1.TabIndex = 12;
-            this.button1.Text = "button1";
-            this.button1.UseVisualStyleBackColor = true;
-            this.button1.Click += new System.EventHandler(this.button1_Click);
-            // 
             // MainForm
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 20F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(552, 272);
+            this.ClientSize = new System.Drawing.Size(828, 419);
             this.Controls.Add(this.groupBox4);
             this.Controls.Add(this.btnExit);
             this.Controls.Add(this.groupBox2);
@@ -316,6 +318,7 @@
             this.Controls.Add(this.groupBox3);
             this.Controls.Add(this.groupBox1);
             this.FormBorderStyle = System.Windows.Forms.FormBorderStyle.FixedSingle;
+            this.Margin = new System.Windows.Forms.Padding(4, 5, 4, 5);
             this.MaximizeBox = false;
             this.MinimizeBox = false;
             this.Name = "MainForm";
@@ -356,15 +359,13 @@
         private System.Windows.Forms.Button btnStart;
         private System.Windows.Forms.NumericUpDown numTimer;
         private System.Windows.Forms.Button btnExit;
-        private System.ComponentModel.BackgroundWorker bwSendData;
         private System.Windows.Forms.Label lbNumCSV;
-        private System.Windows.Forms.Label label2;
         private System.Windows.Forms.TextBox txtFolderSave;
         private System.Windows.Forms.GroupBox groupBox4;
         private System.Windows.Forms.Label lbl_NG;
         private System.Windows.Forms.Label lbl_OK;
         private System.Windows.Forms.Label lbl_barcode;
-        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Label label2;
     }
 }
 

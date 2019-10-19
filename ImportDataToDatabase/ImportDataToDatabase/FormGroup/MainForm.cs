@@ -15,12 +15,31 @@ namespace ImportDataToDatabase.FormGroup
 {
     public partial class MainForm : Form
     {
-        int c;
+
         string[] filespath;
 
         DataTable table;
-        private string path = Environment.CurrentDirectory + "\\";
+        //private string path = Environment.CurrentDirectory + "\\";
+        private string path = @"\\172.16.0.5\Program\export" + "\\";
         string version = "";
+        //Khai bao background worker
+        BackgroundWorker bgWorker;
+        // this timer calls bgWorker again and again after regular intervals
+        System.Windows.Forms.Timer tmrCallBgWorker;
+        // this is the timer to make sure that worker gets called
+        System.Threading.Timer tmrEnsureWorkerGetsCalled;
+        // object used for safe access
+        object lockObject = new object();
+        System.Windows.Forms.Timer tmrCountdown;
+        //Bien them vao
+        int intCountCSV = 0;
+        int intCountOK = 0;
+        int intCountNG = 0;
+        int CountTimer = 0;
+        string strLot = "";
+
+        
+
         public MainForm()
         {
             InitializeComponent();
@@ -30,8 +49,157 @@ namespace ImportDataToDatabase.FormGroup
             version += "." + System.Reflection.Assembly.GetExecutingAssembly().GetName().Version.Build.ToString();
             Text = System.Reflection.Assembly.GetExecutingAssembly().GetName().Name + " " + version;
             Logfile.Output(StatusLog.Normal, "Starting ", Text);
+            // this is our worker
+            bgWorker = new BackgroundWorker();
+           
+
+            // work happens in this method
+            bgWorker.DoWork += new DoWorkEventHandler(bg_DoWork);
+            bgWorker.ProgressChanged += BgWorker_ProgressChanged;
+            bgWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+            bgWorker.WorkerReportsProgress = true;
+            //timer_update.Start();
+            // this timer calls bgWorker again and again after regular intervals
+            tmrCallBgWorker = new System.Windows.Forms.Timer();//Timer for do task
+            tmrCallBgWorker.Tick += new EventHandler(tmrCallBgWorker_Tick);
+            tmrCountdown = new System.Windows.Forms.Timer();
+            tmrCountdown.Tick += new EventHandler(TmrCountdown_Tick); 
+            // tmrCallBgWorker.Interval = 10000;
         }
 
+        private void TmrCountdown_Tick(object sender, EventArgs e)
+        {
+            tmrCountdown.Stop();
+
+            if (CountTimer == 0)
+            {
+                tsTimer.Text = CountTimer.ToString() + "s ";
+                CountTimer = (int)numTimer.Value;
+            }
+            else
+            {
+                tsTimer.Text = CountTimer.ToString() + "s ";
+                CountTimer--;
+            }
+            tmrCountdown.Start();
+        }
+        #region Backround worker task
+        void bg_DoWork(object sender, DoWorkEventArgs e)
+        {
+
+
+            var worker = sender as BackgroundWorker;
+            worker.ReportProgress(10);
+            intCountCSV =  CounterCSV(txtFolderSource.Text);
+            if (intCountCSV > 0)
+            {
+                worker.ReportProgress(30);
+                CompareFormat(filespath);
+                worker.ReportProgress(70);
+            }
+            exportcsvToPLC();
+            worker.ReportProgress(100);
+            System.Threading.Thread.Sleep(100);
+        }
+        void tmrCallBgWorker_Tick(object sender, EventArgs e)
+        {
+            if (Monitor.TryEnter(lockObject))
+            {
+                try
+                {
+                    // if bgworker is not busy the call the worker
+                    if (!bgWorker.IsBusy)
+                        bgWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObject);
+                }
+
+            }
+            else
+            {
+
+                // as the bgworker is busy we will start a timer that will try to call the bgworker again after some time
+                tmrEnsureWorkerGetsCalled = new System.Threading.Timer(new TimerCallback(tmrEnsureWorkerGetsCalled_Callback), null, 0, 10);
+
+            }
+
+        }
+        void tmrEnsureWorkerGetsCalled_Callback(object obj)
+        {
+            // this timer was started as the bgworker was busy before now it will try to call the bgworker again
+            if (Monitor.TryEnter(lockObject))
+            {
+                try
+                {
+                    if (!bgWorker.IsBusy)
+                        bgWorker.RunWorkerAsync();
+                }
+                finally
+                {
+                    Monitor.Exit(lockObject);
+                }
+                tmrEnsureWorkerGetsCalled = null;
+            }
+        }
+        private void BgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
+        {
+            if (e.ProgressPercentage == 10)
+            {
+                lbNumCSV.Text = "0";
+                lbl_OK.Text = "";
+                lbl_NG.Text = "";
+                lbl_barcode.Text = "";
+                tsStatus.Text = "Waiting file...";
+            }
+            else if (e.ProgressPercentage == 30)
+            {
+                tsStatus.Text = "Find down files to update";
+                lbNumCSV.Text = intCountCSV.ToString();
+            }
+            else if (e.ProgressPercentage == 70)
+            {
+                lbl_OK.Text = "OK: " + intCountOK.ToString();
+                lbl_NG.Text = "NG: " + intCountNG.ToString();
+                lbl_barcode.Text = "Barcode: " + strLot;
+                tsStatus.Text = "Update finished";
+            }
+            else if (e.ProgressPercentage == 100)
+            {
+              
+                tsStatus.Text = "Waiting file...";
+            }
+
+
+
+        }
+
+        void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
+        {
+            //  LoadcbInUI();
+            try
+            {
+
+
+                //IF CLICK BUTTON STOP
+                if (e.Cancelled)
+                    tsStatus.Text = "Stop send data";
+                //IF ERROR WHILE SEND
+                else if (e.Error != null)
+                    tsStatus.Text = "Error while send data";
+                //IF COUNTER = 0 AND SEND DATA TO DB
+              
+            }
+            catch (Exception ex)
+            {
+                Logfile.Output(StatusLog.Error, "bwSendData_RunWorkerCompleted", ex.Message);
+
+            }
+
+        }
+      
+        #endregion backround worker task
         //GET SETTING FILE
         private void MainForm_Load(object sender, EventArgs e)
         {
@@ -63,17 +231,22 @@ namespace ImportDataToDatabase.FormGroup
             if (FSopen.ShowDialog() == DialogResult.OK)
             {
                 txtFolderSource.Text = Path.GetDirectoryName(FSopen.FileName) + @"\";
-                int num = CounterCSV(txtFolderSource.Text);
+                intCountCSV = CounterCSV(txtFolderSource.Text);
             }
         }
 
         //COUNTER NUMBER OF CSV FILES IN SOURCE FOLDER
         private int CounterCSV(string path)
         {
-            filespath = Directory.GetFiles(path, "*.csv");
-            int num = filespath.Count();
-            lbNumCSV.Text = num.ToString();
-            return num;
+            int intReturn = 0;
+            if (Directory.Exists(path))
+            {
+
+                filespath = Directory.GetFiles(path, "*.csv");
+                intReturn = filespath.Count();
+                intCountCSV = intReturn;
+            }
+            return intReturn;
         }
 
         //SELECT FOLDER FOR SAVE WRONG FORMAT FILE
@@ -113,7 +286,7 @@ namespace ImportDataToDatabase.FormGroup
             while (!reader.EndOfStream)
             {
                 var line = reader.ReadLine();
-                var value = line.Split('|');
+                var value = line.Split(',');
                 if (value.Count() == numcol)
                     dt.Rows.Add(value);
             }
@@ -150,23 +323,28 @@ namespace ImportDataToDatabase.FormGroup
             {
 
 
-                if (files != null)
+                if (intCountCSV > 0)
                 {
-                    lbl_NG.Text = "NG";
-                    lbl_OK.Text = "OK";
-                    lbl_barcode.Text = "Barcode: ";
+                    //lbl_NG.Text = "NG";
+                    //lbl_OK.Text = "OK";
+                    //lbl_barcode.Text = "Barcode: ";
                     foreach (string file in files)
                     {
+                        try
+                        {
+                      
                         if (ReadCSV(file, 14, ref table))
                         {
 
-                            ImportToDB(file);
-                            lbl_OK.Text = "OK: " + CounterỌKERP(ref table).ToString();
-                            lbl_NG.Text = "NG: " + CounterNGERP(ref table).ToString();
-                            lbl_barcode.Text = "Barcode: " + table.Rows[0]["lot"].ToString();
+                           // ImportToDB(file);
+                            intCountOK = CounterỌKERP(ref table);
+                            intCountNG = CounterNGERP(ref table);
+                            strLot = table.Rows[0]["lot"].ToString();
                             string code = table.Rows[0]["serno"].ToString().Split('-')[0];
                             string No = table.Rows[0]["serno"].ToString().Split('-')[1];
                             string typeNG = "";
+                            string DateUp = DateTime.Now.ToString("yyyyMMdd");
+                            string TImeUp = DateTime.Now.ToString("HH:mm:ss");
                             //An Them Code Check Nguyen Vat Lieu ngay 10/05/2019
                             string MaLSX = code + "-" + No;
                             Material material = new Material();
@@ -174,19 +352,20 @@ namespace ImportDataToDatabase.FormGroup
                             bool IsNVL = false;
                             List<string> _messages = new List<string>();
                             List<MaterialAdapt> listMaterial = new List<MaterialAdapt>();
-                            double SL_UPload = CounterỌKERP(ref table) + CounterNGERP(ref table);
+                            double SL_UPload = intCountOK + intCountNG;
                             //Chua ma Lenh San xuat vao 2 truong dang dua vao
                             bool IsResultheck = material.KiemtraNguyenVatLieu(code, No, SL_UPload, out IsDuSoLuong, out IsNVL, out listMaterial, out _messages);
                             insertERP classinsert = new insertERP();
+                            classinsert.InsertToERPMQC(table);
                             DefectClass defectClass = new DefectClass();
                             if (IsResultheck == true)
                             {
 
-                                classinsert.InsertdataToERP(table.Rows[0]["lot"].ToString(), CounterỌKERP(ref table).ToString(), CounterNGERP(ref table).ToString());
-                                classinsert.updateERP(table.Rows[0]["lot"].ToString());
-                                classinsert.updateERPMQC(table.Rows[0]["serno"].ToString());
-                                classinsert.InsertdataToSFT(table.Rows[0]["lot"].ToString(), CounterỌKERP(ref table).ToString(), CounterNGERP(ref table).ToString());
+                                classinsert.InsertdataToERP(table.Rows[0]["lot"].ToString(), intCountOK.ToString(), intCountNG.ToString(),DateUp, TImeUp);
+                                classinsert.updateERP(table.Rows[0]["lot"].ToString());                              
+                                classinsert.InsertdataToSFT(table.Rows[0]["lot"].ToString(), intCountOK.ToString(), intCountNG.ToString(),DateUp, TImeUp);
                                 classinsert.UpdatedataToSFT(table.Rows[0]["lot"].ToString());
+                               
 
                                 for (int i = 0; i < table.Rows.Count; i++)
                                 {
@@ -195,27 +374,35 @@ namespace ImportDataToDatabase.FormGroup
                                     
                                     if (int.Parse(SL) > 0 && typeNG.Contains("NG")) 
                                     {
-                                        var insert = defectClass.InsertToSFT_OP_EXCEPT(MaLSX, typeNG, int.Parse(SL));
+                                        var insert = defectClass.InsertToSFT_OP_EXCEPT(MaLSX, typeNG, int.Parse(SL), classinsert.Sequence_OP_REAL_RUN);
                                     }
                                 }
-
+                                classinsert.updateERPMQC(table.Rows[0]["serno"].ToString());
+                                classinsert.UpdateToERPMQC_Error("OK", table.Rows[0]["serno"].ToString());
                             }
                             else //insert to Temperate database
                             {
-                                classinsert.InsertToERPMQC_Error(table, CounterỌKERP(ref table).ToString(), "OP");
-                                classinsert.InsertToERPMQC_Error(table, CounterNGERP(ref table).ToString(), "NG");
+                                classinsert.InsertToERPMQC_Error(table);
+                              
                             }
                             table.Clear();
                           File.Delete(file);
                         }
                         else MoveToFolder(file);
+                        }
+                        catch (Exception ex)
+                        {
+                            MoveToFolder(file);
+
+                        }
                     }
                     UpdateFromERPMQC_ErrorToSFT_ERP();
                 }
-                CounterCSV(txtFolderSource.Text);
+              
             }
             catch (Exception ex)
             {
+              
 
                 Logfile.Output(StatusLog.Error, "CompareFormat(string[] files)", ex.Message);
             }
@@ -247,18 +434,34 @@ where status !='OK' ");
                     //Chua ma Lenh San xuat vao 2 truong dang dua vao
                     string code = dtTable.Rows[i]["serno"].ToString().Split('-')[0];
                     string No = dtTable.Rows[i]["serno"].ToString().Split('-')[1];
+                    string DateUp = dtTable.Rows[i]["inspectdate"].ToString().Replace("-", "").Substring(0,8);
+                    string TimeUp = dtTable.Rows[i]["inspecttime"].ToString().Substring(0, 8);
+                    string typeNG = "";
+                    string MaLSX = code + "-" + No;
                     bool IsResultheck = material.KiemtraNguyenVatLieu(code, No, 0, out IsDuSoLuong, out IsNVL, out listMaterial, out _messages);
+                    DefectClass defectClass = new DefectClass();
                     if (IsNVL)
                     {//Update Status
                         string test = dtTable.Rows[i]["remark"].ToString();
                         int countOK = dtTable.Rows[i]["remark"].ToString() == "OP" ? int.Parse(dtTable.Rows[i]["data"].ToString()) : 0;
                         int countNG = dtTable.Rows[i]["remark"].ToString() == "NG" ? int.Parse(dtTable.Rows[i]["data"].ToString()) : 0;
                         insertERP classinsert = new insertERP();
-                        classinsert.InsertdataToERP(dtTable.Rows[0]["lot"].ToString(), countOK.ToString(), countNG.ToString());
-                        classinsert.updateERP(dtTable.Rows[0]["lot"].ToString());
-                        classinsert.UpdateToERPMQC_Error("OK", dtTable.Rows[0]["serno"].ToString());
-                        classinsert.InsertdataToSFT(dtTable.Rows[0]["lot"].ToString(), countOK.ToString(), countNG.ToString());
+                        classinsert.InsertdataToERP(dtTable.Rows[0]["lot"].ToString(), countOK.ToString(), countNG.ToString(),DateUp, TimeUp);
+                        classinsert.updateERP(dtTable.Rows[0]["lot"].ToString());                     
+                        classinsert.InsertdataToSFT(dtTable.Rows[0]["lot"].ToString(), countOK.ToString(), countNG.ToString(), DateUp, TimeUp);
                         classinsert.UpdatedataToSFT(dtTable.Rows[0]["lot"].ToString());
+                        for (int j = 0; j < table.Rows.Count; i++)
+                        {
+                            typeNG = table.Rows[j]["item"].ToString();
+                            string SL = table.Rows[j]["data"].ToString();
+
+                            if (int.Parse(SL) > 0 && typeNG.Contains("NG"))
+                            {
+                                var insert = defectClass.InsertToSFT_OP_EXCEPT(MaLSX, typeNG, int.Parse(SL), classinsert.Sequence_OP_REAL_RUN);
+                            }
+                        }
+                        classinsert.updateERPMQC(dtTable.Rows[0]["serno"].ToString());
+                        classinsert.UpdateToERPMQC_Error("OK", dtTable.Rows[0]["serno"].ToString());
                     }
                 }
             }
@@ -297,27 +500,20 @@ where status !='OK' ");
             btnStop.Enabled = true;
             btnExit.Enabled = false;
             numTimer.Enabled = false;
-            c = (int)numTimer.Value;
-            if (bwSendData.IsBusy) bwSendData.CancelAsync();
-            else bwSendData.RunWorkerAsync();
+            int timerInterval = (int)(numTimer.Value) * 1000;
+            tmrCallBgWorker.Interval = timerInterval;
+            tmrCallBgWorker.Start();
+            tmrCountdown.Interval = 1000;
+            tmrCountdown.Start();
+            CountTimer = (int)numTimer.Value;
+            //c = (int)numTimer.Value;
+            //if (bwSendData.IsBusy) bwSendData.CancelAsync();
+            //else bwSendData.RunWorkerAsync();
 
         }
 
         //COUNTING....
-        private void bwSendData_DoWork(object sender, DoWorkEventArgs e)
-        {
-            for (int i = c; i >= 0; i--)
-            {
-                bwSendData.ReportProgress(i);
-                if (bwSendData.CancellationPending)
-                {
-                    e.Cancel = true;
-                    bwSendData.ReportProgress(c);
-                    return;
-                }
-                Thread.Sleep(1000);
-            }
-        }
+      
 
         //UPDATE COUNTER EACH 1S
         private void bwSendData_ProgressChanged(object sender, ProgressChangedEventArgs e)
@@ -327,46 +523,20 @@ where status !='OK' ");
         }
 
         //UPDATE STATUS
-        private void bwSendData_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
-        {
-            try
-            {
-
-
-                //IF CLICK BUTTON STOP
-                if (e.Cancelled)
-                    tsStatus.Text = "Stop send data";
-                //IF ERROR WHILE SEND
-                else if (e.Error != null)
-                    tsStatus.Text = "Error while send data";
-                //IF COUNTER = 0 AND SEND DATA TO DB
-                else
-                {
-                    tsStatus.Text = "Sending data...";
-                    CompareFormat(filespath);
-
-                    exportcsvToPLC();
-                    bwSendData.RunWorkerAsync();
-
-                }
-            }
-            catch (Exception ex)
-            {
-                Logfile.Output(StatusLog.Error, "bwSendData_RunWorkerCompleted", ex.Message);
-
-            }
-        }
+      
 
         //BUTTON STOP FOR STOP SEND DATA
         private void btnStop_Click(object sender, EventArgs e)
         {
-            if (bwSendData.IsBusy)
+         //   if (bwSendData.IsBusy)
             {
                 btnStart.Enabled = true;
                 btnStop.Enabled = false;
                 btnExit.Enabled = true;
-                numTimer.Enabled = false;
-                bwSendData.CancelAsync();
+                numTimer.Enabled = true;
+                tmrCallBgWorker.Stop();
+                tmrCountdown.Stop();
+                // bwSendData.CancelAsync();
             }
         }
 
@@ -426,7 +596,7 @@ group by TA001,TA002,TA003,TA004, TA006, TA010, TA011,TA012, TC047
                     {
                         cols.Add(dtshow.Rows[i][j].ToString() + @",");
                     }
-                    builder.AppendLine(string.Join("\t", cols.ToArray()));
+                    builder.AppendLine(string.Join("", cols.ToArray()));
                 }
                 System.IO.File.WriteAllText(path + "ListProduct.csv", builder.ToString());
             }
@@ -437,17 +607,8 @@ group by TA001,TA002,TA003,TA004, TA006, TA010, TA011,TA012, TC047
             }
         }
 
-        private void button1_Click(object sender, EventArgs e)
-        {
-            //InsertdataToSFT(string barcode, string output, string NG)
-            DefectClass defect = new DefectClass();
-            //classinsert.InsertdataToSFT("B511-1910013;0010;B01;B01", "2", "1");
-            //  var test = defect.listNGMapping("B01");
-            //  var insert = defect.InsertDefect2SFT_OP_EXCEPT("**** - 1901009", 1, 0, "B01---B01", "ERP", "defect", "SAI LOGO",
-            //   "MO", "10", "B01", 0, 0);
-            //  var strarray = defect.GetDefectItemFromSFT("0400500301");
-            var insert = defect.InsertToSFT_OP_EXCEPT("****- 1901015", "NG2", 5);
+   
 
-        }
+       
     }
 }
