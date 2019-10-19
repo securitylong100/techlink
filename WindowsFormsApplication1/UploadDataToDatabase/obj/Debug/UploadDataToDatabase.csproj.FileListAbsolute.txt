@@ -26,3 +26,4 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\obj\Debug\UploadDataToDatabase.csprojAssemblyReference.cache
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\EmailTemplate.html
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\BackLogForm2.xlsx
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\UploadDataToDatabase\bin\Debug\Resources\BackLogForm3.xlsx

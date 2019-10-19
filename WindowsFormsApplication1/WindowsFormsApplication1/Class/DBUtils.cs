@@ -36,7 +36,7 @@ namespace WindowsFormsApplication1
         {
             //Data Source = LONG; Initial Catalog = TEST; Integrated Security = True
             string datasource = "172.16.0.11";
-            string database = "TECHLINK";
+            string database = "TEST06";
             string username = "soft";
             string password = "techlink@!@#";
 
@@ -51,6 +51,17 @@ namespace WindowsFormsApplication1
 
 
             return DBSQLServerUtils.GetERPDBConnection(datasource, database, username, password);
+        }
+        public static SqlConnection GetSFTDBConnection()
+        {
+            //Data Source = LONG; Initial Catalog = TEST; Integrated Security = True
+            string datasource = "172.16.0.11";
+            string database = "SFT_TECHLINK";
+            string username = "soft";
+            string password = "techlink@!@#";
+
+
+            return DBSQLServerUtils.GetSFTDBConnection(datasource, database, username, password);
         }
 
     }

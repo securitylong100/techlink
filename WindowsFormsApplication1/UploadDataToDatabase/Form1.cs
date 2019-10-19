@@ -11,6 +11,7 @@ using System.Threading.Tasks;
 using System.Windows.Forms;
 using UploadDataToDatabase.Log;
 using UploadDataToDatabase.Class;
+using UploadDataToDatabase.BackLogReport;
 
 namespace UploadDataToDatabase
 {
@@ -434,7 +435,7 @@ and copths.TH004  = coptds.TD004 ");
                         FinishedGoodQty = 0;
                         NGQty = 0;
                         OKQty = 0;
-                        //MessageBox.Show(ex.Message);
+                        Logfile.Output(StatusLog.Error, "UploadDataProduction(DateTime datefrom, DateTime dateto)", ex.Message);
 
                     }
 
@@ -1200,7 +1201,7 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
             SendMailFunction sendmail = new SendMailFunction();
             foreach (var report in listReport)
             {
-                if(report.ReportName =="BackLogReport")
+                if(report.ReportName == "BackLogReport")
                 {
                     List<EmailNeedSend> emailNeeds = new List<EmailNeedSend>();
                     emailNeeds = EmailNeedSends(report.ReportName);
@@ -1212,6 +1213,13 @@ left join MOCTE moctes on  moctes.TE004 =moctbs.TB003 and moctes.TE011 =moctas.T
 
                 }
             }
+        }
+
+        private void Button1_Click(object sender, EventArgs e)
+        {
+            BacklogReport backlogReport = new BacklogReport();
+
+            backlogReport.ExportExcelToReport(ref dgv_export, "BackLog", @"C:\ERP_Temp\", version);
         }
     }
     

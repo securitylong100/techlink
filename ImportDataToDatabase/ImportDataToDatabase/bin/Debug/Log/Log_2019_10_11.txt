@@ -6,3 +6,25 @@
 [09:03:30.676] Loaded Configure
 [09:23:22.223] Starting ImportDataToDatabase 1.0.3
 [09:23:22.277] Loaded Configure
+[14:07:12.283] Starting ImportDataToDatabase 1.0.5
+[14:07:12.314] Loaded Configure
+[14:09:19.381] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER_LINE'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER_LINE'.
+The statement has been terminated.
+[14:32:49.542] Starting ImportDataToDatabase 1.0.5
+[14:32:49.570] Loaded Configure
+[14:42:39.851] Starting ImportDataToDatabase 1.0.5
+[14:42:39.882] Loaded Configure
+[14:43:00.276] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER_LINE'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER_LINE'.
+The statement has been terminated.
+[14:52:46.637] Starting ImportDataToDatabase 1.0.5
+[14:52:46.653] Loaded Configure
+[14:53:26.566] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER_LINE'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER_LINE'.
+The statement has been terminated.
+[15:57:36.691] Starting ImportDataToDatabase 1.0.5
+[15:57:36.719] Loaded Configure
+[15:57:48.287] ERPSQLExcuteNonQuery(string sql, StringBuilder stringBuilder)Violation of PRIMARY KEY constraint 'PK_SFT_TRANSORDER_LINE'. Cannot insert duplicate key in object 'dbo.SFT_TRANSORDER_LINE'.
+The statement has been terminated.
+[16:34:06.708] Starting ImportDataToDatabase 1.0.5
+[16:34:06.724] Loaded Configure
+[16:58:46.233] Starting ImportDataToDatabase 1.0.5
+[16:58:46.271] Loaded Configure

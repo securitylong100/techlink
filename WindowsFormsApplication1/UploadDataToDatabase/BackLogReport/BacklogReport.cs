@@ -21,7 +21,7 @@ namespace UploadDataToDatabase.BackLogReport
         List<DataShipping> ListShipping = new List<DataShipping>();
 
 
-        private string path = Environment.CurrentDirectory + @"\Resources\BackLogForm2.xlsx";
+        private string path = Environment.CurrentDirectory + @"\Resources\BackLogForm3.xlsx";
         private string pathSave = Environment.CurrentDirectory + @"\Resources\";
 
         public bool ExportExcelToReport( ref DataGridView gridView,string FileName ,string pathSave, string version)
@@ -101,8 +101,6 @@ and  coptcs.TC027 = 'Y'
             }
         }
 
-
-
         private void GetDataFromShipping()
         {
             DateTime dtnow = DateTime.Now;
@@ -160,6 +158,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                 foreach (var Order in ListOrderData)
                 {
                     FinalItemsReport inf = new FinalItemsReport();
+                    List<SemiFinishedgoods> listSemi = new List<SemiFinishedgoods>();
                     inf.Department = Order.Departments_code;
                     inf.OrderCode = Order.OrderCode;
                     inf.Product = Order.Product_Code;
@@ -168,7 +167,31 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                     inf.Clients_OrderCode = Order.Clients_Order_Code;
                     inf.Quantity = Order.Order_Quantity;
                     inf.Stock_Quantity = Order.Fisnished_Goods;
-                    inf.OverDueDate = (DateTime.Now.DayOfYear - inf.ClientsRequestDate.DayOfYear);
+
+
+                   
+                    listSemi = GetSemibyNameProduct(inf.Product);
+                    if (listSemi.Count > 0)
+                    {
+                        if (listSemi.Count == 1)
+                        {
+                            inf.Semi_FinishedGoods = listSemi[0].Semi_finishedGoods;
+                            inf.Semi_FinishedGoods_avaiable = listSemi[0].Stock;
+                        }
+                        else if (listSemi.Count > 1)
+                        {
+                            listSemi = listSemi.OrderBy(d => d.Stock).ToList();
+                            inf.Semi_FinishedGoods = listSemi[0].Semi_finishedGoods;
+                            inf.Semi_FinishedGoods_avaiable = listSemi[0].Stock;
+                        }
+                        foreach (var item in listSemi)
+                        {
+                            inf.Semi_Quantity += item.Semi_finishedGoods + " (QTy:) " + item.Stock.ToString() + "\r\n";
+
+                        }
+                    }
+
+                        inf.OverDueDate = (DateTime.Now.DayOfYear - inf.ClientsRequestDate.DayOfYear);
                     var ListProduct = ListShipping
                         .Where(w => w.OrderCode == inf.OrderCode && w.Product_Code == inf.Product)
                         .Select(d => new { d.Shipped_Quantity, d.Shipped_Date }).Distinct().ToArray();
@@ -182,13 +205,13 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                         else inf.Remain_Quantity = 0;
                         if (inf.ShippingPercents < 1)
                         {
-                            if (inf.Stock_Quantity < inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
+                            if (inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable < inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
                             {
                                 inf.Status = "Back Log";
                             }
 
 
-                            else if (DateTime.Now.Date >= Order.Client_Request_Date && inf.Stock_Quantity >= inf.Remain_Quantity)
+                            else if (DateTime.Now.Date >= Order.Client_Request_Date && inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable >= inf.Remain_Quantity)
                             {
 
                                 inf.Status = "Late";
@@ -226,13 +249,13 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
 
                         if (inf.ShippingPercents < 1)
                         {
-                            if (inf.Stock_Quantity < inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
+                            if (inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable < inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
                             {
                                 inf.Status = "Back Log";
                             }
 
 
-                            else if (inf.Stock_Quantity >= inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
+                            else if (inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable >= inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
                             {
 
                                 inf.Status = "Late";
@@ -344,9 +367,109 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
             tenBophan= tf.sqlExecuteScalarString(sql.ToString());
             return tenBophan;
         }
+       
+        public List<BOMItems> bOMItems (string NameProduct)
+        {
+            List<BOMItems> bOMItems = new List<BOMItems>();
+            try
+            {
+
+            DataTable dt = new DataTable();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select MD001,MD003,MD006,MD012 from BOMMD where  1=1 and MD003 like '%B-%' ");
+            sql.Append(" and MD001 = '" + NameProduct + "'");
+            sqlERPCON sqlCON = new sqlERPCON();
+            sqlCON.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            bOMItems = (from DataRow dr in dt.Rows
+                        select new BOMItems()
+                        {
+                            finishedGoods = dr["MD001"].ToString(),
+                            SemiFinishedgoods = dr["MD003"].ToString(),
+                            Rate =( dr["MD006"].ToString() != "") ?double.Parse(dr["MD006"].ToString()): 0,
+                            Expired = (dr["MD012"].ToString() != "" ) ? DateTime.Parse(dr["MD012"].ToString().Insert(4,"-").Insert(7,"-")): DateTime.MaxValue
+                        }).ToList();
+
+            }
+            catch (Exception ex)
+            {
+
+                Logfile.Output(StatusLog.Error, "bOMItems (string NameProduct)", ex.Message);
+            }
+
+            return bOMItems;
+        }
+        public List<StockOfSemi> stockOfSemis(string SemiProduct, double rate)
+        {
+            List<StockOfSemi> Semis = new List<StockOfSemi>();
+            try
+            {
+
+            
+            DataTable dt = new DataTable();
+            StringBuilder sql = new StringBuilder();
+            sql.Append("select MC001,MC002,MC007 from INVMC where  (MC002 = 'A03' or MC002 = 'A09') ");
+            sql.Append(" and MC001 = '" + SemiProduct + "'");
+            sqlERPCON sqlCON = new sqlERPCON();
+            sqlCON.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+            Semis = (from DataRow dr in dt.Rows
+                        select new StockOfSemi()
+                        {
+                            Semi = dr["MC001"].ToString().Trim(),
+                          
+                            Stock = (dr["MC007"].ToString() != "") ? Math.Round((double.Parse(dr["MC007"].ToString()) /rate),0 ): 0,
+                            Warehourse = dr["MC002"].ToString().Trim()
+                        }).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                Logfile.Output(StatusLog.Error, "stockOfSemis(string SemiProduct, double rate)", ex.Message);
+            }
+            return Semis;
+        }
+        public List<SemiFinishedgoods > GetSemibyNameProduct (string NameProduct)
+        {
+            List<SemiFinishedgoods> semiFinishedgoods = new List<SemiFinishedgoods>();
+            try
+            {
+
+
+                // List<SemiFinishedgoods> semiFinishedgoods = new List<SemiFinishedgoods>();
+                List<BOMItems> listBOM = bOMItems(NameProduct);
+                List<StockOfSemi> stockSemis = new List<StockOfSemi>();
+                List<List<StockOfSemi>> listofSemis = new List<List<StockOfSemi>>();
+                if (listBOM != null && listBOM.Count > 0)
+                {
+                    foreach (var item in listBOM)
+                    {
+                        if (item.Expired > DateTime.Now)
+                        {
+                            stockSemis = new List<StockOfSemi>();
+                            stockSemis = stockOfSemis(item.SemiFinishedgoods, item.Rate);
+                            if(stockSemis != null && stockSemis.Count > 0)
+                                listofSemis.Add(stockSemis);
+                        }
+                    }
+
+                    foreach (var item in listofSemis)
+                    {
+                        SemiFinishedgoods semi1 = new SemiFinishedgoods();
+                        semi1.Semi_finishedGoods = item[0].Semi;
+                        semi1.Stock = item.Select(d => d.Stock).Sum();
+                        semiFinishedgoods.Add(semi1);
+                    }
+                }
+            }
+            catch (Exception ex)
+            {
+
+                Logfile.Output(StatusLog.Error, "GetSemibyNameProduct", ex.Message);
+            }
+            return semiFinishedgoods;
+        }
     }
   
-    class StatusSumary
+  public  class StatusSumary
     {
         public string OrderCode { get; set; }
         public string Status { get; set; }
@@ -354,7 +477,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
         public string ClientsRequestDate { get; set; }
 
     }
-    class ShippingItems
+   public class ShippingItems
     {
         public string OrderCode { get; set; }
         public string Clients { get; set; }
@@ -371,7 +494,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
         // public double shipped_Quantity { get; set; }
     }
    
-    class FinalItemsReport
+ public   class FinalItemsReport
     {   public string Department { get; set; }
         public string OrderCode { get; set; }
         public string Clients { get; set; }
@@ -383,12 +506,15 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
         public DateTime DeliveryDate { get; set; }
         public double Remain_Quantity { get; set; }
         public double Stock_Quantity { get; set; }
+        public string Semi_FinishedGoods{ get; set; }
+        public string Semi_Quantity { get; set; }
+        public double Semi_FinishedGoods_avaiable { get; set; }
         public double ShippingPercents { get; set; }
         public int OverDueDate { get; set; }
         public string Status { get; set; }
         // public double shipped_Quantity { get; set; }
     }
-    class OrderData
+ public   class OrderData
     {
         public string OrderCode { get; set; }
         public string Departments_code { get; set; }
@@ -405,16 +531,29 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
         public double Fisnished_Goods { get; set; }
 
     }
-    class StockData
+ public   class SemiFinishedgoods
     {
-        public string Production { get; set; }
+        public string Semi_finishedGoods { get; set; }
         public double Stock { get; set; }
     }
-    class DataShipping
+ public   class DataShipping
     {
         public string OrderCode { get; set; }
         public string Product_Code { get; set; }
         public double Shipped_Quantity { get; set; }
         public DateTime Shipped_Date { get; set; }
+    }
+public    class BOMItems
+    {
+        public string finishedGoods { get; set; }
+        public string SemiFinishedgoods { get; set; }
+        public double Rate { get; set; }
+        public DateTime Expired { get; set; }
+    }
+    public class StockOfSemi
+    {
+        public string Semi { get; set; }   
+        public double Stock { get; set; }
+        public string Warehourse { get; set; }
     }
 }

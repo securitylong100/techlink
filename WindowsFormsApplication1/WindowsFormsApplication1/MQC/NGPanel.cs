@@ -15,25 +15,17 @@ namespace WindowsFormsApplication1.MQC
         List<NGItems> listNGItems = new List<NGItems>();
         List<Label> listLabel = new List<Label>();
         List<Label> listLabelName = new List<Label>();
-        private static NGPanel _Instance;
-        public static List<NGItems> nGItems;
-        public static NGPanel Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new NGPanel(nGItems);
-                return _Instance;
-            }
-        }
+        public  List<NGItems> nGItems;
+       
         public NGPanel(List<NGItems> nGItems)
         {
             InitializeComponent();
             listNGItems = nGItems;
             UpdateUIForNG(nGItems);
         }
-        private void UpdateUIForNG(List<NGItems> NGItems)
+       public void UpdateUIForNG(List<NGItems> NGItems)
         {
+           
             LoadListLabelNG();
             LoadListLabelNGName();
             if (NGItems == null)
@@ -50,9 +42,10 @@ namespace WindowsFormsApplication1.MQC
                 for (int i = 0; i < listOfLists.Count; i++)
                 {
                     ListNG = listOfLists[i];
+                 
                     listLabelName[i].Text = ListNG[0].NGName;
                     listLabel[i].Text = ListNG.Sum(d => d.NGQuantity).ToString();
-                  //  listLabelName[i].Update();
+                    listLabelName[i].Update();
 
                 }
                 for (int i = listOfLists.Count; i < 20; i++)
@@ -60,7 +53,7 @@ namespace WindowsFormsApplication1.MQC
 
                     listLabelName[i].Text = "";
                     listLabel[i].Text = "";
-                    //  listLabelName[i].Update();
+                     listLabelName[i].Update();
 
                 }
             }

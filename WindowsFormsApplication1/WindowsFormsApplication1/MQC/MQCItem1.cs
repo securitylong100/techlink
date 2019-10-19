@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace WindowsFormsApplication1.MQC
 {
-    class MQCItem1
+   public class MQCItem1
     {
         public string department { get; set; }
         public string process { get; set; }
@@ -21,6 +21,8 @@ namespace WindowsFormsApplication1.MQC
         public double percentRework { get; set; }
         public List<NGItems> listNGItems { get; set; }
         public List<NGItems> listRWItems { get; set; }
+        public string Status { get; set; }
+        public string Measage { get; set; }
 
     }
     public class NGItems
@@ -56,5 +58,26 @@ namespace WindowsFormsApplication1.MQC
         public string remark { get; set; }
     }
 
+    public class MQCItemSummary
+    {
+        public string product { get; set; }
+        public string Time_from { get; set; }
+        public string Time_To { get; set; }
+        public double QuantityTotal { get; set; }
+        public double OutputQty { get; set; }
+        public double NGQty { get; set; }
+        public double DefectRate { get; set; }
+        public string Remark { get; set; }
+       public List<DefectItem> defectItems { get; set; }
+
+    }
+
+    public class DefectItem
+    {
+        public string DefectCode { get; set; }
+        public string DefectSFT{ get; set; }
+        public string DefectSFTName { get; set; }
+        public double Quantity { get; set; }
+    }
 }
 

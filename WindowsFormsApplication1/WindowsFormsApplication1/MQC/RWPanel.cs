@@ -15,17 +15,8 @@ namespace WindowsFormsApplication1.MQC
         List<NGItems> listNGItems = new List<NGItems>();
         List<Label> listLabel = new List<Label>();
         List<Label> listLabelName = new List<Label>();
-        private static RWPanel _Instance;
-        public static List<NGItems> nGItems;
-        public static RWPanel Instance
-        {
-            get
-            {
-                if (_Instance == null)
-                    _Instance = new RWPanel(nGItems);
-                return _Instance;
-            }
-        }
+      
+        
         public RWPanel(List<NGItems> nGItems)
         {
             InitializeComponent();
@@ -50,7 +41,7 @@ namespace WindowsFormsApplication1.MQC
                 for (int i = 0; i < listOfLists.Count; i++)
                 {
                     ListNG = listOfLists[i];
-                    listLabelName[i].Text = ListNG[0].NGKey;
+                    listLabelName[i].Text = ListNG[0].NGName;
                     listLabel[i].Text = ListNG.Sum(d => d.NGQuantity).ToString();
                     //  listLabelName[i].Update();
 

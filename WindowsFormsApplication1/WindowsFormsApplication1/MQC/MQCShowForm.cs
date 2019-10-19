@@ -9,13 +9,14 @@ using System.Threading;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using MetroFramework.Forms;
+using WindowsFormsApplication1.Log;
 
 namespace WindowsFormsApplication1.MQC
 {
     public partial class MQCShowForm : MetroForm
     {
-        NGPanel nGPanel;
-        NGPanel nGRework;
+        NGPanel nGPanel = new NGPanel(null);
+        RWPanel nGRework = new RWPanel(null);
         BackgroundWorker bgWorker;
         // this timer calls bgWorker again and again after regular intervals
         System.Windows.Forms.Timer tmrCallBgWorker;
@@ -31,9 +32,15 @@ namespace WindowsFormsApplication1.MQC
         string product = "";
         string po = "";
         bool IsStartup = false;
-        public MQCShowForm()
+        string deptFull = "";
+        int widthWindow = 0;
+        int heightWindow = 0;
+        int countRefresh = 10;
+        public MQCShowForm(MQCItem1 mQCItem1, string depttext )
         {
             InitializeComponent();
+            mQCItem = mQCItem1;
+            deptFull = depttext;
             IsStartup = false;
             // this is our worker
             bgWorker = new BackgroundWorker();
@@ -66,7 +73,10 @@ namespace WindowsFormsApplication1.MQC
                 {
                     // if bgworker is not busy the call the worker
                     if (!bgWorker.IsBusy)
+                    {
                         bgWorker.RunWorkerAsync();
+                        countRefresh--;
+                    }
                 }
                 finally
                 {
@@ -109,63 +119,92 @@ namespace WindowsFormsApplication1.MQC
 
         void bg_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
-            LoadcbInUI();
-            lb_outputTotal.Text = mQCItem.TotalOutput.ToString("N0"); /*1234.567 ("N", en-US) -> 1,234.57*/
+          
+
+            LoadUIFromMQCITEM();
+            lb_mesage_defect.Left += 10;
+            lb_messageMaterial.Left += 10;
+        }
+        public void LoadUIFromMQCITEM()
+        {
+            try
+            {
+             lb_outputTotal.Text = mQCItem.TotalOutput.ToString("N0"); /*1234.567 ("N", en-US) -> 1,234.57*/
             lb_TotalInputSFT.Text = mQCItem.InputSFT.ToString("N0");
             lb_NotyetSFT.Text = mQCItem.InputMaterialNotYet.ToString("N0");
             lb_TotalNG.Text = mQCItem.TotalNG.ToString("N0");
             lb_TotalRW.Text = mQCItem.TotalRework.ToString("N0");
             lb_percentNG.Text = mQCItem.percentNG.ToString("P1");
             lb_percentRW.Text = mQCItem.percentRework.ToString("P1");
-            cb_department.Text = mQCItem.department;
-            cb_po.Text = mQCItem.PO;
-            cb_process.Text = mQCItem.process;
-            cb_product.Text = mQCItem.product;
-
-            NGPanel.nGItems = mQCItem.listNGItems;
-
-            if (!pa_NGPanel.Controls.Contains(NGPanel.Instance))
+            lb_dept.Text = deptFull;
+            lb_po.Text = mQCItem.PO;
+            lb_process.Text = mQCItem.process;
+            lb_product.Text = mQCItem.product;
+             if(mQCItem.Status == ProductionStatus.ShortageMaterial.ToString())
+                {
+                    lb_messageMaterial.Text = mQCItem.Measage;
+                }
+             if(mQCItem.Status == ProductionStatus.HighDefect.ToString())
+                {
+                    lb_mesage_defect.Text = mQCItem.Measage;
+                }
+             if(mQCItem.Status == ProductionStatus.Normal.ToString())
+                {
+                    lb_messageMaterial.Text = "";
+                    lb_mesage_defect.Text = "";
+                }
+             nGPanel = new NGPanel(mQCItem.listNGItems);
+            pa_NGPanel.Controls.Clear();
+            if (!pa_NGPanel.Controls.Contains(nGPanel))
             {
-                pa_NGPanel.Controls.Add(NGPanel.Instance);
-                NGPanel.Instance.Dock = DockStyle.Left;
-                NGPanel.Instance.BringToFront();
+                nGPanel.Name = mQCItem.product;
+              
+                nGPanel.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                    | System.Windows.Forms.AnchorStyles.Left)
+                    | System.Windows.Forms.AnchorStyles.Right)));
+                pa_NGPanel.Controls.Add(nGPanel);
+
             }
-            else
-                NGPanel.Instance.BringToFront();
 
 
+            pa_rework.Controls.Clear();
 
-            RWPanel.nGItems = mQCItem.listRWItems;
-            if (!pa_rework.Controls.Contains(RWPanel.Instance))
+            nGRework = new RWPanel(mQCItem.listRWItems);
+            if (!pa_rework.Controls.Contains(nGRework))
             {
-                pa_rework.Controls.Add(RWPanel.Instance);
-                RWPanel.Instance.Dock = DockStyle.Left;
-                RWPanel.Instance.BringToFront();
+
+                nGRework.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom)
+                     | System.Windows.Forms.AnchorStyles.Left)
+                     | System.Windows.Forms.AnchorStyles.Right)));
+                pa_rework.Controls.Add(nGRework);
             }
-            else
-                RWPanel.Instance.BringToFront();
-        
+
+            }
+            catch (Exception ex)
+            {
+                Logfile.Output(StatusLog.Error, "LoadUIFromMQCITEM()", ex.Message);
+
+
+            }
+            
         }
         #endregion backround worker task
         private void MQCShowForm_Load(object sender, EventArgs e)
         {
-            LoadNGPanel(); //Load NG Panel
+            //  LoadNGPanel(); //Load NG Panel
+
             SettingTimerForBrwoker(); //Setting Timer for run backround worker
             SettingTimeFromDateTodate();
             LoadcbInUI();
+            LoadUIFromMQCITEM();
             IsStartup = true;
+            hScrollBar1.Maximum = nGPanel.Width - layoutPanelNG.Width;
+            hScrollbarRework.Maximum = nGRework.Width - layoutPanelRW.Width;
         }
-        private void LoadNGPanel()
-        {
-            nGPanel = new NGPanel(null);
-            nGPanel.Left = nGPanel.Top = 0;
-            pa_NGPanel.Controls.Add(nGPanel);
-            nGPanel.Show();
-            nGRework = new NGPanel(null);
-            nGRework.Left = nGRework.Top = 0;
-            pa_rework.Controls.Add(nGRework);
-            nGRework.Show();
-        }
+
+     
+
+    
         private void SettingTimerForBrwoker()
         {
             int timerInterval = 5000;
@@ -173,39 +212,7 @@ namespace WindowsFormsApplication1.MQC
             tmrCallBgWorker.Interval = timerInterval;
             tmrCallBgWorker.Start();
         }
-        private void Button1_Click(object sender, EventArgs e)
-        {
-            if (nGPanel.Left < 0)
-            {
-                nGPanel.Left = nGPanel.Left + 10;
-            }
-        }
-
-        private void Btn_right_Click(object sender, EventArgs e)
-        {
-
-            if (nGPanel.Right >= nGPanel.Left + nGPanel.Width)
-            {
-                nGPanel.Left = nGPanel.Left - 10;
-            }
-        }
-
-        private void Btn_leftRework_Click(object sender, EventArgs e)
-        {
-            if (nGRework.Left < 0)
-            {
-                nGRework.Left = nGRework.Left + 10;
-            }
-        }
-
-        private void Btn_rightRework_Click(object sender, EventArgs e)
-        {
-            if (nGRework.Right >= nGRework.Left + nGRework.Width)
-            {
-                nGRework.Left = nGRework.Left - 10;
-            }
-
-        }
+ 
         #region Private function
         //Load data from database 172.0.16.12, tabble m_ERPMQC
         private void SettingTimeFromDateTodate ()
@@ -234,10 +241,13 @@ namespace WindowsFormsApplication1.MQC
         }
         private void LoadcbInUI()
         {
-             dept =cb_department.Text;
-             process = cb_process.Text;
-             product =cb_product.Text;
-              po = cb_product.Text;
+            lb_dept.Text = deptFull;
+            lb_process.Text = mQCItem.process;
+            lb_product.Text = mQCItem.product;
+            dept = mQCItem.department;
+            process = lb_process.Text;
+             product = lb_product.Text;
+            po = lb_po.Text ;
         }
         private void LoadDataERPMQCToShow()
         {
@@ -253,10 +263,10 @@ namespace WindowsFormsApplication1.MQC
 
         private void MQCShowForm_Resize(object sender, EventArgs e)
         {
+
             if (IsStartup)
             {
-                float widthRatio = Screen.PrimaryScreen.Bounds.Width;
-                float heightRatio = Screen.PrimaryScreen.Bounds.Height;
+
                 if (this.WindowState == FormWindowState.Maximized)
                 {
                     Lb_OutputLable.Font = new Font("Times New Roman", Lb_OutputLable.Font.SizeInPoints + 20, FontStyle.Bold);
@@ -276,7 +286,7 @@ namespace WindowsFormsApplication1.MQC
 
                     //  lb_percentNG.Font = new Font("Times New Roman", lb_percentNG.Font.SizeInPoints + 10);
                 }
-                else if (this.WindowState == FormWindowState.Normal)
+                else if (this.WindowState == FormWindowState.Normal && this.Size.Width == widthWindow)
                 {
                     Lb_OutputLable.Font = new Font("Times New Roman", Lb_OutputLable.Font.SizeInPoints - 20, FontStyle.Bold);
                     Lb_SFTLable.Font = new Font("Times New Roman", Lb_SFTLable.Font.SizeInPoints - 20, FontStyle.Bold);
@@ -292,13 +302,39 @@ namespace WindowsFormsApplication1.MQC
                     lb_TotalRW.Font = new Font("Times New Roman", lb_TotalRW.Font.SizeInPoints - 20, FontStyle.Bold);
                     lb_percentRW.Font = new Font("Times New Roman", lb_percentRW.Font.SizeInPoints - 20, FontStyle.Bold);
                 }
+                else
+                {
+                    widthWindow = this.Size.Width;
+                    heightWindow = this.Size.Height;
+                }
             }
-            //SizeF scale = new SizeF(widthRatio, heightRatio);
-            //this.Scale(scale);
-            //foreach (Control control in this.Controls)
-            //{
-            //    control.Font = new Font("Verdana", control.Font.SizeInPoints * heightRatio * widthRatio);
-            //}
+            else
+            {
+                widthWindow = this.Size.Width;
+                heightWindow = this.Size.Height;
+            }
+           
+        }
+
+        private void HScrollBar1_Scroll(object sender, ScrollEventArgs e)
+        {
+         
+         //   nGPanel.Left = nGPanel.Left - hScrollBar1.Value;
+        }
+        int oldHScrollBar = 0;
+        int oldscrollbarRW = 0;
+        private void HScrollBar1_ValueChanged(object sender, EventArgs e)
+        {
+            
+            nGPanel.Left = nGPanel.Left - ( hScrollBar1.Value - oldHScrollBar);
+            oldHScrollBar = hScrollBar1.Value;
+        }
+
+    
+        private void HScrollbarRework_Scroll(object sender, ScrollEventArgs e)
+        {
+            nGRework.Left = nGRework.Left - (hScrollbarRework.Value - oldscrollbarRW);
+            oldscrollbarRW = hScrollbarRework.Value;
         }
     }
 }

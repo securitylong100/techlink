@@ -37,3 +37,13 @@ D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\Imp
 D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.CoreCompileInputs.cache
 D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
 D:\AN\Project\ImportDataToDatabaseProject\Version 1.0.4\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe.config
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.exe
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\bin\Debug\ImportDataToDatabase.pdb
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csprojAssemblyReference.cache
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.FormGroup.MainForm.resources
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.Properties.Resources.resources
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.GenerateResource.cache
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.csproj.CoreCompileInputs.cache
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.exe
+D:\AN\Project\TechLink_master\ImportDataToDatabase\ImportDataToDatabase\obj\Debug\ImportDataToDatabase.pdb

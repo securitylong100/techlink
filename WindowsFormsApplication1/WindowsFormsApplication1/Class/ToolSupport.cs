@@ -178,6 +178,63 @@ namespace WindowsFormsApplication1.Class
                 MessageBox.Show("Export to excel fail: " + ex.Message, "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
         }
+        public void ExportToTemplate(string PathTemplate, string pathSaveExcel, DataGridView dgvBackLog)
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet; //sheet 2
+            //Excel.Worksheet xlWorkSheet1; //sheet 1
+            object misValue = System.Reflection.Missing.Value;
+
+            try
+            {
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Open(PathTemplate, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+
+                #region Sheet 1
+                //Add data in Sheet 1
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); //add data sheet1  
+                                                                                  //xlWorkSheet.Cells[6, 1] = "BackLog Report on " + DateTime.Now.ToString("MMM/dd/yyyy"); //Line
+                                                                                  //xlWorkSheet.Cells[1, 11] = dateupdate; //Line
+                                                                                  //xlWorkSheet.Cells[2, 11] = usersend; //Model
+                                                                                  //xlWorkSheet.Cells[3, 11] = version; //User  
+
+                for (int i = 3; i < dgvBackLog.Columns.Count-4; i++)
+                {
+                  
+                    xlWorkSheet.Cells[3, i+1] = dgvBackLog.Columns[i].HeaderText;
+                    
+                }
+
+                //datagridw
+                for (int i = 0; i <= dgvBackLog.Rows.Count - 1; i++) //dong
+                {
+                    for (int j = 0; j <= dgvBackLog.Columns.Count - 1; j++) //cot
+                    {
+                        DataGridViewCell cell = dgvBackLog[j, i]; //cot roi dong
+                        xlWorkSheet.Cells[i + 5, j + 1] = cell.Value; // dong roi cot
+                    }
+                }
+
+                #endregion
+
+                xlWorkBook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue,
+                        misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close();
+
+
+
+                //   MessageBox.Show("Excel file created, you can find in the folder " + pathSaveExcel, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //xlWorkBook.Close(true, misValue, misValue);
+                //xlApp.Workbooks.Open(pathSaveExcel);
+                //xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error happened in the process.");
+                throw new Exception("ExportToExcel: \n" + ex.Message);
+            }
+        }
         private void reOject(object obj)
         {
             try

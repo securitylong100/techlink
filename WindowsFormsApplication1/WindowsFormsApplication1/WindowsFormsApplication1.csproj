@@ -81,6 +81,15 @@
     <Reference Include="Framework">
       <HintPath>..\..\..\temp\Framework.dll</HintPath>
     </Reference>
+    <Reference Include="LiveCharts, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.0.9.7\lib\net45\LiveCharts.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.WinForms, Version=0.9.7.1, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.WinForms.0.9.7.1\lib\net45\LiveCharts.WinForms.dll</HintPath>
+    </Reference>
+    <Reference Include="LiveCharts.Wpf, Version=0.9.7.0, Culture=neutral, PublicKeyToken=0bc1f845d1ebb8df, processorArchitecture=MSIL">
+      <HintPath>..\packages\LiveCharts.Wpf.0.9.7\lib\net45\LiveCharts.Wpf.dll</HintPath>
+    </Reference>
     <Reference Include="MetroFramework, Version=1.2.0.3, Culture=neutral, PublicKeyToken=5f91a84759bf584a, processorArchitecture=MSIL">
       <HintPath>..\packages\MetroFramework.RunTime.1.2.0.3\lib\net40-Client\MetroFramework.dll</HintPath>
     </Reference>
@@ -95,6 +104,8 @@
       <HintPath>..\packages\Microsoft.Office.Interop.Excel.15.0.4795.1000\lib\net20\Microsoft.Office.Interop.Excel.dll</HintPath>
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </Reference>
+    <Reference Include="PresentationCore" />
+    <Reference Include="PresentationFramework" />
     <Reference Include="System" />
     <Reference Include="System.ComponentModel.DataAnnotations" />
     <Reference Include="System.Core" />
@@ -102,6 +113,7 @@
     <Reference Include="System.Runtime.Serialization" />
     <Reference Include="System.Security" />
     <Reference Include="System.Windows.Forms.DataVisualization" />
+    <Reference Include="System.Xaml" />
     <Reference Include="System.Xml.Linq" />
     <Reference Include="System.Data.DataSetExtensions" />
     <Reference Include="Microsoft.CSharp" />
@@ -111,10 +123,14 @@
     <Reference Include="System.Net.Http" />
     <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
+    <Reference Include="WindowsBase" />
+    <Reference Include="WindowsFormsIntegration" />
   </ItemGroup>
   <ItemGroup>
     <Compile Include="ChartDrawing\ChartDrawing.cs" />
+    <Compile Include="ChartDrawing\LiveChart.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
+    <Compile Include="Class\sqlSFT.cs" />
     <Compile Include="Class\ToolSupport.cs" />
     <Compile Include="Class\valiballecommon.cs" />
     <Compile Include="CommonForm.cs">
@@ -225,6 +241,7 @@
     <Compile Include="ERPShowOrder\ProductionChart.Designer.cs">
       <DependentUpon>ProductionChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="Logfile\Logfile.cs" />
     <Compile Include="LoginFr.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -238,8 +255,22 @@
       <DependentUpon>MainFr.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\infomesge.cs" />
+    <Compile Include="MQC\LineUI.cs">
+      <SubType>UserControl</SubType>
+    </Compile>
+    <Compile Include="MQC\LineUI.Designer.cs">
+      <DependentUpon>LineUI.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQC\LoaddataConfigure.cs" />
     <Compile Include="MQC\LoadDataMQC.cs" />
+    <Compile Include="MQC\LoadDataSummary.cs" />
     <Compile Include="MQC\LoadDefectMapping.cs" />
+    <Compile Include="MQC\MQCChart.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\MQCChart.Designer.cs">
+      <DependentUpon>MQCChart.cs</DependentUpon>
+    </Compile>
     <Compile Include="MQC\MQCItem1.cs" />
     <Compile Include="MQC\MQCShowForm.cs">
       <SubType>Form</SubType>
@@ -253,12 +284,31 @@
     <Compile Include="MQC\NGPanel.Designer.cs">
       <DependentUpon>NGPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\ProductionMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\ProductionMain.Designer.cs">
+      <DependentUpon>ProductionMain.cs</DependentUpon>
+    </Compile>
     <Compile Include="MQC\RWPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
     <Compile Include="MQC\RWPanel.Designer.cs">
       <DependentUpon>RWPanel.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\SummaryWindow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\SummaryWindow.Designer.cs">
+      <DependentUpon>SummaryWindow.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQC\TargetProduction\TargetProdution.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\TargetProduction\TargetProdution.Designer.cs">
+      <DependentUpon>TargetProdution.cs</DependentUpon>
+    </Compile>
+    <Compile Include="MQC\TargetProduction\TargetToDatabase.cs" />
     <Compile Include="PQM\ConnectData\Adruino\Adruino.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -409,14 +459,29 @@
     <EmbeddedResource Include="MainFr.resx">
       <DependentUpon>MainFr.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MQC\LineUI.resx">
+      <DependentUpon>LineUI.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\MQCChart.resx">
+      <DependentUpon>MQCChart.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MQC\MQCShowForm.resx">
       <DependentUpon>MQCShowForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="MQC\NGPanel.resx">
       <DependentUpon>NGPanel.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MQC\ProductionMain.resx">
+      <DependentUpon>ProductionMain.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MQC\RWPanel.resx">
       <DependentUpon>RWPanel.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\SummaryWindow.resx">
+      <DependentUpon>SummaryWindow.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="MQC\TargetProduction\TargetProdution.resx">
+      <DependentUpon>TargetProdution.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PQM\ConnectData\Adruino\Adruino.resx">
       <DependentUpon>Adruino.cs</DependentUpon>
@@ -525,6 +590,17 @@
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\SHORTAGE_MATERIAL_Status.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Normal_Status.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\High_Defect_Status.PNG">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\chart-search-icon.png" />
+    <None Include="Resources\blue-plus-icon.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
   <!-- To modify your build process, add your task inside one of the targets below and uncomment it. 
