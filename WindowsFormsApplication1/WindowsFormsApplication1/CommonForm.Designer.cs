@@ -63,7 +63,7 @@
             this.lbl_username.AutoSize = true;
             this.lbl_username.Font = new System.Drawing.Font("Microsoft Sans Serif", 9.75F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.lbl_username.ForeColor = System.Drawing.Color.Green;
-            this.lbl_username.Location = new System.Drawing.Point(300, 44);
+            this.lbl_username.Location = new System.Drawing.Point(274, 48);
             this.lbl_username.Name = "lbl_username";
             this.lbl_username.Size = new System.Drawing.Size(59, 20);
             this.lbl_username.TabIndex = 2;

@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using System.Data;
 using System.Data.SqlClient;
 using System.Windows.Forms;
+using UploadDataToDatabase.Log;
 
 
 namespace UploadDataToDatabase
@@ -22,11 +23,13 @@ namespace UploadDataToDatabase
             try
             {
                 outstring = cmd.ExecuteScalar().ToString();
+                conn.Close();
                 return outstring;
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "sqlExecuteScalarString", ex.Message);
+                conn.Close();
                 return String.Empty;
             }
         //    conn.Close();
@@ -55,7 +58,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+            
 
             }
             conn.Close();
@@ -86,7 +90,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+               
 
             }
             conn.Close();
@@ -106,7 +111,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+               
 
             }
         }
@@ -120,21 +126,25 @@ namespace UploadDataToDatabase
                 int response = cmd.ExecuteNonQuery();
                 if (response >= 1)
                 {
-                    if (result_message_show) { MessageBox.Show("Successful!", "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Information); }
+                    if (result_message_show) {
+                        Logfile.Output(StatusLog.Warning, "Successful!", "Database Responce");
+                        
+                    }
                     conn.Close();
                     return true;
                 }
                 else
                 {
-                    MessageBox.Show("Not successful!", "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Logfile.Output(StatusLog.Error, "Database Responce");
+                   
                     conn.Close();
                     return false;
                 }
             }
             catch (Exception ex)
             {
-                MessageBox.Show("Not successful!" + System.Environment.NewLine + ex.Message
-                                , "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Not successful!" + " Database Responce", ex.Message);
+            
                 conn.Close();
                 return false;
             }
@@ -167,7 +177,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+              
 
             }
            

@@ -26,7 +26,7 @@
     <InstallUrl>\\172.16.0.12\Softwarepublish\</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.html</WebPage>
-    <ApplicationRevision>21</ApplicationRevision>
+    <ApplicationRevision>33</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -130,6 +130,7 @@
     <Compile Include="ChartDrawing\ChartDrawing.cs" />
     <Compile Include="ChartDrawing\LiveChart.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
+    <Compile Include="Class\SQLERPTarget.cs" />
     <Compile Include="Class\sqlSFT.cs" />
     <Compile Include="Class\ToolSupport.cs" />
     <Compile Include="Class\valiballecommon.cs" />
@@ -265,12 +266,21 @@
     <Compile Include="MQC\LoadDataMQC.cs" />
     <Compile Include="MQC\LoadDataSummary.cs" />
     <Compile Include="MQC\LoadDefectMapping.cs" />
+    <Compile Include="MQC\LoadTargetProduction.cs" />
+    <Compile Include="MQC\MaterialManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\MaterialManagement.Designer.cs">
+      <DependentUpon>MaterialManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="MQC\MQCChart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MQC\MQCChart.Designer.cs">
       <DependentUpon>MQCChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\MQCClass\CheckMaterial.cs" />
+    <Compile Include="MQC\MQCClass\Material.cs" />
     <Compile Include="MQC\MQCItem1.cs" />
     <Compile Include="MQC\MQCShowForm.cs">
       <SubType>Form</SubType>
@@ -290,6 +300,7 @@
     <Compile Include="MQC\ProductionMain.Designer.cs">
       <DependentUpon>ProductionMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\Report\DefectRateReport.cs" />
     <Compile Include="MQC\RWPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -462,6 +473,9 @@
     <EmbeddedResource Include="MQC\LineUI.resx">
       <DependentUpon>LineUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MQC\MaterialManagement.resx">
+      <DependentUpon>MaterialManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MQC\MQCChart.resx">
       <DependentUpon>MQCChart.cs</DependentUpon>
     </EmbeddedResource>
@@ -549,7 +563,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Month.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\MQC-PQC_Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\ShippingForm.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Template_MQC.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Week.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="WindowsFormsApplication1_TemporaryKey.pfx" />
@@ -590,6 +616,13 @@
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
     <Content Include="MetroFramework.txt" />
+    <None Include="Resources\close-icon.png" />
+    <None Include="Resources\expand-icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\home2-icon.png" />
+    <None Include="Resources\Home-icon.png" />
+    <None Include="Resources\Clock-icon.png" />
     <None Include="Resources\SHORTAGE_MATERIAL_Status.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

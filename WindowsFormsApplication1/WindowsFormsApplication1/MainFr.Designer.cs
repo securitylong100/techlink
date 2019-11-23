@@ -42,9 +42,11 @@
             this.btn_model = new System.Windows.Forms.Button();
             this.btn_line = new System.Windows.Forms.Button();
             this.tap_function = new System.Windows.Forms.TabPage();
+            this.btn_MQC = new System.Windows.Forms.Button();
             this.btn_production = new System.Windows.Forms.Button();
             this.btn_shipping = new System.Windows.Forms.Button();
             this.btn_pqmshow = new System.Windows.Forms.Button();
+            this.btn_material = new System.Windows.Forms.Button();
             this.tpc_main.SuspendLayout();
             this.tap_setting.SuspendLayout();
             this.tap_local.SuspendLayout();
@@ -228,6 +230,8 @@
             // 
             // tap_function
             // 
+            this.tap_function.Controls.Add(this.btn_material);
+            this.tap_function.Controls.Add(this.btn_MQC);
             this.tap_function.Controls.Add(this.btn_production);
             this.tap_function.Controls.Add(this.btn_shipping);
             this.tap_function.Controls.Add(this.btn_pqmshow);
@@ -239,44 +243,73 @@
             this.tap_function.Text = "Function";
             this.tap_function.UseVisualStyleBackColor = true;
             // 
+            // btn_MQC
+            // 
+            this.btn_MQC.Enabled = false;
+            this.btn_MQC.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_MQC.Location = new System.Drawing.Point(31, 33);
+            this.btn_MQC.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_MQC.Name = "btn_MQC";
+            this.btn_MQC.Size = new System.Drawing.Size(197, 63);
+            this.btn_MQC.TabIndex = 10;
+            this.btn_MQC.Text = "MQC";
+            this.btn_MQC.UseVisualStyleBackColor = true;
+            this.btn_MQC.Click += new System.EventHandler(this.Btn_MQC_Click);
+            // 
             // btn_production
             // 
             this.btn_production.Enabled = false;
             this.btn_production.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_production.Location = new System.Drawing.Point(712, 35);
+            this.btn_production.Location = new System.Drawing.Point(31, 262);
             this.btn_production.Margin = new System.Windows.Forms.Padding(4);
             this.btn_production.Name = "btn_production";
             this.btn_production.Size = new System.Drawing.Size(197, 63);
             this.btn_production.TabIndex = 9;
             this.btn_production.Text = "Production Report";
             this.btn_production.UseVisualStyleBackColor = true;
+            this.btn_production.Visible = false;
             this.btn_production.Click += new System.EventHandler(this.Btn_production_Click);
             // 
             // btn_shipping
             // 
             this.btn_shipping.Enabled = false;
             this.btn_shipping.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_shipping.Location = new System.Drawing.Point(372, 35);
+            this.btn_shipping.Location = new System.Drawing.Point(31, 149);
             this.btn_shipping.Margin = new System.Windows.Forms.Padding(4);
             this.btn_shipping.Name = "btn_shipping";
             this.btn_shipping.Size = new System.Drawing.Size(197, 63);
             this.btn_shipping.TabIndex = 6;
             this.btn_shipping.Text = "Shipping Report";
             this.btn_shipping.UseVisualStyleBackColor = true;
+            this.btn_shipping.Visible = false;
             this.btn_shipping.Click += new System.EventHandler(this.Btn_OrderReport_Click);
             // 
             // btn_pqmshow
             // 
             this.btn_pqmshow.Enabled = false;
             this.btn_pqmshow.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.btn_pqmshow.Location = new System.Drawing.Point(31, 35);
+            this.btn_pqmshow.Location = new System.Drawing.Point(31, 361);
             this.btn_pqmshow.Margin = new System.Windows.Forms.Padding(4);
             this.btn_pqmshow.Name = "btn_pqmshow";
             this.btn_pqmshow.Size = new System.Drawing.Size(197, 63);
             this.btn_pqmshow.TabIndex = 5;
             this.btn_pqmshow.Text = "PQM Data";
             this.btn_pqmshow.UseVisualStyleBackColor = true;
+            this.btn_pqmshow.Visible = false;
             this.btn_pqmshow.Click += new System.EventHandler(this.btn_pqmshow_Click);
+            // 
+            // btn_material
+            // 
+            this.btn_material.Enabled = false;
+            this.btn_material.Font = new System.Drawing.Font("Microsoft Sans Serif", 11.25F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btn_material.Location = new System.Drawing.Point(274, 33);
+            this.btn_material.Margin = new System.Windows.Forms.Padding(4);
+            this.btn_material.Name = "btn_material";
+            this.btn_material.Size = new System.Drawing.Size(197, 63);
+            this.btn_material.TabIndex = 11;
+            this.btn_material.Text = "Material Management";
+            this.btn_material.UseVisualStyleBackColor = true;
+            this.btn_material.Click += new System.EventHandler(this.Btn_material_Click);
             // 
             // MainFr
             // 
@@ -317,5 +350,7 @@
         private System.Windows.Forms.Button btn_order_pdc;
         private System.Windows.Forms.Button btn_emailconfig;
         private System.Windows.Forms.Button btn_production;
+        private System.Windows.Forms.Button btn_MQC;
+        private System.Windows.Forms.Button btn_material;
     }
 }

@@ -7,7 +7,7 @@
     <ProjectGuid>{C2D84CA4-1056-4773-B8FA-ECC8E6C9F58C}</ProjectGuid>
     <OutputType>WinExe</OutputType>
     <RootNamespace>UploadDataToDatabase</RootNamespace>
-    <AssemblyName>Upload Data To Database</AssemblyName>
+    <AssemblyName>TLMS Report</AssemblyName>
     <TargetFrameworkVersion>v4.5.2</TargetFrameworkVersion>
     <FileAlignment>512</FileAlignment>
     <AutoGenerateBindingRedirects>true</AutoGenerateBindingRedirects>
@@ -48,7 +48,7 @@
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
   <PropertyGroup>
-    <ApplicationIcon>Icojam-Blue-Bits-Database-search.ico</ApplicationIcon>
+    <ApplicationIcon>TLMSReport.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
     <Reference Include="Microsoft.Office.Interop.Excel, Version=15.0.0.0, Culture=neutral, PublicKeyToken=71e9bce111e9429c, processorArchitecture=MSIL">
@@ -70,6 +70,8 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="BackLogReport\BacklogReport.cs" />
+    <Compile Include="BackLogReport\RealabilityReport.cs" />
+    <Compile Include="Class\DateTimeControl.cs" />
     <Compile Include="Class\DBSQLServerUtils.cs" />
     <Compile Include="Class\DBUtils.cs" />
     <Compile Include="Class\infomesge.cs" />
@@ -79,6 +81,8 @@
     <Compile Include="Class\SendMailFunction.cs" />
     <Compile Include="Class\sqlCON.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
+    <Compile Include="Class\SQLERPTarget.cs" />
+    <Compile Include="Class\sqlSFT.cs" />
     <Compile Include="Class\valiballecommon.cs" />
     <Compile Include="CommonForm.cs">
       <SubType>Form</SubType>
@@ -93,6 +97,12 @@
       <DependentUpon>Form1.cs</DependentUpon>
     </Compile>
     <Compile Include="FormConfig\Class1.cs" />
+    <Compile Include="FormConfig\FormDataGridShow.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="FormConfig\FormDataGridShow.Designer.cs">
+      <DependentUpon>FormDataGridShow.cs</DependentUpon>
+    </Compile>
     <Compile Include="FormConfig\ReportSchechuleForm.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -101,13 +111,42 @@
     </Compile>
     <Compile Include="Log\ExportExcelTool.cs" />
     <Compile Include="Log\Logfile.cs" />
+    <Compile Include="MQC\DefectRateReport.cs" />
+    <Compile Include="MQC\LoadDataMQC.cs" />
+    <Compile Include="MQC\LoadDataSummary.cs" />
+    <Compile Include="MQC\LoadDefectMapping.cs" />
+    <Compile Include="MQC\LoadTargetProduction.cs" />
+    <Compile Include="MQC\MQCReport.cs" />
+    <Compile Include="MQC\PublicItems.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
+    <Compile Include="Report\BacklogReport.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\BacklogReport.Designer.cs">
+      <DependentUpon>BacklogReport.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\GetDataEmail.cs" />
+    <Compile Include="Report\ReliabilityReportMonthly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReliabilityReportMonthly.Designer.cs">
+      <DependentUpon>ReliabilityReportMonthly.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Report\ReliabilityReportWeekly.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Report\ReliabilityReportWeekly.Designer.cs">
+      <DependentUpon>ReliabilityReportWeekly.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="FormConfig\FormDataGridShow.resx">
+      <DependentUpon>FormDataGridShow.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="FormConfig\ReportSchechuleForm.resx">
       <DependentUpon>ReportSchechuleForm.cs</DependentUpon>
@@ -116,6 +155,15 @@
       <Generator>ResXFileCodeGenerator</Generator>
       <SubType>Designer</SubType>
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\BacklogReport.resx">
+      <DependentUpon>BacklogReport.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReliabilityReportMonthly.resx">
+      <DependentUpon>ReliabilityReportMonthly.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Report\ReliabilityReportWeekly.resx">
+      <DependentUpon>ReliabilityReportWeekly.cs</DependentUpon>
     </EmbeddedResource>
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
@@ -131,6 +179,15 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\MQC_Daily.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Reliability.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Week.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
   </ItemGroup>
   <ItemGroup>
     <None Include="App.config" />
@@ -139,6 +196,7 @@
     <Content Include="BackLogReport\Template.html" />
     <Content Include="Gakuseisean-Aire-Search.ico" />
     <Content Include="Icojam-Blue-Bits-Database-search.ico" />
+    <Content Include="TLMSReport.ico" />
     <None Include="Resources\BackLogForm2.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
@@ -149,6 +207,12 @@
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\BackLogForm.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Month.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\MQC-PQC_Template.xlsx">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="Resources\Search-icon.png" />
@@ -197,5 +261,6 @@
       <EmbedInteropTypes>True</EmbedInteropTypes>
     </COMReference>
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

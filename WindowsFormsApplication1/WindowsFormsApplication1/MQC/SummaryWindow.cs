@@ -14,10 +14,12 @@ namespace WindowsFormsApplication1.MQC
     {
         public List<MQCItemSummary> qCItemSummaries = new List<MQCItemSummary>();
         List<string> listHeader = new List<string>();
+        public string path = Environment.CurrentDirectory + @"\Resources\Template_MQC.xlsx";
         public SummaryWindow(List<MQCItemSummary> summaries) 
         {
             InitializeComponent();
             qCItemSummaries = summaries;
+            lb_tiltle.Text = "Production Summary data";
         }
 
         private void SummaryWindow_Load(object sender, EventArgs e)
@@ -30,6 +32,7 @@ namespace WindowsFormsApplication1.MQC
         public void CreateDatagridview ()
         {
             DataGridViewCell cell = new DataGridViewTextBoxCell();
+            cell.Style.Font = new Font("Times New Roman", 12);
             DataGridViewColumn newCol = new DataGridViewColumn(); // add a column to the grid
             newCol.CellTemplate = cell;
             newCol.HeaderText = @"
@@ -38,7 +41,6 @@ Tên sản phẩm
             newCol.Name = "col1";
             newCol.Visible = true;
             newCol.Width = 100;
-
             dtgv_summary.Columns.Add(newCol);
 
             DataGridViewColumn newCol2 = new DataGridViewColumn(); // add a column to the grid
@@ -66,8 +68,8 @@ Quantity received
             newCol3.Visible = true;
             newCol3.Width = 100;
             dtgv_summary.Columns.Add(newCol3);
-          
-
+            LoadDefectMapping defectMapping = new LoadDefectMapping();
+            List<NGItemsMapping> nGItemsMappings = defectMapping.listNGMapping("B01", "MQC");
             foreach (var mQCItem in qCItemSummaries)
             {
                 foreach (var defect in mQCItem.defectItems)
@@ -173,7 +175,7 @@ Remarks
         private void Btn_ExportExcel_Click(object sender, EventArgs e)
         {
             Class.ToolSupport exportExcel = new Class.ToolSupport();
-            exportExcel.ExportToTemplate(@"D:\AN\Report\MQC-PQC.xlsx", @"C:\ERP_Temp\Temp2.xlsx", dtgv_summary);
+            exportExcel.ExportToTemplate(path, @"C:\ERP_Temp\Temp2.xlsx", dtgv_summary);
           //  exportExcel.dtgvExport2Excel(dtgv_summary, @"C:\ERP_Temp\Temp2.xls");
         }
     }

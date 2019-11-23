@@ -24,7 +24,7 @@ namespace UploadDataToDatabase.BackLogReport
         private string path = Environment.CurrentDirectory + @"\Resources\BackLogForm3.xlsx";
         private string pathSave = Environment.CurrentDirectory + @"\Resources\";
 
-        public bool ExportExcelToReport( ref DataGridView gridView,string FileName ,string pathSave, string version)
+        public bool ExportExcelToReport( ref DataGridView gridView ,string pathSave, string version)
         {
             try
             {
@@ -39,28 +39,35 @@ namespace UploadDataToDatabase.BackLogReport
 
             if (listBackLog != null && listBackLog.Count > 0)
             {
+                try
+                {
                 ExportExcelTool exportExcel = new ExportExcelTool();
 
                 string strUser = Class.valiballecommon.GetStorage().UserName;
-              
-  
+
                 gridView.DataSource = listBackLog;
 
-                exportExcel.ExportToTemplate(path, pathSave + FileName + "-" + DateTime.Now.ToString("yyyyMMdd HHmmss") + ".xlsx", gridView, DateTime.Now.ToString("yyyy-MM-dd"), strUser, version, DateTime.Now.ToString("yyyy"));
+                    return exportExcel.ExportToTemplate(path, gridView, DateTime.Now.ToString("yyyy-MM-dd"), strUser, version, DateTime.Now.ToString("yyyy"));
 
+                }
+                catch (Exception ex)
+                {
+                    Logfile.Output(StatusLog.Error, "Export excel error !", ex.Message);
+                    return false;
+                }
             }
             else return false;
-            return true;
+          
         }
         private void GetDataProductionOrder()
         {
             try
             {
 
-            DateTime dtnow = DateTime.Now;
-            DateTime datefrom = new DateTime(dtnow.Year, 1, 1);
-            DateTime dateto = new DateTime(dtnow.Year, 12, 31);
-            dtShipping = new DataTable();
+           // DateTime dtnow = DateTime.Now;
+            //DateTime datefrom = new DateTime(dtnow.Year, 1, 1);
+            DateTime dateto = DateTime.Now.AddDays(1);
+                dtShipping = new DataTable();
             StringBuilder sql = new StringBuilder();
             sql.Append(@"select
 coptcs.TC001 as Code_Type, 
@@ -76,7 +83,8 @@ coptds.TD013 as Client_Request_Date,
 coptds.TD008 as Order_Quantity,
 coptds.TD009 as Shipped_Quantity,
 coptds.TD016 as StatusOFCode,
-invmbs.MB064 as Stock_Qty
+invmbs.MB064 as Stock_Qty,
+coptds.TD003 as STT
  from COPTC coptcs
 left join COPTD  coptds on coptcs.TC002 = coptds.TD002  and coptcs.TC001 = coptds.TD001 -- cong doan tao don
 inner join COPMA copmas on copmas.MA001 = coptcs.TC004
@@ -87,8 +95,8 @@ and  coptcs.TC027 = 'Y'
  ");
         
 
-            sql.Append(" and CONVERT(date,coptds.TD013)  >= '" + datefrom + "' ");
-            sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto + "' ");
+          //  sql.Append(" and CONVERT(date,coptds.TD013)  >= '" + datefrom + "' ");
+            sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto.ToString("yyyyMMdd") + "' ");
 
             sql.Append("order by coptds.TD013");
             sqlERPCON con = new sqlERPCON();
@@ -103,35 +111,31 @@ and  coptcs.TC027 = 'Y'
 
         private void GetDataFromShipping()
         {
-            DateTime dtnow = DateTime.Now;
-            DateTime datefrom = new DateTime(dtnow.Year, 1, 1);
-            DateTime dateto = new DateTime(dtnow.Year, 12, 31);
+            //DateTime dtnow = DateTime.Now;
+            //DateTime datefrom = new DateTime(dtnow.Year, 1, 1);
+            //DateTime dateto = new DateTime(dtnow.Year, 12, 31);
             dt = new DataTable();
             StringBuilder sql = new StringBuilder();
             sql.Append(@"select
-coptcs.TC001 as Code_Type, 
-coptcs.TC002 as Code_No,
-coptds.TD004 as Product_Code,
-sum(copths.TH008) as Delivery_Quantity,
-max(coptgs.TG003) as Delivery_Date
- from COPTC coptcs
-left join COPTD  coptds on coptcs.TC002 = coptds.TD002  and coptcs.TC001 = coptds.TD001 -- cong doan tao don
-left join COPTH copths on coptcs.TC002 = copths.TH015 and  coptcs.TC001 = copths.TH014 and copths.TH004 =coptds.TD004
-left join COPTG coptgs on copths.TH002  = coptgs.TG002 and copths.TH001  = coptgs.TG001 --cong doan giao hang
-where 1=1  
-and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
+TH014, TH015,TH004,
+sum(a.TH008) as Delivery_Quantity,
+max(b.TG003) as Delivery_Date,
+TH016
+from COPTH a
+inner join COPTG  b on a.TH001 = b.TG001 and a.TH002 = b.TG002
+where TG023 ='Y' and TH014 !='' and TH015 != ''
  ");
             
 
-            sql.Append(" and CONVERT(date,coptds.TD013)  >= '" + datefrom + "' ");
-            sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto + "' ");
-            sql.Append(@"group by 
-                                   coptcs.CREATE_DATE,
-                                    coptcs.TC001 ,
-                                    coptcs.TC002 ,
-                                   coptds.TD004
+           // sql.Append(" and CONVERT(date,coptds.TD013)  >= '" + datefrom + "' ");
+        //    sql.Append(" and CONVERT(date,coptds.TD013) <= '" + dateto + "' ");
+            sql.Append(@"group by
+TH014,
+TH015,
+TH004,
+TH016
                                     ");
-            sql.Append("order by coptcs.TC001, coptcs.TC002");
+            sql.Append("order by TH014, TH015, TH004");
             sqlERPCON con = new sqlERPCON();
             con.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
         }
@@ -157,6 +161,11 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                 listShipingResult = new List<FinalItemsReport>();
                 foreach (var Order in ListOrderData)
                 {
+                    //if(Order.OrderCode.Trim() == "A221-1810036")
+                    //{
+                    //    ;
+                    //}
+
                     FinalItemsReport inf = new FinalItemsReport();
                     List<SemiFinishedgoods> listSemi = new List<SemiFinishedgoods>();
                     inf.Department = Order.Departments_code;
@@ -190,10 +199,10 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
 
                         }
                     }
-
+                   
                         inf.OverDueDate = (DateTime.Now.DayOfYear - inf.ClientsRequestDate.DayOfYear);
                     var ListProduct = ListShipping
-                        .Where(w => w.OrderCode == inf.OrderCode && w.Product_Code == inf.Product)
+                        .Where(w => w.OrderCode.Trim() == inf.OrderCode.Trim() && w.Product_Code.Trim() == inf.Product.Trim() && w.STT.Trim() == Order.STT.Trim())
                         .Select(d => new { d.Shipped_Quantity, d.Shipped_Date }).Distinct().ToArray();
                     if (ListProduct.Count() > 0)
                     {
@@ -214,7 +223,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                             else if (DateTime.Now.Date >= Order.Client_Request_Date && inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable >= inf.Remain_Quantity)
                             {
 
-                                inf.Status = "Late";
+                                inf.Status = "Back Log";
                             }
 
                             else if (Order.Client_Request_Date > DateTime.Now.Date)
@@ -258,7 +267,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                             else if (inf.Stock_Quantity + inf.Semi_FinishedGoods_avaiable >= inf.Remain_Quantity && DateTime.Now.Date >= Order.Client_Request_Date)
                             {
 
-                                inf.Status = "Late";
+                                inf.Status = "Back Log";
                             }
 
                             else if (Order.Client_Request_Date > DateTime.Now.Date)
@@ -273,14 +282,18 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
 
                     listShipingResult.Add(inf);
                 }
-
+             //   listBackLog = listShipingResult;
                 if (listShipingResult != null && listShipingResult.Count > 0)
                 {
-                    listBackLog = listShipingResult.Where(d => d.Status == "Back Log").ToList();
-                   
+                    listBackLog = listShipingResult.Where(d => d.Status == "Back Log" && d.OrderCode.Contains("A221-1907232")==false).OrderBy(d=>d.OrderCode).ToList();
+
                 }
-               
-               
+                //if (listShipingResult != null && listShipingResult.Count > 0)
+                //{
+                //    listBackLog = listShipingResult.Where(d => d.OrderCode.Trim() == "A222-1910018").ToList();
+
+                //}
+
             }
             catch (Exception ex)
             {
@@ -300,11 +313,11 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
 
 
                 DataShipping shp = new DataShipping();
-                shp.OrderCode = (string)dta.Rows[i][0] + "-" + (string)dta.Rows[i][1];
-                shp.Product_Code = (string)dta.Rows[i][2];
-                shp.Shipped_Quantity = (string)dta.Rows[i][3].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][3].ToString()), 2);
-                shp.Shipped_Date = ((string)dta.Rows[i][4].ToString() == "") ? DateTime.MinValue : DateTime.Parse(dta.Rows[i][4].ToString().Insert(4, "-").Insert(7, "-"));
-
+                shp.OrderCode = (string)dta.Rows[i][0].ToString().Trim() + "-" + (string)dta.Rows[i][1].ToString().Trim();
+                shp.Product_Code = (string)dta.Rows[i][2].ToString().Trim();
+                shp.Shipped_Quantity = (string)dta.Rows[i][3].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][3].ToString().Trim()), 2);
+                shp.Shipped_Date = ((string)dta.Rows[i][4].ToString() == "") ? DateTime.MinValue : DateTime.Parse(dta.Rows[i][4].ToString().Trim().Insert(4, "-").Insert(7, "-"));
+                shp.STT = (string)dta.Rows[i][5].ToString().Trim();
                 listOrderData.Add(shp);
 
 
@@ -324,23 +337,21 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
 
                     OrderData or = new OrderData();
                     or.OrderCode = (string)dta.Rows[i][0] + "-" + (string)dta.Rows[i][1];
-                    //if(or.Departments_code == null)
-                    //{
-                    //    or.Departments_code = Tenbophan()
-                    //}
-                    or.Departments_code = (dta.Rows[i][2] != null && dta.Rows[i][2].ToString() !="") ?  dta.Rows[i][2].ToString(): "N/A";
-                    or.ClientsName = (string)dta.Rows[i][3];
-                    or.Clients_Order_Code = (string)dta.Rows[i][4];
-                    or.Product_Code = (string)dta.Rows[i][5];
-                    or.Product_Name = (string)dta.Rows[i][6];
-                    or.unit = (string)dta.Rows[i][7];
-                    or.Departments = (string)dta.Rows[i][8];
-                    or.Client_Request_Date = ((string)dta.Rows[i][9].ToString() == "") ? DateTime.MinValue : DateTime.Parse(dta.Rows[i][9].ToString().Insert(4, "-").Insert(7, "-"));
-                    or.Order_Quantity = (string)dta.Rows[i][10].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][10].ToString()), 2);
-                    or.Shipped_Quantity = (string)dta.Rows[i][11].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][11].ToString()), 2);
+
+                    or.Departments_code = (dta.Rows[i][2] != null && dta.Rows[i][2].ToString() !="") ?  dta.Rows[i][2].ToString().Trim(): "N/A";
+                    or.ClientsName = (string)dta.Rows[i][3].ToString().Trim();
+                    or.Clients_Order_Code = (string)dta.Rows[i][4].ToString().Trim();
+                    or.Product_Code = (string)dta.Rows[i][5].ToString().Trim();
+                    or.Product_Name = (string)dta.Rows[i][6].ToString().Trim();
+                    or.unit = (string)dta.Rows[i][7].ToString().Trim();
+                    or.Departments = (string)dta.Rows[i][8].ToString().Trim();
+                    or.Client_Request_Date = ((string)dta.Rows[i][9].ToString() == "") ? DateTime.MinValue : DateTime.Parse(dta.Rows[i][9].ToString().Trim().Insert(4, "-").Insert(7, "-"));
+                    or.Order_Quantity = (string)dta.Rows[i][10].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][10].ToString().Trim()), 2);
+                    or.Shipped_Quantity = (string)dta.Rows[i][11].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][11].ToString().Trim()), 2);
                     
-                    or.StatusOFOrder = (string)dta.Rows[i][12];
-                    or.Fisnished_Goods = (string)dta.Rows[i][13].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][13].ToString()), 2);
+                    or.StatusOFOrder = (string)dta.Rows[i][12].ToString().Trim();
+                    or.Fisnished_Goods = (string)dta.Rows[i][13].ToString() == "" ? 0 : Math.Round(double.Parse(dta.Rows[i][13].ToString().Trim()), 2);
+                    or.STT = (string)dta.Rows[i][14].ToString().Trim();
                     listOrderData.Add(or);
 
                 }
@@ -383,10 +394,10 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
             bOMItems = (from DataRow dr in dt.Rows
                         select new BOMItems()
                         {
-                            finishedGoods = dr["MD001"].ToString(),
-                            SemiFinishedgoods = dr["MD003"].ToString(),
-                            Rate =( dr["MD006"].ToString() != "") ?double.Parse(dr["MD006"].ToString()): 0,
-                            Expired = (dr["MD012"].ToString() != "" ) ? DateTime.Parse(dr["MD012"].ToString().Insert(4,"-").Insert(7,"-")): DateTime.MaxValue
+                            finishedGoods = dr["MD001"].ToString().Trim(),
+                            SemiFinishedgoods = dr["MD003"].ToString().Trim(),
+                            Rate =( dr["MD006"].ToString() != "") ?double.Parse(dr["MD006"].ToString().Trim()): 0,
+                            Expired = (dr["MD012"].ToString() != "" ) ? DateTime.Parse(dr["MD012"].ToString().Trim().Insert(4,"-").Insert(7,"-")): DateTime.MaxValue
                         }).ToList();
 
             }
@@ -416,7 +427,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
                         {
                             Semi = dr["MC001"].ToString().Trim(),
                           
-                            Stock = (dr["MC007"].ToString() != "") ? Math.Round((double.Parse(dr["MC007"].ToString()) /rate),0 ): 0,
+                            Stock = (dr["MC007"].ToString() != "" && rate !=0) ? Math.Round((double.Parse(dr["MC007"].ToString()) /rate),0 ): 0,
                             Warehourse = dr["MC002"].ToString().Trim()
                         }).ToList();
             }
@@ -517,6 +528,8 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
  public   class OrderData
     {
         public string OrderCode { get; set; }
+        public string STT { get; set; }
+        public DateTime DateOrder { get; set; }
         public string Departments_code { get; set; }
         public string Departments { get; set; }
         public string ClientsName { get; set; }
@@ -540,6 +553,7 @@ and  coptcs.TC027 = 'Y' and coptgs.TG023 ='Y'
     {
         public string OrderCode { get; set; }
         public string Product_Code { get; set; }
+        public string STT { get; set; }
         public double Shipped_Quantity { get; set; }
         public DateTime Shipped_Date { get; set; }
     }

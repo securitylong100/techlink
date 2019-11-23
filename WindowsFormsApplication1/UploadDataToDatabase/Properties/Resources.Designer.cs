@@ -101,6 +101,36 @@ namespace UploadDataToDatabase.Properties {
         }
         
         /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Month {
+            get {
+                object obj = ResourceManager.GetObject("Month", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MQC_Daily {
+            get {
+                object obj = ResourceManager.GetObject("MQC_Daily", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] MQC_PQC_Template {
+            get {
+                object obj = ResourceManager.GetObject("MQC_PQC_Template", resourceCulture);
+                return ((byte[])(obj));
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized resource of type System.Drawing.Bitmap.
         /// </summary>
         internal static System.Drawing.Bitmap pic {
@@ -127,6 +157,16 @@ namespace UploadDataToDatabase.Properties {
             get {
                 object obj = ResourceManager.GetObject("Search_icon", resourceCulture);
                 return ((System.Drawing.Bitmap)(obj));
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized resource of type System.Byte[].
+        /// </summary>
+        internal static byte[] Week {
+            get {
+                object obj = ResourceManager.GetObject("Week", resourceCulture);
+                return ((byte[])(obj));
             }
         }
     }

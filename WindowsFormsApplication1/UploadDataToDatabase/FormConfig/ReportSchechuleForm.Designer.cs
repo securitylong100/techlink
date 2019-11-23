@@ -50,8 +50,11 @@
             this.txt_subject = new System.Windows.Forms.TextBox();
             this.rtb_comment = new System.Windows.Forms.RichTextBox();
             this.rtb_IsBodyHTML = new System.Windows.Forms.RadioButton();
+            this.nmr_Minutes = new System.Windows.Forms.NumericUpDown();
+            this.label10 = new System.Windows.Forms.Label();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_hours)).BeginInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_date)).BeginInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmr_Minutes)).BeginInit();
             this.SuspendLayout();
             // 
             // lbl_Name
@@ -115,7 +118,7 @@
             // 
             this.label4.AutoSize = true;
             this.label4.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label4.Location = new System.Drawing.Point(174, 202);
+            this.label4.Location = new System.Drawing.Point(309, 202);
             this.label4.Name = "label4";
             this.label4.Size = new System.Drawing.Size(138, 25);
             this.label4.TabIndex = 9;
@@ -124,7 +127,7 @@
             // nmr_hours
             // 
             this.nmr_hours.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nmr_hours.Location = new System.Drawing.Point(179, 243);
+            this.nmr_hours.Location = new System.Drawing.Point(315, 236);
             this.nmr_hours.Maximum = new decimal(new int[] {
             24,
             0,
@@ -136,7 +139,7 @@
             0,
             0});
             this.nmr_hours.Name = "nmr_hours";
-            this.nmr_hours.Size = new System.Drawing.Size(120, 30);
+            this.nmr_hours.Size = new System.Drawing.Size(109, 30);
             this.nmr_hours.TabIndex = 10;
             this.nmr_hours.Value = new decimal(new int[] {
             1,
@@ -148,7 +151,7 @@
             // 
             this.label5.AutoSize = true;
             this.label5.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label5.Location = new System.Drawing.Point(377, 202);
+            this.label5.Location = new System.Drawing.Point(453, 202);
             this.label5.Name = "label5";
             this.label5.Size = new System.Drawing.Size(50, 25);
             this.label5.TabIndex = 11;
@@ -158,16 +161,16 @@
             // 
             this.cmb_day.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_day.FormattingEnabled = true;
-            this.cmb_day.Location = new System.Drawing.Point(338, 240);
+            this.cmb_day.Location = new System.Drawing.Point(458, 235);
             this.cmb_day.Name = "cmb_day";
-            this.cmb_day.Size = new System.Drawing.Size(138, 33);
+            this.cmb_day.Size = new System.Drawing.Size(107, 33);
             this.cmb_day.TabIndex = 12;
             // 
             // label6
             // 
             this.label6.AutoSize = true;
             this.label6.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label6.Location = new System.Drawing.Point(524, 202);
+            this.label6.Location = new System.Drawing.Point(581, 202);
             this.label6.Name = "label6";
             this.label6.Size = new System.Drawing.Size(57, 25);
             this.label6.TabIndex = 14;
@@ -176,7 +179,7 @@
             // nmr_date
             // 
             this.nmr_date.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.nmr_date.Location = new System.Drawing.Point(529, 241);
+            this.nmr_date.Location = new System.Drawing.Point(586, 238);
             this.nmr_date.Maximum = new decimal(new int[] {
             31,
             0,
@@ -188,7 +191,7 @@
             0,
             0});
             this.nmr_date.Name = "nmr_date";
-            this.nmr_date.Size = new System.Drawing.Size(120, 30);
+            this.nmr_date.Size = new System.Drawing.Size(98, 30);
             this.nmr_date.TabIndex = 15;
             this.nmr_date.Value = new decimal(new int[] {
             1,
@@ -200,16 +203,16 @@
             // 
             this.cmb_month.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.cmb_month.FormattingEnabled = true;
-            this.cmb_month.Location = new System.Drawing.Point(676, 238);
+            this.cmb_month.Location = new System.Drawing.Point(712, 238);
             this.cmb_month.Name = "cmb_month";
-            this.cmb_month.Size = new System.Drawing.Size(138, 33);
+            this.cmb_month.Size = new System.Drawing.Size(102, 33);
             this.cmb_month.TabIndex = 16;
             // 
             // label7
             // 
             this.label7.AutoSize = true;
             this.label7.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.label7.Location = new System.Drawing.Point(682, 202);
+            this.label7.Location = new System.Drawing.Point(742, 202);
             this.label7.Name = "label7";
             this.label7.Size = new System.Drawing.Size(72, 25);
             this.label7.TabIndex = 17;
@@ -294,11 +297,46 @@
             this.rtb_IsBodyHTML.UseVisualStyleBackColor = true;
             this.rtb_IsBodyHTML.CheckedChanged += new System.EventHandler(this.Rtb_IsBodyHTML_CheckedChanged);
             // 
+            // nmr_Minutes
+            // 
+            this.nmr_Minutes.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.nmr_Minutes.Location = new System.Drawing.Point(177, 235);
+            this.nmr_Minutes.Maximum = new decimal(new int[] {
+            60,
+            0,
+            0,
+            0});
+            this.nmr_Minutes.Minimum = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            this.nmr_Minutes.Name = "nmr_Minutes";
+            this.nmr_Minutes.Size = new System.Drawing.Size(109, 30);
+            this.nmr_Minutes.TabIndex = 28;
+            this.nmr_Minutes.Value = new decimal(new int[] {
+            1,
+            0,
+            0,
+            0});
+            // 
+            // label10
+            // 
+            this.label10.AutoSize = true;
+            this.label10.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.label10.Location = new System.Drawing.Point(172, 202);
+            this.label10.Name = "label10";
+            this.label10.Size = new System.Drawing.Size(88, 25);
+            this.label10.TabIndex = 27;
+            this.label10.Text = "Minutes";
+            // 
             // ReportSchechuleForm
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(839, 692);
+            this.Controls.Add(this.nmr_Minutes);
+            this.Controls.Add(this.label10);
             this.Controls.Add(this.rtb_IsBodyHTML);
             this.Controls.Add(this.rtb_comment);
             this.Controls.Add(this.txt_subject);
@@ -346,8 +384,11 @@
             this.Controls.SetChildIndex(this.txt_subject, 0);
             this.Controls.SetChildIndex(this.rtb_comment, 0);
             this.Controls.SetChildIndex(this.rtb_IsBodyHTML, 0);
+            this.Controls.SetChildIndex(this.label10, 0);
+            this.Controls.SetChildIndex(this.nmr_Minutes, 0);
             ((System.ComponentModel.ISupportInitialize)(this.nmr_hours)).EndInit();
             ((System.ComponentModel.ISupportInitialize)(this.nmr_date)).EndInit();
+            ((System.ComponentModel.ISupportInitialize)(this.nmr_Minutes)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -377,5 +418,7 @@
         private System.Windows.Forms.TextBox txt_subject;
         private System.Windows.Forms.RichTextBox rtb_comment;
         private System.Windows.Forms.RadioButton rtb_IsBodyHTML;
+        private System.Windows.Forms.NumericUpDown nmr_Minutes;
+        private System.Windows.Forms.Label label10;
     }
 }

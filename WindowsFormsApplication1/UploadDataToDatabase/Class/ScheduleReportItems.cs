@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Data;
 
 namespace UploadDataToDatabase.Class
 {
@@ -11,6 +12,7 @@ namespace UploadDataToDatabase.Class
 
         public string ReportName { get; set; }
         public string ReportType { get; set; }
+        public string Minutes { get; set; }
         public string Hours { get; set; }
         public string Day { get; set; }
         public string Date { get; set; }
@@ -41,5 +43,5 @@ namespace UploadDataToDatabase.Class
         public string Status { get; set; }
         public string Function { get; set; }
     }
-
+    
 }

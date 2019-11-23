@@ -67,9 +67,124 @@ namespace WindowsFormsApplication1.MQC
             catch (Exception ex)
             {
 
-                throw;
+                Log.Logfile.Output(Log.StatusLog.Error, "GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)", ex.Message);
             }
             return qCItemSummaries;
+        }
+        public MQCItemSummary GetMQCItemSummary(DateTime from, DateTime to, string site, string process)
+        {
+            MQCItemSummary itemSummary = new MQCItemSummary();
+
+            try
+            {
+                LoadDataMQC dataMQC = new LoadDataMQC();
+                List<MQCDataItems> mQCDataItems = dataMQC.listMQCDataItemsbySite(from, to, site, process);
+                //Nhom theo san pham
+                var ListItemsData = mQCDataItems
+               .GroupBy(u => u.item)
+               .Select(grp => grp.ToList())
+              .ToList();
+
+                var ListItemsTime = mQCDataItems
+            .GroupBy(u => u.inspecttime)
+           .ToList();
+
+             
+              
+                  
+                itemSummary.product = "";
+                    itemSummary.defectItems = new List<DefectItem>();
+                
+                    //Khi thay doi ngay can phai chinh lai thoi gian
+                    itemSummary.Time_from = mQCDataItems.Min(d => d.inspecttime).ToString();
+                    itemSummary.Time_To = mQCDataItems.Max(d =>d.inspecttime).ToString();
+
+                    foreach (var itemData in ListItemsData)
+                    {
+
+                        if (itemData[0].remark == "OP")
+                        {
+                           itemSummary.OutputQty = itemData.Select(d => d.data).Sum();
+                    }
+                        else if (itemData[0].remark == "NG")
+                    {
+                        DefectItem item = new DefectItem();
+                        item.DefectCode = itemData[0].item;
+                        item.Quantity = itemData.Select(d => d.data).Sum();
+                        LoadDefectMapping defectMapping = new LoadDefectMapping();
+                            NGItemsMapping nGItemsMapping = defectMapping.GetNGMapping(site, process, item.DefectCode);
+                            item.DefectSFT = nGItemsMapping.NGCode_SFT;
+                            item.DefectSFTName = nGItemsMapping.NGCodeName_SFT;
+                            itemSummary.defectItems.Add(item);
+                            itemSummary.NGQty += item.Quantity;
+                        }
+                    }
+                    itemSummary.QuantityTotal = itemSummary.OutputQty + itemSummary.NGQty;
+                    itemSummary.DefectRate = (itemSummary.QuantityTotal != 0) ? (itemSummary.NGQty / itemSummary.QuantityTotal) : 0;
+                  
+                
+            }
+            catch (Exception ex)
+            {
+
+                Log.Logfile.Output(Log.StatusLog.Error, "GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)", ex.Message);
+            }
+            return itemSummary;
+        }
+        public MQCItemSummary GetMQCItemSummarybyLot(DateTime from, DateTime to, string site, string process,string lot)
+        {
+            MQCItemSummary itemSummary = new MQCItemSummary();
+
+            try
+            {
+                LoadDataMQC dataMQC = new LoadDataMQC();
+                List<MQCDataItems> mQCDataItems = dataMQC.listMQCDataItemsbylot(from, to, process,lot);
+                //Nhom theo san pham
+                var ListItemsData = mQCDataItems
+               .GroupBy(u => u.item)
+               .Select(grp => grp.ToList())
+              .ToList();
+
+                var ListItemsTime = mQCDataItems
+            .GroupBy(u => u.inspecttime)
+           .ToList();
+              
+                itemSummary.defectItems = new List<DefectItem>();
+
+                //Khi thay doi ngay can phai chinh lai thoi gian
+                itemSummary.Time_from = mQCDataItems.Min(d => d.inspecttime).ToString();
+                itemSummary.Time_To = mQCDataItems.Max(d => d.inspecttime).ToString(); ;
+
+                foreach (var itemData in ListItemsData)
+                {
+                    itemSummary.product = itemData[0].model;
+                    if (itemData[0].remark == "OP")
+                    {
+                        itemSummary.OutputQty = itemData.Select(d => d.data).Sum();
+                    }
+                    else if (itemData[0].remark == "NG")
+                    {
+                        DefectItem item = new DefectItem();
+                        item.DefectCode = itemData[0].item;
+                        item.Quantity = itemData.Select(d => d.data).Sum();
+                        LoadDefectMapping defectMapping = new LoadDefectMapping();
+                        NGItemsMapping nGItemsMapping = defectMapping.GetNGMapping(site, process, item.DefectCode);
+                        item.DefectSFT = nGItemsMapping.NGCode_SFT;
+                        item.DefectSFTName = nGItemsMapping.NGCodeName_SFT;
+                        itemSummary.defectItems.Add(item);
+                        itemSummary.NGQty += item.Quantity;
+                    }
+                }
+                itemSummary.QuantityTotal = itemSummary.OutputQty + itemSummary.NGQty;
+                itemSummary.DefectRate = (itemSummary.QuantityTotal != 0) ? (itemSummary.NGQty / itemSummary.QuantityTotal) : 0;
+
+            }
+            catch (Exception ex)
+            {
+
+                Log.Logfile.Output(Log.StatusLog.Error, "GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)", ex.Message);
+            }
+            return itemSummary;
         }
     }
 }

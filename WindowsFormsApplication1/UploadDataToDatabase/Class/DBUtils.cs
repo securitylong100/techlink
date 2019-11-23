@@ -52,6 +52,27 @@ namespace UploadDataToDatabase
 
             return DBSQLServerUtils.GetERPDBConnection(datasource, database, username, password);
         }
+        public static SqlConnection GetSFTDBConnection()
+        {
+            //Data Source = LONG; Initial Catalog = TEST; Integrated Security = True
+            string datasource = "172.16.0.11";
+            string database = "SFT_TECHLINK";
+            string username = "soft";
+            string password = "techlink@!@#";
 
+
+            return DBSQLServerUtils.GetSFTDBConnection(datasource, database, username, password);
+        }
+        public static SqlConnection GetERPTargetBConnection()
+        {
+            //Data Source = LONG; Initial Catalog = TEST; Integrated Security = True
+            string datasource = "172.16.0.11";
+            string database = "SOT";
+            string username = "sa";
+            string password = "dsc@123";
+
+
+            return DBSQLServerUtils.GetSFTDBConnection(datasource, database, username, password);
+        }
     }
 }

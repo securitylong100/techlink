@@ -40,11 +40,12 @@
             this.lbl_hours = new System.Windows.Forms.Label();
             this.tableLayoutPanel1 = new System.Windows.Forms.TableLayoutPanel();
             this.panel1 = new System.Windows.Forms.Panel();
+            this.button2 = new System.Windows.Forms.Button();
+            this.button1 = new System.Windows.Forms.Button();
             this.groupBox1 = new System.Windows.Forms.GroupBox();
             this.cb_Backlog2Excel = new System.Windows.Forms.CheckBox();
             this.dgv_export = new System.Windows.Forms.DataGridView();
             this.panel2 = new System.Windows.Forms.Panel();
-            this.button3 = new System.Windows.Forms.Button();
             this.btn_startSendmail = new System.Windows.Forms.Button();
             this.groupBox2 = new System.Windows.Forms.GroupBox();
             this.nmr_secondSendmail = new System.Windows.Forms.NumericUpDown();
@@ -75,7 +76,7 @@
             // 
             // btn_Start
             // 
-            this.btn_Start.Location = new System.Drawing.Point(321, 48);
+            this.btn_Start.Location = new System.Drawing.Point(321, 74);
             this.btn_Start.Name = "btn_Start";
             this.btn_Start.Size = new System.Drawing.Size(98, 50);
             this.btn_Start.TabIndex = 1;
@@ -191,7 +192,7 @@
             this.tableLayoutPanel1.Name = "tableLayoutPanel1";
             this.tableLayoutPanel1.RowCount = 1;
             this.tableLayoutPanel1.RowStyles.Add(new System.Windows.Forms.RowStyle(System.Windows.Forms.SizeType.Percent, 50.51546F));
-            this.tableLayoutPanel1.Size = new System.Drawing.Size(1058, 438);
+            this.tableLayoutPanel1.Size = new System.Drawing.Size(1058, 389);
             this.tableLayoutPanel1.TabIndex = 29;
             // 
             // panel1
@@ -199,14 +200,36 @@
             this.panel1.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
+            this.panel1.Controls.Add(this.button2);
+            this.panel1.Controls.Add(this.button1);
             this.panel1.Controls.Add(this.groupBox1);
             this.panel1.Controls.Add(this.btn_Start);
             this.panel1.Controls.Add(this.groupBox3);
             this.panel1.Controls.Add(this.dgv_export);
             this.panel1.Location = new System.Drawing.Point(3, 3);
             this.panel1.Name = "panel1";
-            this.panel1.Size = new System.Drawing.Size(444, 432);
+            this.panel1.Size = new System.Drawing.Size(444, 383);
             this.panel1.TabIndex = 0;
+            // 
+            // button2
+            // 
+            this.button2.Location = new System.Drawing.Point(342, 248);
+            this.button2.Name = "button2";
+            this.button2.Size = new System.Drawing.Size(88, 28);
+            this.button2.TabIndex = 35;
+            this.button2.Text = "button2";
+            this.button2.UseVisualStyleBackColor = true;
+            this.button2.Click += new System.EventHandler(this.Button2_Click);
+            // 
+            // button1
+            // 
+            this.button1.Location = new System.Drawing.Point(321, 13);
+            this.button1.Name = "button1";
+            this.button1.Size = new System.Drawing.Size(98, 55);
+            this.button1.TabIndex = 34;
+            this.button1.Text = "MQC Report";
+            this.button1.UseVisualStyleBackColor = true;
+            this.button1.Click += new System.EventHandler(this.Button1_Click_2);
             // 
             // groupBox1
             // 
@@ -217,7 +240,7 @@
             this.groupBox1.Font = new System.Drawing.Font("Microsoft Sans Serif", 12F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
             this.groupBox1.Location = new System.Drawing.Point(0, 124);
             this.groupBox1.Name = "groupBox1";
-            this.groupBox1.Size = new System.Drawing.Size(441, 96);
+            this.groupBox1.Size = new System.Drawing.Size(441, 118);
             this.groupBox1.TabIndex = 33;
             this.groupBox1.TabStop = false;
             this.groupBox1.Text = "Task Run";
@@ -237,12 +260,12 @@
             // dgv_export
             // 
             this.dgv_export.ColumnHeadersHeightSizeMode = System.Windows.Forms.DataGridViewColumnHeadersHeightSizeMode.AutoSize;
-            this.dgv_export.Location = new System.Drawing.Point(6, 315);
+            this.dgv_export.Location = new System.Drawing.Point(0, 282);
             this.dgv_export.Name = "dgv_export";
             this.dgv_export.ReadOnly = true;
             this.dgv_export.RowHeadersWidth = 51;
             this.dgv_export.RowTemplate.Height = 24;
-            this.dgv_export.Size = new System.Drawing.Size(437, 108);
+            this.dgv_export.Size = new System.Drawing.Size(437, 69);
             this.dgv_export.TabIndex = 32;
             this.dgv_export.Visible = false;
             // 
@@ -251,7 +274,6 @@
             this.panel2.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
             | System.Windows.Forms.AnchorStyles.Left) 
             | System.Windows.Forms.AnchorStyles.Right)));
-            this.panel2.Controls.Add(this.button3);
             this.panel2.Controls.Add(this.btn_startSendmail);
             this.panel2.Controls.Add(this.groupBox2);
             this.panel2.Controls.Add(this.btn_Remove);
@@ -261,18 +283,8 @@
             this.panel2.Location = new System.Drawing.Point(455, 5);
             this.panel2.Margin = new System.Windows.Forms.Padding(5);
             this.panel2.Name = "panel2";
-            this.panel2.Size = new System.Drawing.Size(598, 428);
+            this.panel2.Size = new System.Drawing.Size(598, 379);
             this.panel2.TabIndex = 1;
-            // 
-            // button3
-            // 
-            this.button3.Location = new System.Drawing.Point(467, 91);
-            this.button3.Name = "button3";
-            this.button3.Size = new System.Drawing.Size(119, 56);
-            this.button3.TabIndex = 38;
-            this.button3.Text = "Send Manual";
-            this.button3.UseVisualStyleBackColor = true;
-            this.button3.Click += new System.EventHandler(this.Button3_Click);
             // 
             // btn_startSendmail
             // 
@@ -402,7 +414,7 @@
             this.dgv_show.Name = "dgv_show";
             this.dgv_show.RowHeadersWidth = 51;
             this.dgv_show.RowTemplate.Height = 24;
-            this.dgv_show.Size = new System.Drawing.Size(591, 264);
+            this.dgv_show.Size = new System.Drawing.Size(591, 215);
             this.dgv_show.TabIndex = 31;
             this.dgv_show.CellContentClick += new System.Windows.Forms.DataGridViewCellEventHandler(this.Dgv_show_CellContentClick);
             // 
@@ -420,7 +432,7 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(9F, 17F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(1078, 551);
+            this.ClientSize = new System.Drawing.Size(1078, 502);
             this.Controls.Add(this.tableLayoutPanel1);
             this.Controls.Add(this.lbl_tittle);
             this.Icon = ((System.Drawing.Icon)(resources.GetObject("$this.Icon")));
@@ -480,7 +492,8 @@
         private System.Windows.Forms.DataGridView dgv_export;
         private System.Windows.Forms.GroupBox groupBox1;
         private System.Windows.Forms.CheckBox cb_Backlog2Excel;
-        private System.Windows.Forms.Button button3;
+        private System.Windows.Forms.Button button1;
+        private System.Windows.Forms.Button button2;
     }
 }
 

@@ -15,7 +15,7 @@ namespace WindowsFormsApplication1
     {
         DataTable dt;
         DataTable dtShipping;
-        DataTable dtshow;
+      
         public CrisisReportShow()
         {
             InitializeComponent();

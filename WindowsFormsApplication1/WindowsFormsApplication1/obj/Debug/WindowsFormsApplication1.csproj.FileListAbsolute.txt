@@ -337,3 +337,9 @@ D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\Normal_Status.PNG
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\High_Defect_Status.PNG
 D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MQC.SummaryWindow.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\Template_MQC.xlsx
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\Month.xls
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\Week.xls
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\MQC-PQC_Template.xlsx
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\obj\Debug\WindowsFormsApplication1.MQC.MaterialManagement.resources
+D:\AN\Project\TechLink_master\WindowsFormsApplication1\WindowsFormsApplication1\bin\Debug\Resources\expand-icon.png

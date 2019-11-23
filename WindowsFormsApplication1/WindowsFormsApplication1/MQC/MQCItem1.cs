@@ -19,6 +19,7 @@ namespace WindowsFormsApplication1.MQC
         public double percentNG { get; set; }
         public double TotalRework { get; set; }
         public double percentRework { get; set; }
+        public TargetMQC TargetMQC { get; set; }
         public List<NGItems> listNGItems { get; set; }
         public List<NGItems> listRWItems { get; set; }
         public string Status { get; set; }
@@ -39,6 +40,7 @@ namespace WindowsFormsApplication1.MQC
         public string NGCodeName_Process { get; set; }
         public string NGCode_SFT { get; set; }
         public string NGCodeName_SFT { get; set; }
+        public int Note { get; set; }
     }
     public class MQCDataItems
     {
@@ -78,6 +80,29 @@ namespace WindowsFormsApplication1.MQC
         public string DefectSFT{ get; set; }
         public string DefectSFTName { get; set; }
         public double Quantity { get; set; }
+        public int Note{ get; set; }
+    }
+    public class TargetMQC
+    {
+        public string model { get; set; }
+        public string Date { get; set; }
+        public int month { get; set; }
+        public int year { get; set; }
+        public double TargetOutput { get; set; }
+        public double TargetDefect { get; set; }
+    }
+ public   class DefectRateData
+    {
+        public string DateTime_from { get; set; }
+        public string DateTime_to { get; set; }
+        public string Product { get; set; }
+        public string Lot { get; set; }
+        public double TotalQuantity { get; set; }
+        public double OutputQuantity { get; set; }
+        public double DefectQuantity { get; set; }
+        public double DefectRate { get; set; }
+        public List<DefectItem> defectItems { get; set; }//top 5 + khac
+
     }
 }
 

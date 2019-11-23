@@ -25,8 +25,8 @@ namespace UploadDataToDatabase.FormConfig
 
             sqlCON connect = new sqlCON();
 
-            string sqladd = @"insert into t_report_schedule (reportname, reporttype, hours, day, date,month,isBodyHTML, subject, attach,comments,inputdate) values ('"
-+ txt_ReportName.Text + "','" + cmb_typeReport.Text + "','"
+            string sqladd = @"insert into t_report_schedule (reportname, reporttype, Minutes,hours, day, date,month,isBodyHTML, subject, attach,comments,inputdate) values ('"
++ txt_ReportName.Text + "','" + cmb_typeReport.Text + "','"+ nmr_Minutes.Value.ToString() + "','"
 + nmr_hours.Value.ToString() + "','" + cmb_day.Text+ "','"+ nmr_date.Value.ToString()+ "','"+ cmb_month.Text+ "','"+ rtb_IsBodyHTML.Checked.ToString()+"','" +txt_subject.Text+ "','"+ txt_attach.Text+ "','"+ rtb_comment.Text+ "',GETDATE())";
             connect.sqlExecuteNonQuery(sqladd, false);
             this.Close();
@@ -37,6 +37,7 @@ namespace UploadDataToDatabase.FormConfig
         {
             if(cmb_typeReport.Text == "Daily")
             {
+                nmr_Minutes.Visible = true;
                 nmr_hours.Visible = true;
                 cmb_day.Visible = false;
                 nmr_date.Visible = false;
@@ -44,6 +45,7 @@ namespace UploadDataToDatabase.FormConfig
             }
             else if (cmb_typeReport.Text == "Weekly")
             {
+                nmr_Minutes.Visible = true;
                 nmr_hours.Visible = true;
                 cmb_day.Visible = true;
                 nmr_date.Visible = false;
@@ -51,6 +53,7 @@ namespace UploadDataToDatabase.FormConfig
             }
             else if (cmb_typeReport.Text == "Monthly")
             {
+                nmr_Minutes.Visible = true;
                 nmr_hours.Visible = true;
                 cmb_day.Visible =false;
                 nmr_date.Visible = true;
@@ -58,6 +61,7 @@ namespace UploadDataToDatabase.FormConfig
             }
             else if (cmb_typeReport.Text == "Yearly")
             {
+                nmr_Minutes.Visible = true;
                 nmr_hours.Visible = true;
                 cmb_day.Visible = false;
                 nmr_date.Visible = true;
@@ -86,7 +90,7 @@ namespace UploadDataToDatabase.FormConfig
                 cmb_month.Items.Add(month.ToString("MMMM"));
                 month= month.AddMonths(1);
             }
-
+            nmr_Minutes.Visible = false;
             nmr_hours.Visible = false;
             cmb_day.Visible = false;
             nmr_date.Visible = false;

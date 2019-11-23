@@ -16,7 +16,11 @@ namespace UploadDataToDatabase
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            Application.Run(new Form1());
+             Application.Run(new Form1());
+        //    Application.Run(new FormConfig.FormDataGridShow());
+            //   Application.Run(new Report.ReliabilityReportWeekly());
+        //  Application.Run(new Report.ReliabilityReportMonthly());
+          //  Application.Run(new Report.BacklogReport());
         }
     }
 }
