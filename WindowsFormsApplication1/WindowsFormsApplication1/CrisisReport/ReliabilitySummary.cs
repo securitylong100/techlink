@@ -67,7 +67,7 @@ and  coptcs.TC027 = 'Y'
                 catch (Exception ex)
                 {
 
-                   // Log.Logfile.Output(Log.StatusLog.Error, "GetDataProductionOrder() : " + ex.Message);
+                    Log.Logfile.Output(Log.StatusLog.Error, "GetDataProductionOrder() : " + ex.Message);
                 }
             }
 

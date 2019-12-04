@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "WindowsFormsApplication1", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "UploadDataToDatabase", "UploadDataToDatabase\UploadDataToDatabase.csproj", "{C2D84CA4-1056-4773-B8FA-ECC8E6C9F58C}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "TLMSClient", "..\TLMSClient\TLMSClient.csproj", "{6FC9FC61-D2C3-456B-BA67-DB933FF13582}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{C2D84CA4-1056-4773-B8FA-ECC8E6C9F58C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{C2D84CA4-1056-4773-B8FA-ECC8E6C9F58C}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{C2D84CA4-1056-4773-B8FA-ECC8E6C9F58C}.Release|Any CPU.Build.0 = Release|Any CPU
+		{6FC9FC61-D2C3-456B-BA67-DB933FF13582}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FC9FC61-D2C3-456B-BA67-DB933FF13582}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FC9FC61-D2C3-456B-BA67-DB933FF13582}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FC9FC61-D2C3-456B-BA67-DB933FF13582}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

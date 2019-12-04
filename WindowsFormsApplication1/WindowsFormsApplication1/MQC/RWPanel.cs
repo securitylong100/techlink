@@ -27,8 +27,18 @@ namespace WindowsFormsApplication1.MQC
         {
             LoadListLabelNG();
             LoadListLabelNGName();
-            if (NGItems == null)
+            if (NGItems == null || NGItems.Count == 0)
+            {
+                for (int i = 0; i < 32; i++)
+                {
+
+                    listLabelName[i].Text = "";
+                    listLabel[i].Text = "";
+                    //  listLabelName[i].Update();
+
+                }
                 return;
+            }
             else if (NGItems.Count > 0)
             {
                 var ListItems = NGItems
@@ -46,7 +56,7 @@ namespace WindowsFormsApplication1.MQC
                     //  listLabelName[i].Update();
 
                 }
-                for (int i = listOfLists.Count; i < 20; i++)
+                for (int i = listOfLists.Count; i < 32; i++)
                 {
 
                     listLabelName[i].Text = "";
@@ -78,6 +88,18 @@ namespace WindowsFormsApplication1.MQC
             listLabel.Add(lb_NGValue18);
             listLabel.Add(lb_NGValue19);
             listLabel.Add(lb_NGValue20);
+            listLabel.Add(lb_NGValue21);
+            listLabel.Add(lb_NGValue22);
+            listLabel.Add(lb_NGValue23);
+            listLabel.Add(lb_NGValue24);
+            listLabel.Add(lb_NGValue25);
+            listLabel.Add(lb_NGValue26);
+            listLabel.Add(lb_NGValue27);
+            listLabel.Add(lb_NGValue28);
+            listLabel.Add(lb_NGValue29);
+            listLabel.Add(lb_NGValue30);
+            listLabel.Add(lb_NGValue31);
+            listLabel.Add(lb_NGValue32);
         }
         public void LoadListLabelNGName()
         {
@@ -101,6 +123,18 @@ namespace WindowsFormsApplication1.MQC
             listLabelName.Add(lb_NG18);
             listLabelName.Add(lb_NG19);
             listLabelName.Add(lb_NG20);
+            listLabelName.Add(lb_NG21);
+            listLabelName.Add(lb_NG22);
+            listLabelName.Add(lb_NG23);
+            listLabelName.Add(lb_NG24);
+            listLabelName.Add(lb_NG25);
+            listLabelName.Add(lb_NG26);
+            listLabelName.Add(lb_NG27);
+            listLabelName.Add(lb_NG28);
+            listLabelName.Add(lb_NG29);
+            listLabelName.Add(lb_NG30);
+            listLabelName.Add(lb_NG31);
+            listLabelName.Add(lb_NG32);
         }
     }
 }

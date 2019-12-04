@@ -1,3 +1,0 @@
-source=D:\CSV\
-save=D:\CSV_Backup\
-timer=2

@@ -20,10 +20,12 @@ namespace WindowsFormsApplication1.MQC
             {
 
             LoadDefectMapping defectMapping = new LoadDefectMapping();
-            List<NGItemsMapping> nGItemsMappings = defectMapping.listNGMapping("B01");
-          
+            List<NGItemsMapping> nGItemsMappings = defectMapping.listNGMapping("B01","MQC");
+                mQCItem.TargetMQC = new TargetMQC();
+                LoadTargetProduction loadTarget = new LoadTargetProduction();
+                mQCItem.TargetMQC = loadTarget.GetTargetMQC(model, DateTime.Now.Date.ToString("yyyyMMdd"));
             List<MQCDataItems> listMQC = new List<MQCDataItems>();
-            listMQC= listMQCDataItems(from, to, model, lot, site, process);
+            listMQC= listMQCDataItems(from, to, model, lot, process);
             //Load MQCItem to show
             mQCItem.process = process;
             mQCItem.department = site;
@@ -86,14 +88,20 @@ namespace WindowsFormsApplication1.MQC
                 mQCItem.listRWItems.Add(nGItems);
             }
             List<MQCDataItems> listMQC_Error = new List<MQCDataItems>();
-            listMQC_Error = listMQCData_ErrorItems(from, to, model, lot, site, process);
+            listMQC_Error = listMQCData_ErrorItems(from, to, model, lot, process);
             mQCItem.InputMaterialNotYet = listMQC_Error.Where(w =>w.remark == "OP" || w.remark == "NG").Select(d=>d.data).ToArray().Sum();
-                if(mQCItem.InputMaterialNotYet > 0)
+                double targetDefect = 0;
+                if (mQCItem.TargetMQC.TargetOutput != 0)
+                {
+                   targetDefect = (mQCItem.TargetMQC.TargetDefect / (mQCItem.TargetMQC.TargetDefect + mQCItem.TargetMQC.TargetOutput));
+                }
+               
+                if (mQCItem.InputMaterialNotYet > 0)
                 {
                     mQCItem.Status = ProductionStatus.ShortageMaterial.ToString();
                     mQCItem.Measage = "Please supply material for production";
                 }
-                else if (mQCItem.percentNG > 0.1)
+                else if (mQCItem.percentNG > targetDefect && targetDefect >0)
                 {
                     mQCItem.Status = ProductionStatus.HighDefect.ToString();
                     mQCItem.Measage = "Defect is too much";
@@ -124,7 +132,7 @@ namespace WindowsFormsApplication1.MQC
             List<MQCDataItems> listMQC = new List<MQCDataItems>();
             listMQC = listMQCDataItemsbySite(from, to, site, process);
             var ListItems = listMQC
-    .GroupBy(u => u.model)
+    .GroupBy(u => u.lot)
     .Select(grp => grp.ToList())
     .ToList();
 
@@ -136,7 +144,10 @@ namespace WindowsFormsApplication1.MQC
                 mQCItem.department = site;
                 mQCItem.product = mQCDatas[0].model;
                 mQCItem.PO = mQCDatas[0].lot;
-                var TotalOutputQty = mQCDatas
+                    mQCItem.TargetMQC = new TargetMQC();
+                    LoadTargetProduction loadTarget = new LoadTargetProduction();
+                    mQCItem.TargetMQC = loadTarget.GetTargetMQC(mQCItem.product, DateTime.Now.Date.ToString("yyyyMMdd"));
+                    var TotalOutputQty = mQCDatas
                     .Where(d => d.remark == "OP")
                     .Select((s => s.data))
                     .ToList();
@@ -154,14 +165,19 @@ namespace WindowsFormsApplication1.MQC
                 mQCItem.percentNG = (mQCItem.TotalOutput + mQCItem.TotalNG + mQCItem.TotalRework) != 0 ? mQCItem.TotalNG / (mQCItem.TotalOutput + mQCItem.TotalNG + mQCItem.TotalRework) : 0;
                 mQCItem.percentRework = (mQCItem.TotalOutput + mQCItem.TotalNG + mQCItem.TotalRework) != 0 ? mQCItem.TotalRework / (mQCItem.TotalOutput + mQCItem.TotalNG + mQCItem.TotalRework) : 0;
                     List<MQCDataItems> listMQC_Error = new List<MQCDataItems>();
-                    listMQC_Error = listMQCData_ErrorItems(from, to, mQCItem.product, mQCItem.PO, site, process);
+                    listMQC_Error = listMQCData_ErrorItems(from, to, mQCItem.product, mQCItem.PO, process);
                     mQCItem.InputMaterialNotYet = listMQC_Error.Where(w => w.remark == "OP" || w.remark == "NG").Select(d => d.data).ToArray().Sum();
+                    double targetDefect = 0;
+                    if (mQCItem.TargetMQC.TargetOutput != 0)
+                    {
+                        targetDefect = (mQCItem.TargetMQC.TargetDefect / (mQCItem.TargetMQC.TargetDefect + mQCItem.TargetMQC.TargetOutput));
+                    }
                     if (mQCItem.InputMaterialNotYet > 0)
                     {
                         mQCItem.Status = ProductionStatus.ShortageMaterial.ToString();
                         mQCItem.Measage = "Please supply material for production";
                     }
-                    else if (mQCItem.percentNG > 0.1)
+                    else if (mQCItem.percentNG > targetDefect && targetDefect > 0)
                     {
                         mQCItem.Status = ProductionStatus.HighDefect.ToString();
                         mQCItem.Measage = "Defect is too much";
@@ -184,7 +200,7 @@ namespace WindowsFormsApplication1.MQC
             return listMQCReturn;
 
         }
-        public List<MQCDataItems> listMQCDataItems(DateTime from, DateTime to, string model,string lot, string site, string process)
+        public List<MQCDataItems> listMQCDataItems(DateTime from, DateTime to, string model,string lot, string process)
         {
             List<MQCDataItems> listMQCDataItems = new List<MQCDataItems>();
             try
@@ -192,13 +208,12 @@ namespace WindowsFormsApplication1.MQC
 
             StringBuilder sql = new StringBuilder();
             sql.Append("select distinct serno, lot, model, site, factory, line, process, item, inspectdate, inspecttime, data, judge, status, remark ");
-            sql.Append("from m_ERPMQC ");
-            sql.Append("where 1=1 ");
+            sql.Append("from m_ERPMQC_REALTIME ");
+            sql.Append("where 1=1  and data  != '0' ");
             sql.Append("and model = '" + model + "' ");
-            sql.Append("and lot like '%" + lot + "%' ");
-            sql.Append("and site = '" + site + "' ");
+            sql.Append("and lot = '" + lot + "' ");
             sql.Append("and process = '" + process + "' ");
-            //sql.Append("and inspectdate > '" + from + "' ");
+           sql.Append("and inspectdate >= '" + from.ToString("yyyy-MM-dd") + "' ") ;
             //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
             sqlCON sql12 = new sqlCON();
             DataTable dt = new DataTable();
@@ -214,9 +229,9 @@ namespace WindowsFormsApplication1.MQC
                                line = dr["line"].ToString(),
                                process = dr["process"].ToString(),
                                item = dr["item"].ToString(),
-                               inspectdate = DateTime.Parse (dr["inspectdate"].ToString()),
-                               inspecttime = TimeSpan.Parse(dr["inspecttime"].ToString()),
-                               data =double.Parse( dr["data"].ToString()),
+                               inspectdate =(dr["inspectdate"].ToString() != "")?  DateTime.Parse (dr["inspectdate"].ToString()): DateTime.MinValue,
+                               inspecttime =(dr["inspecttime"].ToString() != "")?  TimeSpan.Parse(dr["inspecttime"].ToString()) : TimeSpan.MinValue,
+                               data =(dr["data"].ToString() != "") ? double.Parse( dr["data"].ToString()): 0,
                                judge = dr["judge"].ToString(),
                                status = dr["status"].ToString(),
                                remark = dr["remark"].ToString()
@@ -240,13 +255,13 @@ namespace WindowsFormsApplication1.MQC
           //  List<MQCDataItems> listMQCDataItems = new List<MQCDataItems>();
             StringBuilder sql = new StringBuilder();
             sql.Append("select distinct serno, lot, model, site, factory, line, process, item, inspectdate, inspecttime, data, judge, status, remark ");
-            sql.Append("from m_ERPMQC ");
-            sql.Append("where 1=1 ");
-            sql.Append("and site = '" + site + "' ");
+            sql.Append("from m_ERPMQC_REALTIME ");
+                sql.Append("where 1=1  and data  != '0' ");
+                sql.Append("and site = '" + site + "' ");
             sql.Append("and process = '" + process + "' ");
-            //sql.Append("and inspectdate > '" + from + "' ");
-            //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
-            sqlCON sql12 = new sqlCON();
+            sql.Append("and inspectdate >= '" + from.ToString("yyyy-MM-dd") + "' ");
+                //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
+                sqlCON sql12 = new sqlCON();
             DataTable dt = new DataTable();
             sql12.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
             listMQCDataItems = (from DataRow dr in dt.Rows
@@ -260,9 +275,9 @@ namespace WindowsFormsApplication1.MQC
                                     line = dr["line"].ToString(),
                                     process = dr["process"].ToString(),
                                     item = dr["item"].ToString(),
-                                    inspectdate = DateTime.Parse(dr["inspectdate"].ToString()),
-                                    inspecttime = TimeSpan.Parse(dr["inspecttime"].ToString()),
-                                    data = double.Parse(dr["data"].ToString()),
+                                    inspectdate = (dr["inspectdate"].ToString() != "") ? DateTime.Parse(dr["inspectdate"].ToString()) : DateTime.MinValue,
+                                    inspecttime = (dr["inspecttime"].ToString() != "") ? TimeSpan.Parse(dr["inspecttime"].ToString()) : TimeSpan.MinValue,
+                                    data = (dr["data"].ToString() != "") ? double.Parse(dr["data"].ToString()) : 0,
                                     judge = dr["judge"].ToString(),
                                     status = dr["status"].ToString(),
                                     remark = dr["remark"].ToString()
@@ -277,7 +292,54 @@ namespace WindowsFormsApplication1.MQC
 
             return listMQCDataItems;
         }
-        public List<MQCDataItems> listMQCData_ErrorItems(DateTime from, DateTime to, string model, string lot, string site, string process)
+        public List<MQCDataItems> listMQCDataItemsbylot(DateTime from, DateTime to, string process, string lot)
+        {
+            List<MQCDataItems> listMQCDataItems = new List<MQCDataItems>();
+            try
+            {
+
+
+                //  List<MQCDataItems> listMQCDataItems = new List<MQCDataItems>();
+                StringBuilder sql = new StringBuilder();
+                sql.Append("select distinct serno, lot, model, site, factory, line, process, item, inspectdate, inspecttime, data, judge, status, remark ");
+                sql.Append("from m_ERPMQC_REALTIME ");
+                sql.Append("where 1=1  and data  != '0' ");
+                sql.Append("and process = '" + process + "' ");
+                sql.Append("and lot = '" + lot + "' ");
+                sql.Append("and inspectdate >= '" + from.ToString("yyyy-MM-dd") + "' ");
+                //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
+                sqlCON sql12 = new sqlCON();
+                DataTable dt = new DataTable();
+                sql12.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
+                listMQCDataItems = (from DataRow dr in dt.Rows
+                                    select new MQCDataItems()
+                                    {
+                                        serno = dr["serno"].ToString(),
+                                        lot = dr["lot"].ToString(),
+                                        model = dr["model"].ToString(),
+                                        site = dr["site"].ToString(),
+                                        factory = dr["factory"].ToString(),
+                                        line = dr["line"].ToString(),
+                                        process = dr["process"].ToString(),
+                                        item = dr["item"].ToString(),
+                                        inspectdate = (dr["inspectdate"].ToString() != "") ? DateTime.Parse(dr["inspectdate"].ToString()) : DateTime.MinValue,
+                                        inspecttime = (dr["inspecttime"].ToString() != "") ? TimeSpan.Parse(dr["inspecttime"].ToString()) : TimeSpan.MinValue,
+                                        data = (dr["data"].ToString() != "") ? double.Parse(dr["data"].ToString()) : 0,
+                                        judge = dr["judge"].ToString(),
+                                        status = dr["status"].ToString(),
+                                        remark = dr["remark"].ToString()
+
+                                    }).ToList();
+            }
+            catch (Exception ex)
+            {
+
+                Log.Logfile.Output(Log.StatusLog.Error, "listMQCDataItemsbySite()", ex.Message);
+            }
+
+            return listMQCDataItems;
+        }
+        public List<MQCDataItems> listMQCData_ErrorItems(DateTime from, DateTime to, string model, string lot, string process)
         {
             List<MQCDataItems> listMQCDataItems = new List<MQCDataItems>();
             try
@@ -289,12 +351,11 @@ namespace WindowsFormsApplication1.MQC
             sql.Append("from m_ERPMQC_Error ");
             sql.Append("where 1=1 and status !='OK' ");
             sql.Append("and model = '" + model + "' ");
-            sql.Append("and lot like '%" + lot + "%' ");
-            sql.Append("and site = '" + site + "' ");
-            sql.Append("and process = '" + process + "' ");
-            //sql.Append("and inspectdate > '" + from + "' ");
-            //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
-            sqlCON sql12 = new sqlCON();
+            sql.Append("and lot = '" + lot + "' ");
+             sql.Append("and process = '" + process + "' ");
+             sql.Append("and inspectdate >= '" + from.ToString("yyyy-MM-dd") + "' ");
+                //sql.Append("and inspecttime > '" + to.TimeOfDay + "' ");
+                sqlCON sql12 = new sqlCON();
             DataTable dt = new DataTable();
             sql12.sqlDataAdapterFillDatatable(sql.ToString(), ref dt);
             listMQCDataItems = (from DataRow dr in dt.Rows
@@ -308,9 +369,9 @@ namespace WindowsFormsApplication1.MQC
                                     line = dr["line"].ToString(),
                                     process = dr["process"].ToString(),
                                     item = dr["item"].ToString(),
-                                    inspectdate = DateTime.Parse(dr["inspectdate"].ToString()),
-                                    inspecttime = TimeSpan.Parse(dr["inspecttime"].ToString()),
-                                    data = double.Parse(dr["data"].ToString()),
+                                    inspectdate = (dr["inspectdate"].ToString() != "") ? DateTime.Parse(dr["inspectdate"].ToString()) : DateTime.MinValue,
+                                    inspecttime = (dr["inspecttime"].ToString() != "") ? TimeSpan.Parse(dr["inspecttime"].ToString()) : TimeSpan.MinValue,
+                                    data = (dr["data"].ToString() != "") ? double.Parse(dr["data"].ToString()) : 0,
                                     judge = dr["judge"].ToString(),
                                     status = dr["status"].ToString(),
                                     remark = dr["remark"].ToString()
@@ -325,20 +386,7 @@ namespace WindowsFormsApplication1.MQC
 
             return listMQCDataItems;
         }
-        public NGItems GetNGItems(string Dept, string process, string NBPLC)
-        {
-            NGItems GetNGItems = new NGItems();
-            try
-            {
-
-            }
-            catch (Exception ex)
-            {
-
-                throw;
-            }
-            return GetNGItems;
-        }
+       
         
 
 

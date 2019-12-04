@@ -26,7 +26,7 @@
     <InstallUrl>\\172.16.0.12\Softwarepublish\</InstallUrl>
     <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
     <WebPage>publish.html</WebPage>
-    <ApplicationRevision>21</ApplicationRevision>
+    <ApplicationRevision>46</ApplicationRevision>
     <ApplicationVersion>1.0.0.%2a</ApplicationVersion>
     <UseApplicationTrust>false</UseApplicationTrust>
     <PublishWizardCompleted>true</PublishWizardCompleted>
@@ -130,6 +130,7 @@
     <Compile Include="ChartDrawing\ChartDrawing.cs" />
     <Compile Include="ChartDrawing\LiveChart.cs" />
     <Compile Include="Class\sqlERPCON.cs" />
+    <Compile Include="Class\SQLERPTarget.cs" />
     <Compile Include="Class\sqlSFT.cs" />
     <Compile Include="Class\ToolSupport.cs" />
     <Compile Include="Class\valiballecommon.cs" />
@@ -265,12 +266,21 @@
     <Compile Include="MQC\LoadDataMQC.cs" />
     <Compile Include="MQC\LoadDataSummary.cs" />
     <Compile Include="MQC\LoadDefectMapping.cs" />
+    <Compile Include="MQC\LoadTargetProduction.cs" />
+    <Compile Include="MQC\MaterialManagement.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="MQC\MaterialManagement.Designer.cs">
+      <DependentUpon>MaterialManagement.cs</DependentUpon>
+    </Compile>
     <Compile Include="MQC\MQCChart.cs">
       <SubType>Form</SubType>
     </Compile>
     <Compile Include="MQC\MQCChart.Designer.cs">
       <DependentUpon>MQCChart.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\MQCClass\CheckMaterial.cs" />
+    <Compile Include="MQC\MQCClass\Material.cs" />
     <Compile Include="MQC\MQCItem1.cs" />
     <Compile Include="MQC\MQCShowForm.cs">
       <SubType>Form</SubType>
@@ -290,6 +300,7 @@
     <Compile Include="MQC\ProductionMain.Designer.cs">
       <DependentUpon>ProductionMain.cs</DependentUpon>
     </Compile>
+    <Compile Include="MQC\Report\DefectRateReport.cs" />
     <Compile Include="MQC\RWPanel.cs">
       <SubType>UserControl</SubType>
     </Compile>
@@ -309,6 +320,26 @@
       <DependentUpon>TargetProdution.cs</DependentUpon>
     </Compile>
     <Compile Include="MQC\TargetProduction\TargetToDatabase.cs" />
+    <Compile Include="Planning\LoadDataPlanning.cs" />
+    <Compile Include="Planning\OrderVariable.cs" />
+    <Compile Include="Planning\PlanningConfigure.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Planning\PlanningConfigure.Designer.cs">
+      <DependentUpon>PlanningConfigure.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Planning\PlanningMain.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Planning\PlanningMain.Designer.cs">
+      <DependentUpon>PlanningMain.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Planning\SettingDataPlanning.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Planning\SettingDataPlanning.Designer.cs">
+      <DependentUpon>SettingDataPlanning.cs</DependentUpon>
+    </Compile>
     <Compile Include="PQM\ConnectData\Adruino\Adruino.cs">
       <SubType>Form</SubType>
     </Compile>
@@ -340,6 +371,18 @@
     </Compile>
     <Compile Include="SettingForm\DeptForm\DeptForm.Designer.cs">
       <DependentUpon>DeptForm.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingForm\IPPLC\AddIPPLC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\IPPLC\AddIPPLC.Designer.cs">
+      <DependentUpon>AddIPPLC.cs</DependentUpon>
+    </Compile>
+    <Compile Include="SettingForm\IPPLC\IPPLC.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="SettingForm\IPPLC\IPPLC.Designer.cs">
+      <DependentUpon>IPPLC.cs</DependentUpon>
     </Compile>
     <Compile Include="SettingForm\Line-ModelForm\ModelLine.cs">
       <SubType>Form</SubType>
@@ -402,6 +445,24 @@
       <DependentUpon>RegisterUserForm.cs</DependentUpon>
     </Compile>
     <Compile Include="Class\sqlCON.cs" />
+    <Compile Include="Warehouse\CheckMaterial.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Warehouse\CheckMaterial.Designer.cs">
+      <DependentUpon>CheckMaterial.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse\QtyStationController\QtyStationCotroller.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Warehouse\QtyStationController\QtyStationCotroller.Designer.cs">
+      <DependentUpon>QtyStationCotroller.cs</DependentUpon>
+    </Compile>
+    <Compile Include="Warehouse\WarehouseAlarm.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="Warehouse\WarehouseAlarm.Designer.cs">
+      <DependentUpon>WarehouseAlarm.cs</DependentUpon>
+    </Compile>
     <EmbeddedResource Include="CommonForm.resx">
       <DependentUpon>CommonForm.cs</DependentUpon>
     </EmbeddedResource>
@@ -462,6 +523,9 @@
     <EmbeddedResource Include="MQC\LineUI.resx">
       <DependentUpon>LineUI.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="MQC\MaterialManagement.resx">
+      <DependentUpon>MaterialManagement.cs</DependentUpon>
+    </EmbeddedResource>
     <EmbeddedResource Include="MQC\MQCChart.resx">
       <DependentUpon>MQCChart.cs</DependentUpon>
     </EmbeddedResource>
@@ -482,6 +546,15 @@
     </EmbeddedResource>
     <EmbeddedResource Include="MQC\TargetProduction\TargetProdution.resx">
       <DependentUpon>TargetProdution.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Planning\PlanningConfigure.resx">
+      <DependentUpon>PlanningConfigure.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Planning\PlanningMain.resx">
+      <DependentUpon>PlanningMain.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Planning\SettingDataPlanning.resx">
+      <DependentUpon>SettingDataPlanning.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="PQM\ConnectData\Adruino\Adruino.resx">
       <DependentUpon>Adruino.cs</DependentUpon>
@@ -507,6 +580,12 @@
     </EmbeddedResource>
     <EmbeddedResource Include="SettingForm\DeptForm\DeptForm.resx">
       <DependentUpon>DeptForm.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\IPPLC\AddIPPLC.resx">
+      <DependentUpon>AddIPPLC.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="SettingForm\IPPLC\IPPLC.resx">
+      <DependentUpon>IPPLC.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="SettingForm\Line-ModelForm\ModelLine.resx">
       <DependentUpon>ModelLine.cs</DependentUpon>
@@ -538,6 +617,15 @@
     <EmbeddedResource Include="SettingForm\RegisterUserForm\RegisterUserForm.resx">
       <DependentUpon>RegisterUserForm.cs</DependentUpon>
     </EmbeddedResource>
+    <EmbeddedResource Include="Warehouse\CheckMaterial.resx">
+      <DependentUpon>CheckMaterial.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Warehouse\QtyStationController\QtyStationCotroller.resx">
+      <DependentUpon>QtyStationCotroller.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="Warehouse\WarehouseAlarm.resx">
+      <DependentUpon>WarehouseAlarm.cs</DependentUpon>
+    </EmbeddedResource>
     <None Include="packages.config" />
     <None Include="Properties\app.manifest" />
     <None Include="Properties\Settings.settings">
@@ -549,7 +637,19 @@
       <DependentUpon>Settings.settings</DependentUpon>
       <DesignTimeSharedInput>True</DesignTimeSharedInput>
     </Compile>
+    <None Include="Resources\Month.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\MQC-PQC_Template.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
     <None Include="Resources\ShippingForm.xls">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Template_MQC.xlsx">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\Week.xls">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>
     <None Include="WindowsFormsApplication1_TemporaryKey.pfx" />
@@ -590,6 +690,14 @@
   <ItemGroup>
     <Content Include="HTMLPage1.html" />
     <Content Include="MetroFramework.txt" />
+    <Content Include="Planning\SQLQuery1.sql" />
+    <None Include="Resources\close-icon.png" />
+    <None Include="Resources\expand-icon.png">
+      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+    </None>
+    <None Include="Resources\home2-icon.png" />
+    <None Include="Resources\Home-icon.png" />
+    <None Include="Resources\Clock-icon.png" />
     <None Include="Resources\SHORTAGE_MATERIAL_Status.PNG">
       <CopyToOutputDirectory>Always</CopyToOutputDirectory>
     </None>

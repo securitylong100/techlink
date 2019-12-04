@@ -3,17 +3,19 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Media;
 using LiveCharts;
 using LiveCharts.WinForms;
 using LiveCharts.Wpf;
+using WindowsFormsApplication1.MQC;
 using CartesianChart = LiveCharts.WinForms.CartesianChart;
 
 namespace WindowsFormsApplication1.ChartDrawing
 {
   public  class LiveChartDrawing
     {
-public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartdatabyDate> chartdataDefect, ref CartesianChart chart)
+public void DrawingLiveChart(TargetMQC target, List<chartdatabyDate> chartdatabyDates, List<chartdatabyDate> chartdataDefect, ref CartesianChart chart)
         {
             //xu ly data de chon cac thong so cua chart
             double YmaxValue = 0;
@@ -26,8 +28,10 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
                 chart.AxisX.Clear();
                 chart.AxisY.Clear();
                 chart.Controls.Clear();
-                
-               
+          //      chart.Base.Foreground = new SolidColorBrush(Color.FromRgb(66, 66, 66));
+              
+                //  chart.Background = System.Windows.Media.Brushes.BlanchedAlmond;
+
                 ValueConvert = DicChangeTime(chartdatabyDates);
                 ValueConvertDefect = DicChangeTime(chartdataDefect);
                 string[] TimeChanged = ValueConvert.Keys.ToArray();
@@ -39,15 +43,24 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
                 ChartValues<double> values = new ChartValues<double>();
                 ChartValues<double> valuesTarget = new ChartValues<double>();
                 ChartValues<double> valuesDefect = new ChartValues<double>();
-
+                ChartValues<double> PercentQuantity = new ChartValues<double>();
+                ChartValues<double> Defecttarget = new ChartValues<double>();
+                double per = 0;
                 for (int i = 0; i < OutputChanged.Count(); i++)
                 {
                     values.Add(OutputChanged[i]);
+                  
                     //  valuesTarget.Add(100);
                     if ((OutputChangedDefect[i] + OutputChanged[i]) != 0)
                         valuesDefect.Add(OutputChangedDefect[i] / (OutputChangedDefect[i] + OutputChanged[i]));
                     else valuesDefect.Add(0);
                     valuesTarget.Add(OutputChangedDefect[i]);
+                    if (target.TargetOutput > 0)
+                    {
+                        per += OutputChanged[i] / target.TargetOutput;
+                        PercentQuantity.Add(per);
+                        Defecttarget.Add(target.TargetDefect / target.TargetOutput);
+                    }
                 }
                 YmaxValue = values.Max();
                // YmaxValue = (values.Max() > valuesTarget.Max())? values.Max() : valuesTarget.Max();
@@ -93,9 +106,34 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
                     ScalesYAt = 1,
                     FontSize = 15
 
+                });
+                  chart.Series.Add(
+                new LineSeries
+                {
+                    Title = "Target Quantity(%)",
+                    Values = PercentQuantity,
+                    DataLabels = true,
+                    Foreground = System.Windows.Media.Brushes.BlueViolet,
+                    PointForeground = System.Windows.Media.Brushes.BlueViolet,
+                    ScalesYAt = 1,
+                    FontSize = 15
+
                 }
             ) ;
+                chart.Series.Add(
+             new LineSeries
+             {
+                 Title = "Defect target(%)",
+                 Values = Defecttarget,
+                 DataLabels = true,
+                 Foreground = System.Windows.Media.Brushes.DarkKhaki,
+                 PointForeground = System.Windows.Media.Brushes.DarkKhaki,
+                 ScalesYAt = 1,
+                 FontSize = 15
 
+             }
+         );
+                chart.DefaultLegend.Margin = new Thickness(30);
                 chart.DefaultLegend.FontSize = 20;
                 chart.LegendLocation = LegendLocation.Top;
               
@@ -106,7 +144,7 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
                     Title = "Hours",
                     Labels = lables,
                     Unit = 1,
-                    FontSize = 14,
+                    FontSize = 15,
                    
                     FontFamily = new System.Windows.Media.FontFamily("Times New Roman"),
                     Foreground = System.Windows.Media.Brushes.Black,
@@ -124,19 +162,21 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
                 {
                     Title = "Quantity (pcs)",
                     LabelFormatter = value => value.ToString("N0"),
-                    FontSize = 12,
+                    FontSize = 15,
+                  
                     FontFamily = new System.Windows.Media.FontFamily("Times New Roman"),
+                   
                     Foreground = System.Windows.Media.Brushes.Black,
-                    MaxValue = YmaxValue *1.2,
+                    MaxValue = YmaxValue * 1.2,
                     MinValue = 0,
                     Position = AxisPosition.LeftBottom
-                }) ;
+                }); 
 
                 chart.AxisY.Add(new Axis
                 {
                     Title = "percent (%)",
                     LabelFormatter = value => value.ToString("P1"),
-                    FontSize = 12,
+                    FontSize = 15,
                     FontFamily = new System.Windows.Media.FontFamily("Times New Roman"),
                     Foreground = System.Windows.Media.Brushes.Black,
                     MaxValue = 1,
@@ -148,7 +188,72 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
             }
 
         }
-    
+        public void DrawingPiechart(List<chartdataPie> chartdatas,ref LiveCharts.WinForms.PieChart pieChart1 )
+        {
+            pieChart1.Series.Clear();
+            pieChart1.Controls.Clear();
+            pieChart1.InnerRadius = 100;
+            pieChart1.LegendLocation = LegendLocation.Top;
+            pieChart1.Series = new SeriesCollection();
+            pieChart1.Text = " Defect Type Rate ( % )";
+            pieChart1.DefaultLegend.Margin = new Thickness(30);
+            pieChart1.DefaultLegend.FontSize = 20;
+            pieChart1.LegendLocation = LegendLocation.Top;
+
+            foreach (var item in chartdatas)
+            {
+                PieSeries pie = new PieSeries
+                {
+                    Title = item.Label,
+                    Values = new ChartValues<double> { item.value },
+                    PushOut = 5,
+                   
+                    
+                    DataLabels = true
+                };
+                pieChart1.Series.Add(pie);
+            }
+
+      
+        }
+        public void DrawingGaugeChart(List<chartdataPie> chartdatas, ref LiveCharts.WinForms.AngularGauge angularGauge1)
+        {
+            angularGauge1.Value = 0.25;
+            angularGauge1.FromValue = 0;
+            angularGauge1.ToValue = 1;
+            angularGauge1.TicksForeground = Brushes.White;
+            angularGauge1.Base.Foreground = Brushes.White;
+            angularGauge1.Base.FontWeight = FontWeights.Bold;
+            angularGauge1.Base.FontSize = 16;
+            angularGauge1.SectionsInnerRadius = 0.5;
+            
+            angularGauge1.Sections.Add(new AngularSection
+            {
+                FromValue = 0,
+                ToValue = 0.25,
+                Fill = new SolidColorBrush(Color.FromRgb(247, 166, 37))
+            });
+            angularGauge1.Sections.Add(new AngularSection
+            {
+                FromValue = 0.25,
+                ToValue = 0.5,
+                Fill = new SolidColorBrush(Color.FromRgb(220, 100, 37))
+            });
+            angularGauge1.Sections.Add(new AngularSection
+            {
+                FromValue = 0.5,
+                ToValue = 0.75,
+                Fill = new SolidColorBrush(Color.FromRgb(225, 10, 37))
+            });
+            angularGauge1.Sections.Add(new AngularSection
+            {
+                FromValue = 0.75,
+                ToValue = 1,
+                Fill = new SolidColorBrush(Color.FromRgb(254, 57, 57))
+            });
+
+
+        }
         public Dictionary<string, double> DicChangeTime(List<chartdatabyDate> chartdatabyDates)
         {
             string[] time = null;
@@ -227,4 +332,13 @@ public void DrawingLiveChart(List<chartdatabyDate> chartdatabyDates, List<chartd
         public double value { get; set; }
 
     }
+    public class chartdataPie
+    {
+        public string Label {get;set;}
+        public double value { get; set; }
+        public double Percent { get; set; }
+
+
+    }
 }
+

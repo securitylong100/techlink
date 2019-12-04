@@ -17,18 +17,23 @@ namespace WindowsFormsApplication1
         {
             Application.EnableVisualStyles();
             Application.SetCompatibleTextRenderingDefault(false);
-            //   Application.Run(new LoginFr());
+            //       Application.Run(new LoginFr());
             //    Application.Run(new ERPShowOrder.ERPShowMain());
-            // Application.Run(new ERPShowOrder.ERPShowShipping());
+            //   Application.Run(new ERPShowOrder.ERPShowShipping());
             // Application.Run(new ERPShowOrder.ERPMaterialShow());
             //  Application.Run(new ERPShowOrder.ERPShowOrder());
             // Application.Run(new ShippingReport());
             //    Application.Run(new CrisisReport.ProductionMonitoring());
 
             //  Application.Run(new ERPShowOrder.ERP_KPI_Report());
-            // Application.Run(new MQC.MQCShowForm());
-             Application.Run(new MQC.ProductionMain());
-          // Application.Run(new MQC.TargetProduction.TargetProdution());
+            //  Application.Run(new MQC.MQCShowForm());
+            //   Application.Run(new MQC.ProductionMain());
+            //   Application.Run(new MQC.TargetProduction.TargetProdution());
+            // Application.Run(new SettingForm.IPPLC.IPPLC());
+            // Application.Run(new Planning.SettingDataPlanning());
+
+            Application.Run(new Planning.PlanningMain());
+
         }
     }
 }

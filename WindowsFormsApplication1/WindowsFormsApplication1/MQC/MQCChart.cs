@@ -27,11 +27,13 @@ namespace WindowsFormsApplication1.MQC
         System.Threading.Timer tmrEnsureWorkerGetsCalled;
         // object used for safe access
         object lockObject = new object();
-        int countRefresh = 10;
+        int countRefresh = Properties.Settings.Default.intCounterRefresh;
+        DateTime dateTimeFrom;
+        DateTime dateTimeTo;
         public MQCChart(MQCItem1 mQC,List<chartdatabyDate> chartdata, List<chartdatabyDate> chartdataDefect)
         {
             InitializeComponent();
-            this.Text = "PRODUCTION MONITORING CHART";
+            this.WindowState = FormWindowState.Maximized;
             MQC = mQC;
             chartdatabyDates = chartdata;
             chartdatabyDates_old = chartdatabyDates;
@@ -56,7 +58,7 @@ namespace WindowsFormsApplication1.MQC
             var worker = sender as BackgroundWorker;
             List<MQCDataItems> listMQC = new List<MQCDataItems>();
             LoadDataMQC loadDataMQC = new LoadDataMQC();
-            listMQC = loadDataMQC.listMQCDataItems(DateTime.Now.Date, DateTime.Now.Date.AddDays(1), MQC.product, "", MQC.department, MQC.process);
+            listMQC = loadDataMQC.listMQCDataItems(dateTimeFrom, dateTimeTo, MQC.product, MQC.PO, MQC.process);
             chartdatabyDates = new List<chartdatabyDate>();
             chartdatadefect = new List<chartdatabyDate>();
             foreach (var item in listMQC)
@@ -70,7 +72,9 @@ namespace WindowsFormsApplication1.MQC
                     chartdatadefect.Add(new chartdatabyDate { date = item.inspectdate, time = item.inspecttime, value = item.data });
                 }
             }
-           
+            LoadDataERPMQCToShow();
+
+
 
             System.Threading.Thread.Sleep(100);
         }
@@ -133,36 +137,120 @@ namespace WindowsFormsApplication1.MQC
             if (chartdatabyDates_old.Count != chartdatabyDates.Count || chartdatadefect_old.Count != chartdatadefect.Count)
             {
                 LiveChartDrawing liveChartDrawing = new LiveChartDrawing();
-                liveChartDrawing.DrawingLiveChart(chartdatabyDates, chartdatadefect, ref columnChart);
+                liveChartDrawing.DrawingLiveChart(MQC.TargetMQC,chartdatabyDates, chartdatadefect, ref columnChart);
                 chartdatabyDates_old = chartdatabyDates;
                 chartdatadefect_old = chartdatadefect;
+             List<chartdataPie> listChartDataPies =    GetchartdataPies(MQC);
+                liveChartDrawing.DrawingPiechart(listChartDataPies,ref pieChartDefect);
             }
             if(countRefresh == 0)
             {
                 LiveChartDrawing liveChartDrawing = new LiveChartDrawing();
-                liveChartDrawing.DrawingLiveChart(chartdatabyDates, chartdatadefect, ref columnChart);
+                liveChartDrawing.DrawingLiveChart(MQC.TargetMQC, chartdatabyDates, chartdatadefect, ref columnChart);
                 chartdatabyDates_old = chartdatabyDates;
                 chartdatadefect_old = chartdatadefect;
-                countRefresh = 10;
+                countRefresh = Properties.Settings.Default.intCounterRefresh;
+                List<chartdataPie> listChartDataPies = GetchartdataPies(MQC);
+                liveChartDrawing.DrawingPiechart(listChartDataPies, ref pieChartDefect);
             }
-           
+            lb_tittlechart.Text = "Defect Reason (" + MQC.TotalNG.ToString() + " pcs )";
+            lb_clock.Text = DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss");
 
         }
     
         #endregion backround worker task
         private void MQCChart_Load(object sender, EventArgs e)
         {
-            
+            SettingTimeFromDateTodate();
+            LoadDataERPMQCToShow();
             LiveChartDrawing liveChartDrawing = new LiveChartDrawing();
-            liveChartDrawing.DrawingLiveChart(chartdatabyDates, chartdatadefect, ref columnChart);
+            liveChartDrawing.DrawingLiveChart(MQC.TargetMQC,chartdatabyDates, chartdatadefect, ref columnChart);
+            List<chartdataPie> listChartDataPies = GetchartdataPies(MQC);
+            liveChartDrawing.DrawingPiechart(listChartDataPies, ref pieChartDefect);
+         //   liveChartDrawing.DrawingGaugeChart(listChartDataPies, ref GaugeChartTarget);
             SettingTimerForBrwoker();
+         
+            lb_tittlechart.Text = "Defect Reason (" + MQC.TotalNG.ToString() + " pcs )";
+            lb_clock.Text = DateTime.Now.ToString("dd-MMM-yyyy HH:mm:ss");
+            lb_LotValue.Text = MQC.PO;
+            lb_ProductValue.Text = MQC.product;
+
+
         }
         private void SettingTimerForBrwoker()
         {
-            int timerInterval = 2000;
+            int timerInterval = Properties.Settings.Default.intTimerMQCChart;
 
             tmrCallBgWorker.Interval = timerInterval;
             tmrCallBgWorker.Start();
+        }
+        private void LoadDataERPMQCToShow()
+        {
+            //Load data from m_ERPMQC
+            LoadDataMQC dataMQC = new LoadDataMQC();
+
+            MQC = dataMQC.GetQCCItemOK(dateTimeFrom, dateTimeTo, MQC.product, MQC.PO, MQC.department, MQC.process);
+
+        }
+        private void SettingTimeFromDateTodate()
+        {
+            //Setting DateTime from and To to limit data in database
+            var lastDayOfMonth = DateTime.DaysInMonth(DateTime.Now.Year, DateTime.Now.Month);//avoid end of month
+            if (DateTime.Now.Day < lastDayOfMonth)
+            {
+                dateTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+                dateTimeTo = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day + 1, 6, 0, 0);
+            }
+            else if (DateTime.Now.Day == lastDayOfMonth)
+            {
+                if (DateTime.Now.Month < 12)
+                {
+                    dateTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+                    dateTimeTo = new DateTime(DateTime.Now.Year, DateTime.Now.Month + 1, 1, 6, 0, 0);
+                }
+                else if (DateTime.Now.Month == 12) //avoid 31/12
+                {
+                    dateTimeFrom = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 6, 0, 0);
+                    dateTimeTo = new DateTime(DateTime.Now.Year + 1, 1, 1, 6, 0, 0);
+                }
+            }
+            dateTimeFrom = DateTime.MinValue;
+        }
+        public List<chartdataPie> GetchartdataPies (MQCItem1 mQC)
+        {
+            List<chartdataPie> chartdatas = new List<chartdataPie>();
+            List<chartdataPie> chartdatasReturn = new List<chartdataPie>();
+            for (int i = 0; i < mQC.listNGItems.Count; i++)
+            {
+                chartdatas.Add(new chartdataPie
+                {
+                    Label = mQC.listNGItems[i].NGName,
+                    value = mQC.listNGItems[i].NGQuantity,
+                    Percent = (mQC.percentNG != 0) ? (mQC.listNGItems[i].NGQuantity / mQC.percentNG) : 0
+                }); ;
+            }
+  var group =    chartdatas
+            .GroupBy(u => u.Label)
+                    .Select(grp => grp.ToList())
+                   .ToList();
+
+            foreach (var item in group)
+            {
+                chartdataPie pie = new chartdataPie();
+                pie = item[0];
+                pie.value = item.Select(d => d.value).Sum();
+                pie.Percent = (mQC.percentNG != 0) ? (pie.value / mQC.percentNG) : 0;
+                chartdatasReturn.Add(pie);
+            }
+            return chartdatasReturn;
+        }
+
+        private void MQCChart_FormClosed(object sender, FormClosedEventArgs e)
+        {
+            bgWorker.DoWork -= new DoWorkEventHandler(bg_DoWork);
+            bgWorker.ProgressChanged -= BgWorker_ProgressChanged;
+            bgWorker.RunWorkerCompleted -= new RunWorkerCompletedEventHandler(bg_RunWorkerCompleted);
+            tmrCallBgWorker.Tick -= new EventHandler(tmrCallBgWorker_Tick);
         }
     }
 }

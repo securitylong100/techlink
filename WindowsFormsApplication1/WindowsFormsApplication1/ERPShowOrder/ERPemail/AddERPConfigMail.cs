@@ -40,6 +40,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
                 va.value2 = null;
                 va.value3 = null;
                 va.value4 = null;
+              
                 addupdate = 0;
             }
             else
@@ -77,8 +78,9 @@ namespace WindowsFormsApplication1.ERPShowOrder
             }
             else //update
             {
-                sql = "update m_email set deptcode  =  '" + cmb_deptcode.Text + "', status = '" + cmb_defaultstatus.Text + "', usingfunction ='" + cmb_usingfunction.Text + "' where emailaddress = '" + txt_emailaddress.Text + "'";
-
+                sql = "update m_email set deptcode  =  '" + cmb_deptcode.Text + "', status = '" + cmb_defaultstatus.Text + "', usingfunction ='" + cmb_usingfunction.Text + "' where id = '" + Class.valiballecommon.GetStorage().valuleID + "'";
+                Class.valiballecommon va = Class.valiballecommon.GetStorage();
+                va.valuleID = null;
             }
 
             sqlCON connect = new sqlCON();

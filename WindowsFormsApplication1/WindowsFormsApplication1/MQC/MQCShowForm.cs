@@ -35,10 +35,11 @@ namespace WindowsFormsApplication1.MQC
         string deptFull = "";
         int widthWindow = 0;
         int heightWindow = 0;
-        int countRefresh = 10;
+        int countRefresh = Properties.Settings.Default.intCounterRefresh;
         public MQCShowForm(MQCItem1 mQCItem1, string depttext )
         {
             InitializeComponent();
+          
             mQCItem = mQCItem1;
             deptFull = depttext;
             IsStartup = false;
@@ -129,8 +130,10 @@ namespace WindowsFormsApplication1.MQC
         {
             try
             {
-             lb_outputTotal.Text = mQCItem.TotalOutput.ToString("N0"); /*1234.567 ("N", en-US) -> 1,234.57*/
-            lb_TotalInputSFT.Text = mQCItem.InputSFT.ToString("N0");
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
+                lb_outputTotal.Text = mQCItem.TotalOutput.ToString("N0"); /*1234.567 ("N", en-US) -> 1,234.57*/
+            lb_TargetValue.Text = mQCItem.TargetMQC.TargetOutput.ToString("N0");
             lb_NotyetSFT.Text = mQCItem.InputMaterialNotYet.ToString("N0");
             lb_TotalNG.Text = mQCItem.TotalNG.ToString("N0");
             lb_TotalRW.Text = mQCItem.TotalRework.ToString("N0");
@@ -153,8 +156,10 @@ namespace WindowsFormsApplication1.MQC
                     lb_messageMaterial.Text = "";
                     lb_mesage_defect.Text = "";
                 }
+                nGPanel.Dispose();
              nGPanel = new NGPanel(mQCItem.listNGItems);
             pa_NGPanel.Controls.Clear();
+               
             if (!pa_NGPanel.Controls.Contains(nGPanel))
             {
                 nGPanel.Name = mQCItem.product;
@@ -163,12 +168,13 @@ namespace WindowsFormsApplication1.MQC
                     | System.Windows.Forms.AnchorStyles.Left)
                     | System.Windows.Forms.AnchorStyles.Right)));
                 pa_NGPanel.Controls.Add(nGPanel);
-
+              
+                //    nGPanel.Dispose();
             }
 
 
             pa_rework.Controls.Clear();
-
+                nGRework.Dispose();
             nGRework = new RWPanel(mQCItem.listRWItems);
             if (!pa_rework.Controls.Contains(nGRework))
             {
@@ -177,7 +183,13 @@ namespace WindowsFormsApplication1.MQC
                      | System.Windows.Forms.AnchorStyles.Left)
                      | System.Windows.Forms.AnchorStyles.Right)));
                 pa_rework.Controls.Add(nGRework);
+                  
+                  //  nGRework.Dispose();
             }
+                lb_clock.Text = DateTime.Now.ToString("dd-MM-yyyy HH:mm:ss");
+
+                GC.Collect();
+                GC.WaitForPendingFinalizers();
 
             }
             catch (Exception ex)
@@ -196,10 +208,13 @@ namespace WindowsFormsApplication1.MQC
             SettingTimerForBrwoker(); //Setting Timer for run backround worker
             SettingTimeFromDateTodate();
             LoadcbInUI();
+            LoadDataERPMQCToShow();
             LoadUIFromMQCITEM();
+
             IsStartup = true;
             hScrollBar1.Maximum = nGPanel.Width - layoutPanelNG.Width;
             hScrollbarRework.Maximum = nGRework.Width - layoutPanelRW.Width;
+            this.WindowState = FormWindowState.Maximized;
         }
 
      
@@ -207,7 +222,7 @@ namespace WindowsFormsApplication1.MQC
     
         private void SettingTimerForBrwoker()
         {
-            int timerInterval = 5000;
+            int timerInterval = Properties.Settings.Default.intTimerMQCShow;
 
             tmrCallBgWorker.Interval = timerInterval;
             tmrCallBgWorker.Start();
@@ -252,9 +267,11 @@ namespace WindowsFormsApplication1.MQC
         private void LoadDataERPMQCToShow()
         {
             //Load data from m_ERPMQC
+            
             LoadDataMQC dataMQC = new LoadDataMQC();
-           
-            mQCItem = dataMQC.GetQCCItemOK(dateTimeFrom, dateTimeTo, product, po, dept, process);
+            dateTimeFrom = DateTime.Now.Date;
+            dateTimeTo = DateTime.Now.Date.AddDays(1);
+            mQCItem = dataMQC.GetQCCItemOK(dateTimeFrom, dateTimeTo, product, mQCItem.PO, dept, process);
            
         }
 
@@ -269,38 +286,41 @@ namespace WindowsFormsApplication1.MQC
 
                 if (this.WindowState == FormWindowState.Maximized)
                 {
-                    Lb_OutputLable.Font = new Font("Times New Roman", Lb_OutputLable.Font.SizeInPoints + 20, FontStyle.Bold);
-                    Lb_SFTLable.Font = new Font("Times New Roman", Lb_SFTLable.Font.SizeInPoints + 20, FontStyle.Bold);
-                    Lb_SFTNotLable.Font = new Font("Times New Roman", Lb_SFTNotLable.Font.SizeInPoints + 20, FontStyle.Bold);
-                    Lb_TotalNGLabel.Font = new Font("Times New Roman", Lb_TotalNGLabel.Font.SizeInPoints + 20, FontStyle.Bold);
-                    Lb_reworkLB.Font = new Font("Times New Roman", Lb_reworkLB.Font.SizeInPoints + 20, FontStyle.Bold);
+                    Lb_OutputLable.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    Lb_Target.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    Lb_SFTNotLable.Font = new Font("Times New Roman", 35, FontStyle.Bold);
+                    Lb_TotalNGLabel.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    Lb_reworkLB.Font = new Font("Times New Roman", 50, FontStyle.Bold);
                   
 
-                    lb_outputTotal.Font = new Font("Times New Roman", lb_outputTotal.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_TotalInputSFT.Font = new Font("Times New Roman", lb_TotalInputSFT.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_NotyetSFT.Font = new Font("Times New Roman", lb_NotyetSFT.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_percentNG.Font = new Font("Times New Roman", lb_percentNG.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_TotalNG.Font = new Font("Times New Roman", lb_TotalNG.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_TotalRW.Font = new Font("Times New Roman", lb_TotalRW.Font.SizeInPoints + 20, FontStyle.Bold);
-                    lb_percentRW.Font = new Font("Times New Roman", lb_percentRW.Font.SizeInPoints + 20, FontStyle.Bold);
+                    lb_outputTotal.Font = new Font("Times New Roman", 110, FontStyle.Bold);
+                    lb_TargetValue.Font = new Font("Times New Roman", 80, FontStyle.Bold);
+                    lb_NotyetSFT.Font = new Font("Times New Roman", 80, FontStyle.Bold);
+                    lb_percentNG.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    lb_TotalNG.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    lb_TotalRW.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                    lb_percentRW.Font = new Font("Times New Roman", 50, FontStyle.Bold);
+                 
+
 
                     //  lb_percentNG.Font = new Font("Times New Roman", lb_percentNG.Font.SizeInPoints + 10);
                 }
                 else if (this.WindowState == FormWindowState.Normal && this.Size.Width == widthWindow)
                 {
-                    Lb_OutputLable.Font = new Font("Times New Roman", Lb_OutputLable.Font.SizeInPoints - 20, FontStyle.Bold);
-                    Lb_SFTLable.Font = new Font("Times New Roman", Lb_SFTLable.Font.SizeInPoints - 20, FontStyle.Bold);
-                    Lb_SFTNotLable.Font = new Font("Times New Roman", Lb_SFTNotLable.Font.SizeInPoints - 20, FontStyle.Bold);
-                    Lb_TotalNGLabel.Font = new Font("Times New Roman", Lb_TotalNGLabel.Font.SizeInPoints - 20, FontStyle.Bold);
-                    Lb_reworkLB.Font = new Font("Times New Roman", Lb_reworkLB.Font.SizeInPoints - 20, FontStyle.Bold);
+                    Lb_OutputLable.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    Lb_Target.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    Lb_SFTNotLable.Font = new Font("Times New Roman", 25, FontStyle.Bold);
+                    Lb_TotalNGLabel.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    Lb_reworkLB.Font = new Font("Times New Roman", 30, FontStyle.Bold);
 
-                    lb_outputTotal.Font = new Font("Times New Roman", lb_outputTotal.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_TotalInputSFT.Font = new Font("Times New Roman", lb_TotalInputSFT.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_NotyetSFT.Font = new Font("Times New Roman", lb_NotyetSFT.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_percentNG.Font = new Font("Times New Roman", lb_percentNG.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_TotalNG.Font = new Font("Times New Roman", lb_TotalNG.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_TotalRW.Font = new Font("Times New Roman", lb_TotalRW.Font.SizeInPoints - 20, FontStyle.Bold);
-                    lb_percentRW.Font = new Font("Times New Roman", lb_percentRW.Font.SizeInPoints - 20, FontStyle.Bold);
+                    lb_outputTotal.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    lb_TargetValue.Font = new Font("Times New Roman",30, FontStyle.Bold);
+                    lb_NotyetSFT.Font = new Font("Times New Roman",30, FontStyle.Bold);
+                    lb_percentNG.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    lb_TotalNG.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    lb_TotalRW.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    lb_percentRW.Font = new Font("Times New Roman", 30, FontStyle.Bold);
+                    
                 }
                 else
                 {

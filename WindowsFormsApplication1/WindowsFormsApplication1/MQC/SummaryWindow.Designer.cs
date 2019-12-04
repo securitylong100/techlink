@@ -32,6 +32,7 @@
             this.dtgv_summary = new System.Windows.Forms.DataGridView();
             this.layoutHeader = new System.Windows.Forms.TableLayoutPanel();
             this.btn_ExportExcel = new System.Windows.Forms.Button();
+            this.lb_tiltle = new System.Windows.Forms.Label();
             this.tableLayoutPanel1.SuspendLayout();
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_summary)).BeginInit();
             this.layoutHeader.SuspendLayout();
@@ -76,6 +77,7 @@
             this.layoutHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Percent, 100F));
             this.layoutHeader.ColumnStyles.Add(new System.Windows.Forms.ColumnStyle(System.Windows.Forms.SizeType.Absolute, 100F));
             this.layoutHeader.Controls.Add(this.btn_ExportExcel, 1, 0);
+            this.layoutHeader.Controls.Add(this.lb_tiltle, 0, 0);
             this.layoutHeader.Location = new System.Drawing.Point(3, 3);
             this.layoutHeader.Name = "layoutHeader";
             this.layoutHeader.RowCount = 1;
@@ -98,6 +100,20 @@
             this.btn_ExportExcel.UseVisualStyleBackColor = true;
             this.btn_ExportExcel.Click += new System.EventHandler(this.Btn_ExportExcel_Click);
             // 
+            // lb_tiltle
+            // 
+            this.lb_tiltle.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.lb_tiltle.AutoSize = true;
+            this.lb_tiltle.Font = new System.Drawing.Font("Times New Roman", 30F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.lb_tiltle.ForeColor = System.Drawing.Color.Black;
+            this.lb_tiltle.Location = new System.Drawing.Point(3, 0);
+            this.lb_tiltle.Name = "lb_tiltle";
+            this.lb_tiltle.Size = new System.Drawing.Size(1161, 64);
+            this.lb_tiltle.TabIndex = 1;
+            this.lb_tiltle.TextAlign = System.Drawing.ContentAlignment.MiddleCenter;
+            // 
             // SummaryWindow
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 16F);
@@ -109,6 +125,7 @@
             this.tableLayoutPanel1.ResumeLayout(false);
             ((System.ComponentModel.ISupportInitialize)(this.dtgv_summary)).EndInit();
             this.layoutHeader.ResumeLayout(false);
+            this.layoutHeader.PerformLayout();
             this.ResumeLayout(false);
 
         }
@@ -119,5 +136,6 @@
         private System.Windows.Forms.DataGridView dtgv_summary;
         private System.Windows.Forms.TableLayoutPanel layoutHeader;
         private System.Windows.Forms.Button btn_ExportExcel;
+        private System.Windows.Forms.Label lb_tiltle;
     }
 }

@@ -5,11 +5,12 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using WindowsFormsApplication1.MQC;
 using Excel = Microsoft.Office.Interop.Excel;
 
 namespace WindowsFormsApplication1.Class
 {
-    public  class ToolSupport
+    public class ToolSupport
     {
         public void Datagridview2Excel(DataGridView dataGrid, string pathSaveExcel)
 
@@ -135,42 +136,43 @@ namespace WindowsFormsApplication1.Class
             try
             {
 
-          
-            Excel.Application xlapp;
-            Excel.Workbook xlworkbook;
-            Excel.Worksheet xlworsheet;
-            object misValue = System.Reflection.Missing.Value;
 
-            xlapp = new Excel.Application();
-            xlworkbook = xlapp.Workbooks.Add(misValue);
-            xlworsheet = (Excel.Worksheet)xlworkbook.Worksheets.get_Item(1);
-            // int i = 0;
-            // int j = 0;
+                Excel.Application xlapp;
+                Excel.Workbook xlworkbook;
+                Excel.Worksheet xlworsheet;
+                object misValue = System.Reflection.Missing.Value;
 
-
-            for (int k = 0; k <= dataGrid.ColumnCount - 1; k++)
-            {
-                string cell = dataGrid.Columns[k].HeaderText;
-                xlworsheet.Cells[1, k+ 1] = cell;
-            }
+                xlapp = new Excel.Application();
+                xlworkbook = xlapp.Workbooks.Add(misValue);
+                xlworsheet = (Excel.Worksheet)xlworkbook.Worksheets.get_Item(1);
+                // int i = 0;
+                // int j = 0;
 
 
-
-            for (int i = 0; i <= dataGrid.RowCount-1 ; i++)
-            {
-                for (int j = 0; j <= dataGrid.ColumnCount - 1; j++)
+                for (int k = 0; k <= dataGrid.ColumnCount - 1; k++)
                 {
-                    DataGridViewCell cell = dataGrid[j, i];
-                    xlworsheet.Cells[i + 2, j + 1] = cell.Value;
+                    string cell = dataGrid.Columns[k].HeaderText;
+                    xlworsheet.Cells[1, k + 1] = cell;
                 }
-            }
-            xlworkbook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
-            xlworkbook.Close(true, misValue, misValue);
-            xlapp.Quit();
-            reOject(xlworsheet);
-            reOject(xlworkbook);
-            reOject(xlapp);
-            MessageBox.Show("Export to excel sucessful !" , "Information",MessageBoxButtons.OK,MessageBoxIcon.Information);
+
+
+
+                for (int i = 0; i <= dataGrid.RowCount - 1; i++)
+                {
+                    for (int j = 0; j <= dataGrid.ColumnCount - 1; j++)
+                    {
+                        DataGridViewCell cell = dataGrid[j, i];
+                        xlworsheet.Cells[i + 2, j + 1] = cell.Value;
+                        xlworsheet.Cells[i + 2, j + 1].Interior.Color = System.Drawing.ColorTranslator.ToOle(System.Drawing.Color.Gray);
+                    }
+                }
+                xlworkbook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookNormal, misValue, misValue, misValue, misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlworkbook.Close(true, misValue, misValue);
+                xlapp.Quit();
+                reOject(xlworsheet);
+                reOject(xlworkbook);
+                reOject(xlapp);
+                MessageBox.Show("Export to excel sucessful !", "Information", MessageBoxButtons.OK, MessageBoxIcon.Information);
             }
             catch (Exception ex)
             {
@@ -196,17 +198,20 @@ namespace WindowsFormsApplication1.Class
                 xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); //add data sheet1  
                                                                                   //xlWorkSheet.Cells[6, 1] = "BackLog Report on " + DateTime.Now.ToString("MMM/dd/yyyy"); //Line
                                                                                   //xlWorkSheet.Cells[1, 11] = dateupdate; //Line
-                                                                                  //xlWorkSheet.Cells[2, 11] = usersend; //Model
-                                                                                  //xlWorkSheet.Cells[3, 11] = version; //User  
+                                                                                  //Fill ngay thang nam                                                                //xlWorkSheet.Cells[2, 11] = usersend; //Model
+                string date = DateTime.Now.ToString("dd");                                                            //xlWorkSheet.Cells[3, 11] = version; //User  
+                xlWorkSheet.Cells[2, 27] = DateTime.Now.ToString("dd");
+                xlWorkSheet.Cells[2, 29] = DateTime.Now.ToString("MM");
+                xlWorkSheet.Cells[2, 31] = DateTime.Now.ToString("MM");
+                //for (int i = 3; i < dgvBackLog.Columns.Count-4; i++)
+                //{
 
-                for (int i = 3; i < dgvBackLog.Columns.Count-4; i++)
-                {
-                  
-                    xlWorkSheet.Cells[3, i+1] = dgvBackLog.Columns[i].HeaderText;
-                    
-                }
+                //    xlWorkSheet.Cells[3, i+1] = dgvBackLog.Columns[i].HeaderText;
+
+                //}
 
                 //datagridw
+
                 for (int i = 0; i <= dgvBackLog.Rows.Count - 1; i++) //dong
                 {
                     for (int j = 0; j <= dgvBackLog.Columns.Count - 1; j++) //cot
@@ -216,6 +221,126 @@ namespace WindowsFormsApplication1.Class
                     }
                 }
 
+                #endregion
+
+                xlWorkBook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue,
+                        misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close();
+
+
+
+                //   MessageBox.Show("Excel file created, you can find in the folder " + pathSaveExcel, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //xlWorkBook.Close(true, misValue, misValue);
+                //xlApp.Workbooks.Open(pathSaveExcel);
+                //xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error happened in the process.");
+                throw new Exception("ExportToExcel: \n" + ex.Message);
+            }
+        }
+        public void ExportToTemplateMQCDefect(string PathTemplate, string pathSaveExcel, DefectRateData defectRate)
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet; //sheet 2
+            //Excel.Worksheet xlWorkSheet1; //sheet 1
+            object misValue = System.Reflection.Missing.Value;
+
+            try
+            {
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Open(PathTemplate, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+
+                #region Sheet 1
+                //Add data in Sheet 1
+
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(2); //add data sheet1  
+                                                                                  //xlWorkSheet.Cells[6, 1] = "BackLog Report on " + DateTime.Now.ToString("MMM/dd/yyyy"); //Line
+                string strWorksheetName = xlWorkSheet.Name;//Get the name of worksheet.                                                               //xlWorkSheet.Cells[1, 11] = dateupdate; //Line
+                if (strWorksheetName == "优減")
+                {//Fill ngay thang nam                                                                //xlWorkSheet.Cells[2, 11] = usersend; //Model
+                    string date = DateTime.Now.ToString("yyyy.MM.dd");
+                    xlWorkSheet.Cells[3, 10] = date;//xlWorkSheet.Cells[3, 11] = version; //User  
+                    xlWorkSheet.Cells[4, 2] = defectRate.TotalQuantity;
+                    xlWorkSheet.Cells[4, 6] = defectRate.DefectQuantity;
+                    xlWorkSheet.Cells[17, 2] = date;
+                    double countDefect = 0;
+                    //   xlWorkSheet.Cells[2, 31] = DateTime.Now.ToString("MM");
+                    for (int i = 0; i < defectRate.defectItems.Count; i++)
+                    {
+                        if (defectRate.defectItems[i].Note == (i + 1))
+                        {
+                            xlWorkSheet.Cells[7, 2 + i] = defectRate.defectItems[i].Quantity;
+                            countDefect += defectRate.defectItems[i].Quantity;
+                        }
+                    }
+                    xlWorkSheet.Cells[7, 7] = defectRate.DefectQuantity - countDefect;
+                }
+                #endregion
+
+                xlWorkBook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue,
+                        misValue, Excel.XlSaveAsAccessMode.xlExclusive, misValue, misValue, misValue, misValue, misValue);
+                xlWorkBook.Close();
+
+
+
+                //   MessageBox.Show("Excel file created, you can find in the folder " + pathSaveExcel, "Notice", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                //xlWorkBook.Close(true, misValue, misValue);
+                //xlApp.Workbooks.Open(pathSaveExcel);
+                //xlApp.Visible = true;
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show("An error happened in the process.");
+                throw new Exception("ExportToExcel: \n" + ex.Message);
+            }
+        }
+        public void ExportToTemplateMQCDefectTop16(string PathTemplate, string pathSaveExcel, DefectRateData defectRate)
+        {
+            Excel.Application xlApp;
+            Excel.Workbook xlWorkBook;
+            Excel.Worksheet xlWorkSheet; //sheet 2
+            //Excel.Worksheet xlWorkSheet1; //sheet 1
+            object misValue = System.Reflection.Missing.Value;
+
+            try
+            {
+                xlApp = new Excel.Application();
+                xlWorkBook = xlApp.Workbooks.Open(PathTemplate, 0, true, 5, "", "", true, Microsoft.Office.Interop.Excel.XlPlatform.xlWindows, "\t", false, false, 0, true, 1, 0);
+
+                #region Sheet 1
+                //Add data in Sheet 1
+
+                xlWorkSheet = (Excel.Worksheet)xlWorkBook.Worksheets.get_Item(1); //add data sheet1  
+                                                                                  //xlWorkSheet.Cells[6, 1] = "BackLog Report on " + DateTime.Now.ToString("MMM/dd/yyyy"); //Line
+                string strWorksheetName = xlWorkSheet.Name;//Get the name of worksheet.                                                               //xlWorkSheet.Cells[1, 11] = dateupdate; //Line
+                if (strWorksheetName == "报表")
+                {//Fill ngay thang nam                                                                //xlWorkSheet.Cells[2, 11] = usersend; //Model
+                    string date = DateTime.Now.ToString("yyyy.MM.dd");
+                    xlWorkSheet.Cells[2, 11] = DateTime.Now.ToString("dd");
+                    xlWorkSheet.Cells[2, 13] = DateTime.Now.ToString("MM");
+                    xlWorkSheet.Cells[2, 15] = DateTime.Now.ToString("yyyy");
+                    xlWorkSheet.Cells[6, 1] = defectRate.Product;//xlWorkSheet.Cells[3, 11] = version; //User  
+                    xlWorkSheet.Cells[6, 2] = defectRate.Lot;
+                    xlWorkSheet.Cells[6, 3] = defectRate.DateTime_from + "-" + defectRate.DateTime_to;
+                    xlWorkSheet.Cells[6, 4] = defectRate.TotalQuantity;
+                    xlWorkSheet.Cells[6, 23] = defectRate.OutputQuantity;
+                    xlWorkSheet.Cells[6, 24] = defectRate.DefectQuantity;
+                    xlWorkSheet.Cells[6, 25] = defectRate.DefectRate;
+                    double countDefect = 0;
+                    //   xlWorkSheet.Cells[2, 31] = DateTime.Now.ToString("MM");
+                    for (int i = 0; i < defectRate.defectItems.Count; i++)
+                    {
+                        if (defectRate.defectItems[i].Note == (i + 1))
+                        {
+                            xlWorkSheet.Cells[6, 5 + i] = defectRate.defectItems[i].Quantity;
+                            countDefect += defectRate.defectItems[i].Quantity;
+                        }
+                    }
+                    xlWorkSheet.Cells[6, 21] = defectRate.DefectQuantity - countDefect;
+                }
                 #endregion
 
                 xlWorkBook.SaveAs(pathSaveExcel, Excel.XlFileFormat.xlWorkbookDefault, misValue, misValue, misValue,

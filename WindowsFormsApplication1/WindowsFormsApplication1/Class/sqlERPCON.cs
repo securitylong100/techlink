@@ -22,11 +22,13 @@ namespace WindowsFormsApplication1
             try
             {
                 outstring = cmd.ExecuteScalar().ToString();
+                conn.Close();
                 return outstring;
             }
             catch (Exception ex)
             {
                 MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                conn.Close();
                 return String.Empty;
             }
         //    conn.Close();

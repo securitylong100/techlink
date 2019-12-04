@@ -1,0 +1,6 @@
+[13:41:22.164] GetDefectRateReport(DateTime from, DateTime to, string Dept, string codeProcess)
+[13:41:57.420] GetDefectRateReport(DateTime from, DateTime to, string Dept, string codeProcess)
+[13:42:29.135] GetDefectRateReport(DateTime from, DateTime to, string Dept, string codeProcess)
+[14:32:51.850] GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)
+[14:33:28.899] GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)
+[14:33:31.325] GetMQCItemSummaries(DateTime from, DateTime to, string site, string process)

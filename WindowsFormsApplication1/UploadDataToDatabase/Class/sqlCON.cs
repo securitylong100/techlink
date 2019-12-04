@@ -29,7 +29,7 @@ namespace UploadDataToDatabase
             catch (Exception ex)
             {
                 Logfile.Output(StatusLog.Error, ex.Message, "Database Responce " + "sqlExecuteScalarString");
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              
                 return String.Empty;
             }
 
@@ -57,7 +57,7 @@ namespace UploadDataToDatabase
             catch (Exception ex)
             {
                 Logfile.Output(StatusLog.Error, ex.Message, "Database Responce");
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              
 
             }
             conn.Close();
@@ -77,7 +77,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+              
 
             }
         }
@@ -92,16 +93,16 @@ namespace UploadDataToDatabase
                 if (response >= 1)
                 {
                     if (result_message_show) {
-
-                        MessageBox.Show("Successful!", "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Information);
+                        Logfile.Output(StatusLog.Error, "Database Responce");
+                       
                     }
                     conn.Close();
                     return true;
                 }
                 else
                 {
-
-                    MessageBox.Show("Not successful!", "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                    Logfile.Output(StatusLog.Error, "Not successful!", "Database Responce");
+                   
                     conn.Close();
                     return false;
                 }
@@ -109,8 +110,7 @@ namespace UploadDataToDatabase
             catch (Exception ex)
             {
                 Logfile.Output(StatusLog.Error, ex.Message, "Not successful!");
-                MessageBox.Show("Not successful!" + System.Environment.NewLine + ex.Message
-                                , "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+              
                 conn.Close();
                 return false;
             }
@@ -143,7 +143,8 @@ namespace UploadDataToDatabase
             }
             catch (Exception ex)
             {
-                MessageBox.Show(ex.Message, "Database Responce", MessageBoxButtons.OK, MessageBoxIcon.Warning);
+                Logfile.Output(StatusLog.Error, "Database Responce", ex.Message);
+            
 
             }
 

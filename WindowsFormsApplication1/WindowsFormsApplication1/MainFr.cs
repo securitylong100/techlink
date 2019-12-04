@@ -36,11 +36,14 @@ namespace WindowsFormsApplication1
             connect.sqlDatatablePermision("ModelLine", btn_modelline);
             connect.sqlDatatablePermision("Dept", btn_dept);
             connect.sqlDatatablePermision("PQMShow", btn_pqmshow);
-            connect.sqlDatatablePermision("ProcessInspect", btn_process);      
+            connect.sqlDatatablePermision("ProcessInspect", btn_process);
             connect.sqlDatatablePermision("ERPConfigMail", btn_emailconfig);
             connect.sqlDatatablePermision("ProductionReport", btn_production);
             connect.sqlDatatablePermision("ShippingReport", btn_shipping);
-
+            connect.sqlDatatablePermision("MQCShow", btn_MQC);
+            connect.sqlDatatablePermision("CheckMaterial", btn_CheckMaterial);  //
+            connect.sqlDatatablePermision("WarehouseAlarm", btn_warehousealarm);
+            connect.sqlDatatablePermision("IPPLC", btn_ipplc);
         }
 
         private void btn_changepass_Click(object sender, EventArgs e)
@@ -114,6 +117,37 @@ namespace WindowsFormsApplication1
         {
             ProductionMonitoring productionShow = new ProductionMonitoring();
             productionShow.ShowDialog();
+        }
+
+        private void Btn_MQC_Click(object sender, EventArgs e)
+        {
+            MQC.ProductionMain productionMain = new MQC.ProductionMain();
+            productionMain.ShowDialog();
+        }
+
+        private void Btn_material_Click(object sender, EventArgs e)
+        {
+            MQC.MaterialManagement materialManagement = new MQC.MaterialManagement();
+            materialManagement.Show();
+        }
+
+        private void btn_CheckMaterial_Click(object sender, EventArgs e)
+        {
+            Warehouse.CheckMaterial fr = new Warehouse.CheckMaterial();
+
+            fr.ShowDialog();
+        }
+
+        private void btn_warehousealarm_Click(object sender, EventArgs e)
+        {
+            Warehouse.WarehouseAlarm wfr = new Warehouse.WarehouseAlarm();
+            wfr.ShowDialog();
+        }
+
+        private void btn_ipplc_Click(object sender, EventArgs e)
+        {
+            SettingForm.IPPLC.IPPLC dt = new SettingForm.IPPLC.IPPLC();
+            dt.ShowDialog();
         }
     }
 }

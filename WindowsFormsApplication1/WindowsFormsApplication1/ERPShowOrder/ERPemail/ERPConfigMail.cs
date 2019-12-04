@@ -79,7 +79,7 @@ namespace WindowsFormsApplication1.ERPShowOrder
             va.value2 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells[2].Value.ToString();
             va.value3 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells[4].Value.ToString();
             va.value4 = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells[3].Value.ToString();
-
+            va.valuleID = dgv_show.Rows[dgv_show.SelectedCells[0].RowIndex].Cells[0].Value.ToString();
             if (frm.ShowDialog() == DialogResult.OK)
             {
                 searchdata(ref dgv_show, true);
@@ -91,8 +91,8 @@ namespace WindowsFormsApplication1.ERPShowOrder
             if (dgv_show.RowCount > 0)
             {
                 int rownumber = dgv_show.SelectedCells[0].RowIndex;
-                string emailaddress = dgv_show.Rows[rownumber].Cells[2].Value.ToString();
-                string sql = "delete from m_email where emailaddress = '" + emailaddress + "'";
+                string ID = dgv_show.Rows[rownumber].Cells[0].Value.ToString();
+                string sql = "delete from m_email where id = '" + ID + "'";
                 sqlCON connect = new sqlCON();
                 connect.sqlExecuteNonQuery(sql, true);
                 searchdata(ref dgv_show, true);
